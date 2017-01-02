@@ -16,7 +16,7 @@ def log(message, answer):
     print('----------------------------------------------------------------')
     print('{0} {1} (id {2})'.format(message.from_user.first_name,
                                     message.from_user.last_name,
-                                    str(message.from_user.id)), end='')
+                                    message.from_user.id), end='')
     if message.chat.id != message.from_user.id:
         print(' in {0} (id {1}): '.format(message.chat.title,
                                           message.chat.id))
