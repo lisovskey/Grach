@@ -1,6 +1,7 @@
 '''
 умеет мало
 работаем дальше
+надо в класс забомбить
 '''
 
 import API
@@ -106,7 +107,7 @@ def handle_text(message):
                   'нахер' in text_message or
                   'на хер' in text_message):
             if message.chat.id != message.from_user.id:
-                answer = constants.BYE
+                answer = constants.OKAY
                 leave = True
             else:
                 answer = constants.NO

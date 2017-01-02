@@ -11,6 +11,7 @@ YES = 'да'
 NO = 'не'
 HI = 'привет'
 BYE = 'пока'
+OKAY = 'ладно'
 IGNORANCE = 'не понял щас'
 
 DICK = 'AgADAgADsqcxG619BApGPqqhwbre04fUgQ0ABEEa0kzVKn3I0OADAAEC'
