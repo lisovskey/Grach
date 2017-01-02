@@ -10,8 +10,6 @@ import constants
 bot = API.TeleBot(constants.TOKEN)
 print(bot.get_me())
 
-asked_user_id = 0
-
 def log(message, answer):
     '''
     логируем в консоль
@@ -38,6 +36,7 @@ def handle_help(message):
     log(message, answer)
     bot.send_message(message.chat.id, answer)
 
+
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
     '''
@@ -52,9 +51,6 @@ def handle_text(message):
             'гриша' in text_message or
             'григорий' in text_message):
             reaction = True
-        elif (message.from_user.id == asked_user_id):
-            reaction = True
-            asked_user_id = None
     else:
         reaction = True
 
@@ -121,7 +117,6 @@ def handle_text(message):
             text_message == 'гриша' or
             text_message == 'григорий'):
             answer = constants.WHAT
-            asked_user_id = message.from_user.id
 
         log(message, answer)
 
