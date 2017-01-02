@@ -43,9 +43,7 @@ def handle_text(message):
     answer = constants.IGNORANCE
     text_message = message.text.lower()
 
-    leave = False
     reaction = False
-
     if message.chat.id != message.from_user.id:
         if ('грач' in text_message or
             'гриша' in text_message or
@@ -53,6 +51,10 @@ def handle_text(message):
             reaction = True
     else:
         reaction = True
+
+    text = False
+    photo = False
+    leave = False
 
     if reaction:
 
@@ -64,7 +66,8 @@ def handle_text(message):
             'хаю хай' in text_message or
             'дратут' in text_message or
             'здаров' in text_message):
-            answer = constants.GREET
+            answer = constants.HI
+            text = True
 
         elif ('все давай' in text_message or
               'всё давай' in text_message or
@@ -76,7 +79,8 @@ def handle_text(message):
                   'покаж' not in text_message) or (
                       'пака' in text_message and
                       'пакаж' not in text_message)):
-            answer = constants.PARTING
+            answer = constants.BYE
+            text = True
 
         if ('умееш' in text_message or
             'можеш' in text_message) and (
@@ -86,6 +90,7 @@ def handle_text(message):
                 'чо' in text_message or
                 'что' in text_message):
             answer = constants.HELP
+            text = True
 
         elif ('хуй' in text_message or
               'член' in text_message) and (
@@ -94,6 +99,7 @@ def handle_text(message):
                   'покажи' in text_message or
                   'скинь' in text_message):
             answer = constants.DICK
+            photo = True
 
         elif ('отсюда' in text_message or
               'отсюдо' in text_message) and (
@@ -101,19 +107,25 @@ def handle_text(message):
                   'на хуй' in text_message or
                   'нахер' in text_message or
                   'на хер' in text_message):
-            answer = constants.PARTING
-
             if message.chat.id != message.from_user.id:
+                answer = constants.BYE
                 leave = True
+            else:
+                answer = constants.NO
+                text = True
 
         if (text_message == 'грач' or
             text_message == 'гриша' or
             text_message == 'григорий'):
             answer = constants.WHAT
+            text = True
 
         log(message, answer)
-        bot.send_message(message.chat.id, answer)
 
+        if photo:
+            bot.send_photo(message.chat.id, answer)
+        if text:
+            bot.send_message(message.chat.id, answer)
         if leave:
             bot.leave_chat(message.chat.id)
 
