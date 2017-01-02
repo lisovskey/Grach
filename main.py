@@ -52,7 +52,7 @@ def handle_text(message):
     else:
         reaction = True
 
-    text = False
+    text = True
     photo = False
     leave = False
 
@@ -67,7 +67,6 @@ def handle_text(message):
             'дратут' in text_message or
             'здаров' in text_message):
             answer = constants.HI
-            text = True
 
         elif ('все давай' in text_message or
               'всё давай' in text_message or
@@ -80,7 +79,6 @@ def handle_text(message):
                       'пака' in text_message and
                       'пакаж' not in text_message)):
             answer = constants.BYE
-            text = True
 
         if ('умееш' in text_message or
             'можеш' in text_message) and (
@@ -90,7 +88,6 @@ def handle_text(message):
                 'чо' in text_message or
                 'что' in text_message):
             answer = constants.HELP
-            text = True
 
         elif ('хуй' in text_message or
               'член' in text_message) and (
@@ -99,6 +96,7 @@ def handle_text(message):
                   'покажи' in text_message or
                   'скинь' in text_message):
             answer = constants.DICK
+            text = False
             photo = True
 
         elif ('отсюда' in text_message or
@@ -112,13 +110,11 @@ def handle_text(message):
                 leave = True
             else:
                 answer = constants.NO
-                text = True
 
         if (text_message == 'грач' or
             text_message == 'гриша' or
             text_message == 'григорий'):
             answer = constants.WHAT
-            text = True
 
         log(message, answer)
 
