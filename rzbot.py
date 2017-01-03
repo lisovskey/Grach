@@ -34,6 +34,7 @@ class RZTeleBot(API.TeleBot):
     def reply(self, received_message, send_what, to_chat_id, answer):
         '''
         посылаем с логом
+        экспериментальная хуйня
         '''
         self.log(received_message, answer)
         send_what(to_chat_id, answer)
