@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
 '''
 работаем
 '''
 import API
+import requests
+from datetime import datetime, date, time, timedelta
+from bs4 import BeautifulStoneSoup as Soup
 
 class RZTeleBot(API.TeleBot):
     '''
@@ -38,3 +42,48 @@ class RZTeleBot(API.TeleBot):
         '''
         self.log(received_message, answer)
         send_what(to_chat_id, answer)
+        
+    def getSchedule(group, d):
+    # schedule takes group and delta days and returns day's schedule
+        sub = ""
+        date = ""
+        tmpDate = datetime.now() + timedelta(days=d)
+        tmpDate = tmpDate.timetuple()
+        date += str(tmpDate[2]) + "." + str(tmpDate[1]) + "." + str(tmpDate[0])
+        wn = requests.get("https://www.bsuir.by/schedule/rest/currentWeek/date/" + date)
+        weekNum = str(wn.content)[2]
+        if tmpDate[6] == 0:
+            weekDay = "Понедельник"
+        elif tmpDate[6] == 1:
+            weekDay = "Вторник"
+        elif tmpDate[6] == 2:
+            weekDay = "Среда"
+        elif tmpDate[6] == 3:
+            weekDay = "Четверг"
+        elif tmpDate[6] == 4:
+            weekDay = "Пятница"
+        elif tmpDate[6] == 5:
+            weekDay = "Суббота"
+        elif tmpDate[6] == 6:
+            weekDay = "Воскресенье"
+        sub += weekDay + "\n"
+        resp = requests.get("https://www.bsuir.by/schedule/rest/schedule/" + group)
+        soup = Soup(resp.content)
+        day = soup.findAll("weekDay", text=weekDay)
+        if not day:
+            return "Занятий нет, иди катать"
+        day = day[0].findParent("scheduleModel")
+        subs = day.findAll("weekNumber", text=weekNum)
+        if not subs:
+            return "Занятий нет, иди катать"
+        for subI in subs:
+            subI = subI.findParent("schedule")
+            sub += subI.lessonTime.text + " " + subI.subject.text + " " + subI.lessonType.text
+            if subI.auditory is not None:
+                sub += " " + subI.auditory.text
+            if subI.numSubgroup.text != "0":
+                sub += " (" + subI.numSubgroup.text + ")"
+            if subI.lastName is not None and subI.numSubgroup.text == "0":
+                sub += " " + subI.lastName.text
+            sub += "\n"
+        return sub
