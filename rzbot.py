@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 '''
 работаем
 '''
 from datetime import datetime, date, time, timedelta
-import API
+import telebot
 import requests
 from bs4 import BeautifulStoneSoup as Soup
 
-class RZTeleBot(API.TeleBot):
+class RZTeleBot(telebot.TeleBot):
     '''
     ну это типа грач
     '''
