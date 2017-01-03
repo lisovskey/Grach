@@ -25,7 +25,7 @@ def handle_shedule(message):
     '''
     чо делать, если шедуле
     '''
-    answer = bot.get_schedule(614302, 1)
+    answer = bot.get_schedule(21833, 1)
     bot.log(message, answer)
     bot.send_message(message.chat.id, answer)
 
