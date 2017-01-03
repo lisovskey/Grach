@@ -29,7 +29,10 @@ def handle_shedule(message):
     '''
     чо делать, если шедуле
     '''
-    answer = bot.get_schedule(data_base["user"][message.from_user.username], 1)
+    try:
+        answer = bot.get_schedule(data_base["user"][message.from_user.username], 1)
+    except KeyError:
+        answer = constants.UNKNOWN_USER
     bot.log(message, answer)
     bot.send_message(message.chat.id, answer)
 
