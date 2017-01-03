@@ -29,7 +29,9 @@ def handle_text(message):
 
     reaction = False
     if message.chat.id != message.from_user.id:
-        if any(constants.NAMES for item in text_message):
+        if ('грач' in text_message or
+            'гриша' in text_message or
+            'григорий' in text_message):
             reaction = True
     else:
         reaction = True
@@ -40,10 +42,26 @@ def handle_text(message):
 
     if reaction:
 
-        if any(constants.TO_HI for item in text_message):
+        if ('прив' in text_message or
+            'привет' in text_message or
+            'здравствуй' in text_message or
+            'хай' in text_message or
+            'хаюх' in text_message or
+            'хаю хай' in text_message or
+            'дратут' in text_message or
+            'здаров' in text_message):
             answer = constants.HI
 
-        elif any(constants.TO_BYE for item in text_message):
+        elif ('все давай' in text_message or
+              'всё давай' in text_message or
+              'датвиданья' in text_message or
+              'до связи' in text_message or
+              'до свидани' in text_message or
+              'досвидан' in text_message or (
+                  'пока' in text_message and
+                  'покаж' not in text_message) or (
+                      'пака' in text_message and
+                      'пакаж' not in text_message)):
             answer = constants.BYE
 
         if ('умееш' in text_message or
@@ -77,7 +95,9 @@ def handle_text(message):
             else:
                 answer = constants.NO
 
-        if text_message in constants.NAMES:
+        if (text_message == 'грач' or
+            text_message == 'гриша' or
+            text_message == 'григорий'):
             answer = constants.WHAT
 
         bot.log(message, answer)
