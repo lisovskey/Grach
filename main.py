@@ -4,9 +4,9 @@
 надо в рзбот перенести все
 '''
 
+import random
 import rzbot
 import constants
-import random
 
 bot = rzbot.RZTeleBot(constants.TOKEN)
 
@@ -70,10 +70,10 @@ def handle_text(message):
 
         bot.log(message, answer)
 
-        if photo:
-            bot.send_photo(message.chat.id, answer)
         if text:
             bot.send_message(message.chat.id, answer)
+        if photo:
+            bot.send_photo(message.chat.id, answer)
         if leave:
             bot.leave_chat(message.chat.id)
 
