@@ -35,7 +35,7 @@ class RZTeleBot(telebot.TeleBot):
         print('Отвечаю: ')
         print(' - {}'.format(answer))
 
-    def reply(self, received_message, send_what, to_chat_id, answer):
+    def response(self, received_message, send_what, to_chat_id, answer):
         '''
         посылаем с логом
         экспериментальная хуйня
@@ -47,13 +47,16 @@ class RZTeleBot(telebot.TeleBot):
         '''
         schedule takes group and delta days and returns day's schedule
         '''
-        sub = ''
+        schedule = ''
+
         date = ''
         tmp_date = datetime.now() + timedelta(days=delta)
         tmp_date = tmp_date.timetuple()
         date += str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
+
         tmp_week = requests.get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
         week_num = str(tmp_week.content)[2]
+
         if tmp_date[6] == 0:
             week_day = 'Понедельник'
         elif tmp_date[6] == 1:
@@ -68,24 +71,30 @@ class RZTeleBot(telebot.TeleBot):
             week_day = 'Суббота'
         elif tmp_date[6] == 6:
             week_day = 'Воскресенье'
-        sub += week_day + '\n'
+        schedule += week_day + '\n'
+
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
         soup = Soup(resp.content)
         day = soup.findAll('weekDay', text=week_day)
         if not day:
             return 'занятий нет, иди катать'
+
         day = day[0].findParent('scheduleModel')
         subs = day.findAll('weekNumber', text=week_num)
         if not subs:
             return 'занятий нет, иди катать'
-        for sub_i in subs:
-            sub_i = sub_i.findParent('schedule')
-            sub += sub_i.lessonTime.text + ' ' + sub_i.subject.text + ' ' + sub_i.lessonType.text
-            if sub_i.auditory is not None:
-                sub += ' ' + sub_i.auditory.text
-            if sub_i.numSubgroup.text != '0':
-                sub += ' (' + sub_i.numSubgroup.text + ')'
-            if sub_i.lastName is not None and sub_i.numSubgroup.text == '0':
-                sub += ' ' + sub_i.lastName.text
-            sub += '\n'
-        return sub
+
+        for subject in subs:
+            subject = subject.findParent('schedule')
+            schedule += (subject.lessonTime.text + ' ' +
+                         subject.subject.text + ' ' +
+                         subject.lessonType.text)
+            if subject.auditory is not None:
+                schedule += ' ' + subject.auditory.text
+            if subject.numSubgroup.text != '0':
+                schedule += ' (' + subject.numSubgroup.text + ')'
+            if subject.lastName is not None and subject.numSubgroup.text == '0':
+                schedule += ' ' + subject.lastName.text
+            schedule += '\n'
+
+        return schedule
