@@ -4,28 +4,10 @@
 надо в класс забомбить
 '''
 
-import API
+import rzbot
 import constants
 
-bot = API.TeleBot(constants.TOKEN)
-print(bot.get_me())
-
-def log(message, answer):
-    '''
-    логируем в консоль
-    '''
-    print('----------------------------------------------------------------')
-    print('{0} {1} (id {2})'.format(message.from_user.first_name,
-                                    message.from_user.last_name,
-                                    message.from_user.id), end='')
-    if message.chat.id != message.from_user.id:
-        print(' in {0} (id {1}): '.format(message.chat.title,
-                                          message.chat.id))
-    else:
-        print(': ')
-    print(' - {}'.format(message.text))
-    print('Отвечаю: ')
-    print(' - {}'.format(answer))
+bot = rzbot.RZTeleBot(constants.TOKEN)
 
 @bot.message_handler(commands=['help'])
 def handle_help(message):
@@ -33,7 +15,7 @@ def handle_help(message):
     чо делать, если халп
     '''
     answer = constants.HELP
-    log(message, answer)
+    bot.log(message, answer)
     bot.send_message(message.chat.id, answer)
 
 
@@ -118,7 +100,7 @@ def handle_text(message):
             text_message == 'григорий'):
             answer = constants.WHAT
 
-        log(message, answer)
+        bot.log(message, answer)
 
         if photo:
             bot.send_photo(message.chat.id, answer)
