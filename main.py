@@ -25,7 +25,14 @@ def handle_shedule(message):
     '''
     чо делать, если шедуле
     '''
-    answer = bot.get_schedule(21833, 1)
+    if message.from_user.username == 'lisovskey':
+        group = 21833
+    elif message.from_user.username == 'hetchback':
+        group = 21830
+    else:
+        answer = constants.UNKNOWN_USER
+
+    answer = bot.get_schedule(group, 1)
     bot.log(message, answer)
     bot.send_message(message.chat.id, answer)
 
