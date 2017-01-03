@@ -69,7 +69,7 @@ class RZTeleBot(telebot.TeleBot):
         elif tmp_date[6] == 6:
             week_day = 'Воскресенье'
         sub += week_day + '\n'
-        resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + group)
+        resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
         soup = Soup(resp.content)
         day = soup.findAll('week_day', text=week_day)
         if not day:
