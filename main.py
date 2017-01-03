@@ -41,10 +41,12 @@ def handle_text(message):
 
     if reaction:
 
-        if any(item in text_message for item in constants.TO_HI):
+        if any(item in text_message for item in constants.TO_HI) and
+           any(item not in text_message for item in constants.NOT_TO_HI)::
             answer = random.choice(constants.HI_LIST)
 
-        elif any(item in text_message for item in constants.TO_BYE):
+        elif any(item in text_message for item in constants.TO_BYE) and
+             any(item not in text_message for item in constants.NOT_TO_BYE):
             answer = random.choice(constants.BYE_LIST)
 
         if (any(item in text_message for item in constants.TO_HELP_1) and
