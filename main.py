@@ -29,7 +29,7 @@ def handle_shedule(message):
     '''
     чо делать, если шедуле
     '''
-    answer = bot.get_schedule(data_base["user"][username], 1)
+    answer = bot.get_schedule(data_base["user"][message.from_user.username], 1)
     bot.log(message, answer)
     bot.send_message(message.chat.id, answer)
 
