@@ -8,6 +8,10 @@
 import random
 import rzbot
 import constants
+import json 
+
+with open('content.json') as json_data:
+    data_base = json.load(json_data)
 
 bot = rzbot.RZTeleBot(constants.TOKEN)
 
@@ -25,7 +29,7 @@ def handle_shedule(message):
     '''
     чо делать, если шедуле
     '''
-    answer = bot.get_schedule(21833, 1)
+    answer = bot.get_schedule(data_base["user"][username], 1)
     bot.log(message, answer)
     bot.send_message(message.chat.id, answer)
 
