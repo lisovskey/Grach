@@ -19,6 +19,14 @@ def handle_help(message):
     bot.log(message, answer)
     bot.send_message(message.chat.id, answer)
 
+@bot.message_handler(commands=['schedule'])
+def handle_shedule(message):
+    '''
+    чо делать, если шедуле
+    '''
+    answer = bot.get_schedule(614302, 1)
+    bot.log(message, answer)
+    bot.send_message(message.chat.id, answer)
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
@@ -41,12 +49,12 @@ def handle_text(message):
 
     if reaction:
 
-        if any(item in text_message for item in constants.TO_HI) and
-           any(item not in text_message for item in constants.NOT_TO_HI)::
+        if (any(item in text_message for item in constants.TO_HI) and
+            any(item not in text_message for item in constants.NOT_TO_HI)):
             answer = random.choice(constants.HI_LIST)
 
-        elif any(item in text_message for item in constants.TO_BYE) and
-             any(item not in text_message for item in constants.NOT_TO_BYE):
+        elif (any(item in text_message for item in constants.TO_BYE) and
+              any(item not in text_message for item in constants.NOT_TO_BYE)):
             answer = random.choice(constants.BYE_LIST)
 
         if (any(item in text_message for item in constants.TO_HELP_1) and
