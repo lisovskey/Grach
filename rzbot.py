@@ -71,21 +71,21 @@ class RZTeleBot(telebot.TeleBot):
         sub += week_day + '\n'
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
         soup = Soup(resp.content)
-        day = soup.findAll('week_day', text=week_day)
+        day = soup.findAll('weekDay', text=week_day)
         if not day:
             return 'занятий нет, иди катать'
         day = day[0].findParent('scheduleModel')
-        subs = day.findAll('week_number', text=week_num)
+        subs = day.findAll('weekNumber', text=week_num)
         if not subs:
             return 'занятий нет, иди катать'
-        for subI in subs:
-            subI = subI.findParent('schedule')
-            sub += subI.lessonTime.text + ' ' + subI.subject.text + ' ' + subI.lessonType.text
-            if subI.auditory is not None:
-                sub += ' ' + subI.auditory.text
-            if subI.numSubgroup.text != '0':
-                sub += ' (' + subI.numSubgroup.text + ')'
-            if subI.lastName is not None and subI.numSubgroup.text == '0':
-                sub += ' ' + subI.lastName.text
+        for sub_i in subs:
+            sub_i = sub_i.findParent('schedule')
+            sub += sub_i.lessonTime.text + ' ' + sub_i.subject.text + ' ' + sub_i.lessonType.text
+            if sub_i.auditory is not None:
+                sub += ' ' + sub_i.auditory.text
+            if sub_i.numSubgroup.text != '0':
+                sub += ' (' + sub_i.numSubgroup.text + ')'
+            if sub_i.lastName is not None and sub_i.numSubgroup.text == '0':
+                sub += ' ' + sub_i.lastName.text
             sub += '\n'
         return sub
