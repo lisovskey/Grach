@@ -48,8 +48,8 @@ class RZTeleBot(telebot.TeleBot):
         schedule takes group and delta days and returns day's schedule
         '''
         schedule = ''
-        date = ''
 
+        date = ''
         tmp_date = datetime.now() + timedelta(days=delta)
         tmp_date = tmp_date.timetuple()
         date += str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
