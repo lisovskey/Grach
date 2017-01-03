@@ -2,7 +2,7 @@
 '''
 работаем
 '''
-from datetime import datetime, date, time, timedelta
+from datetime import datetime, timedelta
 import telebot
 import requests
 from bs4 import BeautifulStoneSoup as Soup
@@ -52,8 +52,8 @@ class RZTeleBot(telebot.TeleBot):
         tmp_date = datetime.now() + timedelta(days=delta)
         tmp_date = tmp_date.timetuple()
         date += str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
-        wn = requests.get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
-        week_num = str(wn.content)[2]
+        tmp_week = requests.get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
+        week_num = str(tmp_week.content)[2]
         if tmp_date[6] == 0:
             week_day = 'Понедельник'
         elif tmp_date[6] == 1:
