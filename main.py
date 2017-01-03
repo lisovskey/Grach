@@ -6,6 +6,7 @@
 
 import rzbot
 import constants
+import random
 
 bot = rzbot.RZTeleBot(constants.TOKEN)
 
@@ -41,44 +42,31 @@ def handle_text(message):
     if reaction:
 
         if any(item in text_message for item in constants.TO_HI):
-            answer = constants.HI
+            answer = random.choice(constants.HI_LIST)
 
         elif any(item in text_message for item in constants.TO_BYE):
-            answer = constants.BYE
+            answer = random.choice(constants.BYE_LIST)
 
-        if ('умееш' in text_message or
-            'можеш' in text_message) and (
-                '?' in text_message or
-                'че' in text_message or
-                'чё' in text_message or
-                'чо' in text_message or
-                'что' in text_message):
+        if (any(item in text_message for item in constants.TO_HELP_1) and
+            any(item in text_message for item in constants.TO_HELP_2)):
             answer = constants.HELP
 
-        elif ('хуй' in text_message or
-              'член' in text_message) and (
-                  'василюк' in text_message or
-                  'денис' in text_message or
-                  'покажи' in text_message or
-                  'скинь' in text_message):
+        elif (any(item in text_message for item in constants.TO_DICK_1) and
+              any(item in text_message for item in constants.TO_DICK_2)):
             answer = constants.DICK
             text = False
             photo = True
 
-        elif ('отсюда' in text_message or
-              'отсюдо' in text_message) and (
-                  'нахуй' in text_message or
-                  'на хуй' in text_message or
-                  'нахер' in text_message or
-                  'на хер' in text_message):
+        elif (any(item in text_message for item in constants.TO_LEAVE_1) and
+              any(item in text_message for item in constants.TO_LEAVE_2)):
             if message.chat.id != message.from_user.id:
-                answer = constants.OKAY
+                answer = random.choice(constants.OKAY_LIST)
                 leave = True
             else:
-                answer = constants.NO
+                answer = random.choice(constants.NO_LIST)
 
         if any(item == text_message for item in constants.NAMES):
-            answer = constants.WHAT
+            answer = random.choice(constants.WHAT_LIST)
 
         bot.log(message, answer)
 
