@@ -6,12 +6,12 @@
 '''
 
 import random
+import json
 import rzbot
 import constants
-import json 
 
 with open('content.json') as json_data:
-    data_base = json.load(json_data)
+    DATABASE = json.load(json_data)
 
 bot = rzbot.RZTeleBot(constants.TOKEN)
 
@@ -30,7 +30,7 @@ def handle_shedule(message):
     чо делать, если шедуле
     '''
     try:
-        answer = bot.get_schedule(data_base["user"][message.from_user.username], 1)
+        answer = bot.get_schedule(DATABASE["user"][message.from_user.username], 1)
     except KeyError:
         answer = constants.UNKNOWN_USER
     bot.log(message, answer)
