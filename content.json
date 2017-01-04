@@ -1,15 +1,43 @@
 {
-    "user": {       
-            "lisovskey": "21833",
-            "Hetchback": "21830"
-    },
+    "users": [
+       
+            {
+                "name": "lisovskey",
+                "id": "21833",
+                "group": "614302"
+            },
+            {
+                "name": "hetchback",
+                "id": "21830",
+                "group": "610901"
+            }
 
-    "command": {
-        "help": "помощь",
-        "schedule": "расписание"
-    },
+    ],
+
+    "commands": [
+        {
+            "title": "help", 
+            "text": "помощь",
+            "output": "могу расписание твое показать"
+            },
+        
+        {
+            "title": "schedule",
+            "text": "расписание",
+            "parameters": [
+                    "сегодня", "завтра"
+                ],
+            "answer": "bot.send_message(message.chat.id, 'hui01')"
+            },
+        
+        {
+            "title": "shutdown",
+            "text": "уходи"
+            }
+    ],
 
     "config": {
         "token": "280995361:AAFPietXTGxRttwiE8GIn4xVRGBW6VJmXVk"
     }
 }
+
