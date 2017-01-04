@@ -53,7 +53,6 @@ class RZTeleBot(telebot.TeleBot):
 
         date = ''
         tmp_date = datetime.today() + timedelta(days=delta, hours=3)
-        print(tmp_date.time())
         tmp_date = tmp_date.timetuple()
         date += str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
 
