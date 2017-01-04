@@ -17,21 +17,21 @@
             "title": "help", 
             "text": "помощь",
             "output": "могу расписание твое показать"
-            },
+        },
         
         {
             "title": "schedule",
             "text": "расписание",
             "parameters": [
                     "сегодня", "завтра"
-                ],
+            ],
             "answer": "bot.send_message(message.chat.id, 'hui01')"
-            },
+        },
         
         {
             "title": "shutdown",
             "text": "уходи"
-            }
+        }
     ],
 
     "config": {

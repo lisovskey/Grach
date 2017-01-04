@@ -73,7 +73,7 @@ def handle_text(message):
         elif (any(item in text_message for item in phrases.TO_BYE) and not
               any(item in text_message for item in phrases.NOT_TO_BYE)):
             answer = random.choice(phrases.BYE_LIST)
-        
+
         if (any(item in text_message for item in phrases.TO_SCHEDULE_1) and
             any(item in text_message for item in phrases.TO_SCHEDULE_2) and not
             any(item in text_message for item in phrases.NOT_TO_SCHEDULE)):
