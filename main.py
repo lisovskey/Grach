@@ -31,7 +31,9 @@ def handle_shedule(message):
     чо делать, если шедуле
     '''
     try:
-        answer = bot.get_schedule(DATABASE['user'][message.from_user.username], 1)
+         for user in DATABASE['users']:
+            if user['name'] == message.from_user.username: 
+                answer = user['group'] + ' ' +  bot.get_schedule(user['id'], 1)
     except KeyError:
         answer = phrases.UNKNOWN_USER
     bot.log(message, answer)
