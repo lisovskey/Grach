@@ -34,7 +34,7 @@ def handle_shedule(message):
     answer = ''
     try:
         for user in DATABASE['users']:
-            if user['name'] == message.from_user.username: 
+            if user['name'] == message.from_user.username:
                 answer = user['group'] + ' ' +  bot.get_schedule(user['id'], 1)
     except KeyError:
         answer = phrases.UNKNOWN_USER
@@ -48,7 +48,11 @@ def handle_text(message):
     '''
     answer = phrases.IGNORANCE
     text_message = message.text.lower()
-
+    '''
+    for command in DATABASE['commands']:
+        if command['text'] in text_message:
+            exec(command['answer'])
+    '''
     reaction = False
     if message.chat.id != message.from_user.id:
         if any(item in text_message for item in phrases.NAMES):
@@ -103,7 +107,6 @@ def handle_text(message):
             bot.send_photo(message.chat.id, answer)
         if leave:
             bot.leave_chat(message.chat.id)
-            
 
 if __name__ == '__main__':
     bot.polling(none_stop=True, interval=0)

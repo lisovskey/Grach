@@ -59,7 +59,6 @@ class RZTeleBot(telebot.TeleBot):
         tmp_week = requests.get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
         week_num = str(tmp_week.content)[2]
         pretext = 'в'
-        
         if tmp_date[6] == 0:
             week_day = 'Понедельник'
         elif tmp_date[6] == 1:
@@ -99,8 +98,7 @@ class RZTeleBot(telebot.TeleBot):
                 schedule += ' (' + subject.numSubgroup.text + ')'
             if subject.lastName is not None and subject.numSubgroup.text == '0':
                 schedule += ' ' + subject.lastName.text
-            schedule += '\n \n'
+            schedule += '\n\n'
 
         return schedule
-        
    
