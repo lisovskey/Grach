@@ -2,12 +2,7 @@
 '''
 капсом пишем жопай
 '''
-TOKEN = '280995361:AAFPietXTGxRttwiE8GIn4xVRGBW6VJmXVk'
-
-# Files
-DICK = 'AgADAgADsqcxG619BApGPqqhwbre04fUgQ0ABEEa0kzVKn3I0OADAAEC'
-
-# Recieved phrases
+# Recieved
 NAMES = ['гриша', 'грач', 'григорий']
 
 TO_HI = ['прив', 'привет', 'здравствуй', 'хай', 'хаюх',

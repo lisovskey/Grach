@@ -1,12 +1,15 @@
 {
-    "user": {
-       
+    "user": {       
             "lisovskey": "21833",
             "Hetchback": "21830"
-
     },
 
     "command": {
+        "help": "помощь",
         "schedule": "расписание"
+    },
+
+    "config": {
+        "token": "280995361:AAFPietXTGxRttwiE8GIn4xVRGBW6VJmXVk"
     }
 }

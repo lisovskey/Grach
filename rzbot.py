@@ -35,7 +35,7 @@ class RZTeleBot(telebot.TeleBot):
         print('Отвечаю: ')
         print(' - {}'.format(answer))
 
-    def response(self, received_message, send_what, to_chat_id, answer):
+    def reply(self, received_message, send_what, to_chat_id, answer):
         '''
         посылаем с логом
         экспериментальная хуйня
