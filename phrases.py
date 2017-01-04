@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
 '''
 капсом пишем жопай
 '''
+
 # Recieved
 NAMES = ['гриша', 'грач', 'григорий']
 
@@ -27,12 +29,8 @@ TO_SCHEDULE_1 = []
 TO_SCHEDULE_2 = []
 NOT_TO_SCHEDULE = []
 
-TODAY = []
-TOMORROW = []
-AFTER_TOMORROW = []
-
 # Replies
-HELP = 'могу василюка хуй показать'
+HELP = 'могу расписание твое показать'
 IGNORANCE = 'не понял щас'
 UNKNOWN_USER = 'я тебя не знаю дядя'
 

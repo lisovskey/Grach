@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 '''
 умеет мало
 работаем дальше
@@ -30,8 +31,11 @@ def handle_shedule(message):
     '''
     чо делать, если шедуле
     '''
+    answer = ''
     try:
-        answer = bot.get_schedule(DATABASE['user'][message.from_user.username], 1)
+        for user in DATABASE['users']:
+            if user['name'] == message.from_user.username: 
+                answer = user['group'] + ' ' +  bot.get_schedule(user['id'], 1)
     except KeyError:
         answer = phrases.UNKNOWN_USER
     bot.log(message, answer)
@@ -58,16 +62,20 @@ def handle_text(message):
 
     if reaction:
 
-        if (any(item in text_message for item in phrases.TO_HI) and
-            any(item not in text_message for item in phrases.NOT_TO_HI)):
+        if (any(item in text_message for item in phrases.TO_HI) and not
+            any(item in text_message for item in phrases.NOT_TO_HI)):
             answer = random.choice(phrases.HI_LIST)
 
-        elif (any(item in text_message for item in phrases.TO_BYE) and
-              any(item not in text_message for item in phrases.NOT_TO_BYE)):
+        elif (any(item in text_message for item in phrases.TO_BYE) and not
+              any(item in text_message for item in phrases.NOT_TO_BYE)):
             answer = random.choice(phrases.BYE_LIST)
-
-        if (any(item in text_message for item in phrases.TO_HELP_1) and
-            any(item in text_message for item in phrases.TO_HELP_2)):
+        
+        if (any(item in text_message for item in phrases.TO_SCHEDULE_1) and
+            any(item in text_message for item in phrases.TO_SCHEDULE_2) and not
+            any(item in text_message for item in phrases.NOT_TO_SCHEDULE)):
+            answer = phrases.UNKNOWN_USER
+        elif (any(item in text_message for item in phrases.TO_HELP_1) and
+              any(item in text_message for item in phrases.TO_HELP_2)):
             answer = phrases.HELP
 
         elif (any(item in text_message for item in phrases.TO_DICK_1) and
@@ -95,6 +103,7 @@ def handle_text(message):
             bot.send_photo(message.chat.id, answer)
         if leave:
             bot.leave_chat(message.chat.id)
+            
 
 if __name__ == '__main__':
     bot.polling(none_stop=True, interval=0)

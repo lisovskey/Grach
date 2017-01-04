@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
 '''
 работаем
 '''
+
 from datetime import datetime, timedelta
 import telebot
 import requests
@@ -56,11 +58,13 @@ class RZTeleBot(telebot.TeleBot):
 
         tmp_week = requests.get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
         week_num = str(tmp_week.content)[2]
-
+        pretext = 'в'
+        
         if tmp_date[6] == 0:
             week_day = 'Понедельник'
         elif tmp_date[6] == 1:
             week_day = 'Вторник'
+            pretext = 'во'
         elif tmp_date[6] == 2:
             week_day = 'Среда'
         elif tmp_date[6] == 3:
@@ -71,7 +75,7 @@ class RZTeleBot(telebot.TeleBot):
             week_day = 'Суббота'
         elif tmp_date[6] == 6:
             week_day = 'Воскресенье'
-        schedule += week_day + '\n'
+        schedule += pretext + ' ' + week_day + ':\n \n'
 
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
         soup = Soup(resp.content)
@@ -87,14 +91,16 @@ class RZTeleBot(telebot.TeleBot):
         for subject in subs:
             subject = subject.findParent('schedule')
             schedule += (subject.lessonTime.text + ' ' +
-                         subject.subject.text + ' ' +
-                         subject.lessonType.text)
+                         subject.subject.text + ' (' +
+                         subject.lessonType.text + ')')
             if subject.auditory is not None:
                 schedule += ' ' + subject.auditory.text
             if subject.numSubgroup.text != '0':
                 schedule += ' (' + subject.numSubgroup.text + ')'
             if subject.lastName is not None and subject.numSubgroup.text == '0':
                 schedule += ' ' + subject.lastName.text
-            schedule += '\n'
+            schedule += '\n \n'
 
         return schedule
+        
+   
