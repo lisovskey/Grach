@@ -9,6 +9,7 @@ import telebot
 import requests
 from bs4 import BeautifulStoneSoup as Soup
 
+
 class RZTeleBot(telebot.TeleBot):
     '''
     ну это типа грач
