@@ -4,7 +4,7 @@
 работаем
 '''
 
-from datetime import datetime, timedelta
+from datetime import datetime, date, time, timedelta
 import telebot
 import requests
 from bs4 import BeautifulStoneSoup as Soup
@@ -52,7 +52,8 @@ class RZTeleBot(telebot.TeleBot):
         schedule = ''
 
         date = ''
-        tmp_date = datetime.now() + timedelta(days=delta)
+        tmp_date = datetime.today() + timedelta(days=delta, hours=3)
+        print(tmp_date.time())
         tmp_date = tmp_date.timetuple()
         date += str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
 
