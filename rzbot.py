@@ -95,6 +95,6 @@ class RZTeleBot(telebot.TeleBot):
                 schedule += ' (' + subject.numSubgroup.text + ')'
             if subject.lastName is not None and subject.numSubgroup.text == '0':
                 schedule += ' ' + subject.lastName.text
-            schedule += '\n'
+            schedule += '\n\n'
 
         return schedule
