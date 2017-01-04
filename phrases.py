@@ -23,6 +23,14 @@ TO_DICK_2 = ['василюк', 'денис', 'скинь', 'покажи', 'по
 TO_LEAVE_1 = ['отсюда', 'отсюдо']
 TO_LEAVE_2 = ['нахуй', 'на хуй', 'нахер', 'на хер', 'вон', 'пиздуй', 'пошел', 'пошёл']
 
+TO_SCHEDULE_1 = []
+TO_SCHEDULE_2 = []
+NOT_TO_SCHEDULE = []
+
+TODAY = []
+TOMORROW = []
+AFTER_TOMORROW = []
+
 # Replies
 HELP = 'могу василюка хуй показать'
 IGNORANCE = 'не понял щас'
