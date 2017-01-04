@@ -44,8 +44,11 @@ def handle_text(message):
     '''
     answer = phrases.IGNORANCE
     text_message = message.text.lower()
-
-    reaction = False
+    for command in DATABASE['commands']:
+        if command['text'] in text_message:
+            exec(command['answer'])
+            
+    '''reaction = False
     if message.chat.id != message.from_user.id:
         if any(item in text_message for item in phrases.NAMES):
             reaction = True
@@ -95,6 +98,7 @@ def handle_text(message):
             bot.send_photo(message.chat.id, answer)
         if leave:
             bot.leave_chat(message.chat.id)
+        '''
 
 if __name__ == '__main__':
     bot.polling(none_stop=True, interval=0)
