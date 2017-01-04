@@ -17,22 +17,26 @@
     "commands": [
         {
             "title": "help", 
-            "text": "помощь",
-            "output": "могу расписание твое показать"
+            "text": [
+                {"part1": ["умееш", "можеш"]}, 
+                {"part2": ["че", "чё", "что", "чо", "?"]}
+                ],
+            "answer": "bot.send_message(message.chat.id, 'могу расписание твое показать')"
             },
         
         {
             "title": "schedule",
-            "text": "расписание",
+            "text": ["расписание"],
             "parameters": [
                     "сегодня", "завтра"
                 ],
-            "answer": "bot.send_message(message.chat.id, 'hui01')"
+            "answer": "handle_shedule(message)"
             },
         
         {
             "title": "shutdown",
-            "text": "уходи"
+            "text": ["уходи"],
+            "answer": "bot.send_message(message.chat.id, 'ладно')"
             }
     ],
 

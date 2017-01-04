@@ -17,6 +17,7 @@ with open('content.json') as json_data:
 
 bot = rzbot.RZTeleBot(DATABASE['config']['token'])
 
+
 @bot.message_handler(commands=['help'])
 def handle_help(message):
     '''
@@ -25,6 +26,7 @@ def handle_help(message):
     answer = phrases.HELP
     bot.log(message, answer)
     bot.send_message(message.chat.id, answer)
+
 
 @bot.message_handler(commands=['schedule'])
 def handle_shedule(message):
@@ -41,6 +43,7 @@ def handle_shedule(message):
     bot.log(message, answer)
     bot.send_message(message.chat.id, answer)
 
+
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
     '''
@@ -48,10 +51,19 @@ def handle_text(message):
     '''
     answer = phrases.IGNORANCE
     text_message = message.text.lower()
-    '''
+
     for command in DATABASE['commands']:
-        if command['text'] in text_message:
-            exec(command['answer'])
+        if type(command['text']) is list:
+            for text in command['text']:
+                if text in text_message:
+                    exec(command['answer'])
+        else:
+            if command['text'] in text_message:
+                exec(command['answer'])
+
+
+def find_text(text_list):
+    if type(text_list) is list
     '''
     reaction = False
     if message.chat.id != message.from_user.id:
@@ -73,7 +85,7 @@ def handle_text(message):
         elif (any(item in text_message for item in phrases.TO_BYE) and not
               any(item in text_message for item in phrases.NOT_TO_BYE)):
             answer = random.choice(phrases.BYE_LIST)
-        
+
         if (any(item in text_message for item in phrases.TO_SCHEDULE_1) and
             any(item in text_message for item in phrases.TO_SCHEDULE_2) and not
             any(item in text_message for item in phrases.NOT_TO_SCHEDULE)):
@@ -107,6 +119,6 @@ def handle_text(message):
             bot.send_photo(message.chat.id, answer)
         if leave:
             bot.leave_chat(message.chat.id)
-
+            '''
 if __name__ == '__main__':
     bot.polling(none_stop=True, interval=0)
