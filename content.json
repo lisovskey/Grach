@@ -1,6 +1,5 @@
 {
     "users": [
-       
             {
                 "name": "lisovskey",
                 "id": "21833",
@@ -11,7 +10,6 @@
                 "id": "21830",
                 "group": "610901"
             }
-
     ],
 
     "commands": [
