@@ -36,7 +36,9 @@
         
         {
             "title": "shutdown",
-            "text": [],
+            "text": [
+                {"part": ["авадакедавра"]}
+            ],
             "output": ["ладно"],
             "answer": "bot.send_message(message.chat.id, random.choice(command['output']))"
         },
