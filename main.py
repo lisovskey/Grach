@@ -52,19 +52,6 @@ def handle_text(message):
     answer = phrases.IGNORANCE
     text_message = message.text.lower()
 
-    for command in DATABASE['commands']:
-        if type(command['text']) is list:
-            for text in command['text']:
-                if text in text_message:
-                    exec(command['answer'])
-        else:
-            if command['text'] in text_message:
-                exec(command['answer'])
-
-
-def find_text(text_list):
-    if type(text_list) is list
-    '''
     reaction = False
     if message.chat.id != message.from_user.id:
         if any(item in text_message for item in phrases.NAMES):
@@ -119,6 +106,6 @@ def find_text(text_list):
             bot.send_photo(message.chat.id, answer)
         if leave:
             bot.leave_chat(message.chat.id)
-            '''
+            
 if __name__ == '__main__':
     bot.polling(none_stop=True, interval=0)
