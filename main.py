@@ -6,6 +6,7 @@
 надо в рзбот перенести все
 '''
 
+import sys
 import random
 import json
 import rzbot
@@ -25,7 +26,7 @@ def handle_shutdown(message):
     try:
         for user in DATABASE['users']:
             if user['name'] == message.from_user.username:
-                exit(0)
+                sys.exit(0)
     except KeyError:
         answer = phrases.UNKNOWN_USER
         bot.log_message(message, answer)
