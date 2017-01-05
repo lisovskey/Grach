@@ -70,8 +70,43 @@ def handle_text(message):
     '''
     answer = phrases.IGNORANCE
     text_message = message.text.lower()
+    text_message = text_message.replace('ё', 'е') + ' '
+    parts = 0
+    word = None
+    no_commands = True
+    need_name = True
 
-    reaction = False
+    if message.chat.id != message.from_user.id:
+        if any(name in text_message for name in DATABASE['config']['bot_names']):
+            need_name = False
+    else:
+        need_name = False
+
+    for command in DATABASE['commands']:
+        for text in command['text']:
+            for word in text['part']:
+                if word in text_message:
+                    right = True
+                    i = text_message.find(word)
+                    length = text_message.find(' ', i)
+                    for exception in command['exceptions']:
+                        print(exception)
+                        print(text_message[i:length])
+                        if exception in text_message[i: length]:
+                            right = False
+                            break
+                    if right:
+                        parts += 1
+                        break
+        if not need_name:
+            if parts == command['parts']:
+                no_commands = False
+                exec(command['method'])
+        parts = 0
+    if no_commands and not need_name:
+        bot.reply(message, bot.send_message, message.chat.id, 
+                  random.choice(DATABASE['config']['bot_call_answer']))
+    '''reaction = False
     if message.chat.id != message.from_user.id:
         if any(item in text_message for item in phrases.NAMES):
             reaction = True
@@ -122,7 +157,7 @@ def handle_text(message):
         if photo:
             bot.reply(message, bot.send_photo, message.chat.id, answer)
         if leave:
-            bot.leave_chat(message.chat.id)
+            bot.leave_chat(message.chat.id)'''
 
 if __name__ == '__main__':
     bot.polling(none_stop=True, interval=0)
