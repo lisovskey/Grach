@@ -21,7 +21,7 @@ class RZTeleBot(telebot.TeleBot):
         super().__init__(token)
         print(self.get_me())
 
-    def log(self, received_message, answer):
+    def log_message(self, received_message, answer):
         '''
         логируем в консоль
         '''
@@ -43,7 +43,7 @@ class RZTeleBot(telebot.TeleBot):
         посылаем с логом
         экспериментальная хуйня
         '''
-        self.log(received_message, answer)
+        self.log_message(received_message, answer)
         send_what(to_chat_id, answer)
 
     def get_schedule(self, group, delta):
@@ -88,12 +88,12 @@ class RZTeleBot(telebot.TeleBot):
         soup = Soup(resp.content)
         day = soup.findAll('weekDay', text=week_day)
         if not day:
-            return 'занятий нет, иди катать'
+            return 'нет у тебя пар'
 
         day = day[0].findParent('scheduleModel')
         subs = day.findAll('weekNumber', text=week_num)
         if not subs:
-            return 'занятий нет, иди катать'
+            return 'нет у тебя пар'
 
         for subject in subs:
             subject = subject.findParent('schedule')

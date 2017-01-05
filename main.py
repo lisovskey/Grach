@@ -98,7 +98,7 @@ def handle_text(message):
         if any(item == text_message for item in phrases.NAMES):
             answer = random.choice(phrases.WHAT_LIST)
 
-        bot.log(message, answer)
+        bot.log_message(message, answer)
 
         if text:
             bot.send_message(message.chat.id, answer)
