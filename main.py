@@ -16,7 +16,7 @@ import files
 with open('content.json') as json_data:
     DATABASE = json.load(json_data)
 
-bot = rzbot.RZTeleBot(DATABASE['config']['token'])
+bot = rzbot.RZTeleBot(DATABASE['config']['bot_token'])
 
 @bot.message_handler(commands=['shutdown'])
 def handle_shutdown(message):
