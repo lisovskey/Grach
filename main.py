@@ -6,7 +6,7 @@
 надо в рзбот перенести все
 '''
 
-from contextlib import redirect_stderr
+import contextlib
 import sys
 import random
 import json
@@ -17,7 +17,7 @@ import files
 with open('content.json') as json_data:
     DATABASE = json.load(json_data)
 
-with open('errors.log', 'w') as stderr, redirect_stderr(stderr):
+with open('errors.log', 'w') as stderr, contextlib.redirect_stderr(stderr):
     bot = rzbot.RZTeleBot(DATABASE['config']['token'])
 
     @bot.message_handler(commands=['shutdown'])
