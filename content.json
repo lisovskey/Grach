@@ -20,8 +20,8 @@
                 {"part": ["умееш", "можеш"]}, 
                 {"part": ["че", "чё", "что", "чо", "?"]}
             ],
-            "output": ["могу расписание твое показать"],
-            "answer": "bot.send_message(message.chat.id, '')"
+            "answer": ["могу расписание твое показать"],
+            "method": "bot.send_message(message.chat.id, '')"
         },
         
         {
@@ -30,8 +30,8 @@
                 {"part":["какое", "какие"]},
                 {"part":["расписание", "пары"]}
             ],
-            "output": ["на"],
-            "answer": "handle_schedule(message)"
+            "answer": ["на"],
+            "method": "handle_schedule(message)"
         },
         
         {
@@ -39,8 +39,8 @@
             "text": [
                 {"part": ["авадакедавра"]}
             ],
-            "output": ["ладно"],
-            "answer": "bot.send_message(message.chat.id, random.choice(command['output']))"
+            "answer": ["ладно"],
+            "method": "bot.send_message(message.chat.id, random.choice(command['output']))"
         },
 
         {
@@ -49,8 +49,8 @@
                 {"part": ["прив", "привет", "здравствуй", "хай", "хаюх",
                           "дратут", "здаров", "добрый день", "добрый вечер", "вечероче"]}
             ],
-            "output": ["привет", "здрасте", "приветик", "у аппарата", "да да", "ало"],
-            "answer": "bot.send_message(message.chat.id, random.choice(command['output']))"
+            "answer": ["привет", "здрасте", "приветик", "у аппарата", "да да", "ало"],
+            "method": "bot.send_message(message.chat.id, random.choice(command['output']))"
         },
 
         {
@@ -59,8 +59,8 @@
                 {"part": ["все давай", "всё давай", "датвиданья", "до связи",
                           "до свидани", "досвидан", "пока", "пака", "ой ночи"]}
             ],
-            "output": ["пока", "пака", "давай"],
-            "answer": "bot.send_message(message.chat.id, random.choice(command['output']))"
+            "answer": ["пока", "пака", "давай"],
+            "method": "bot.send_message(message.chat.id, random.choice(command['output']))"
         },
 
         {
@@ -70,8 +70,8 @@
                           "пошел", "пошёл", "уебыва", "уёбыва", "уходи", "ливай"]},
                 {"part": ["отсюда", "отсюдо"]}
             ],
-            "output": ["ладно"],
-            "answer": "bot.send_message(message.chat.id, random.choice(command['output']))"
+            "answer": ["ладно"],
+            "method": "bot.send_message(message.chat.id, random.choice(command['output']))"
         }
     ],
 
