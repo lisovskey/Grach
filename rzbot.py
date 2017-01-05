@@ -4,10 +4,11 @@
 работаем
 '''
 
-from datetime import datetime, timedelta
+from datetime import datetime, date, time, timedelta
 import telebot
 import requests
 from bs4 import BeautifulStoneSoup as Soup
+
 
 class RZTeleBot(telebot.TeleBot):
     '''
@@ -52,7 +53,7 @@ class RZTeleBot(telebot.TeleBot):
         schedule = ''
 
         date = ''
-        tmp_date = datetime.now() + timedelta(days=delta)
+        tmp_date = datetime.today() + timedelta(days=delta, hours=3)
         tmp_date = tmp_date.timetuple()
         date += str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
 
@@ -61,20 +62,27 @@ class RZTeleBot(telebot.TeleBot):
         pretext = 'в'
         if tmp_date[6] == 0:
             week_day = 'Понедельник'
+            tmp_week = 'понедельник'
         elif tmp_date[6] == 1:
             week_day = 'Вторник'
             pretext = 'во'
+            tmp_week = 'вторник'
         elif tmp_date[6] == 2:
             week_day = 'Среда'
+            tmp_week = 'среду'
         elif tmp_date[6] == 3:
             week_day = 'Четверг'
+            tmp_week = 'четверг'
         elif tmp_date[6] == 4:
             week_day = 'Пятница'
+            tmp_week = 'пятницу'
         elif tmp_date[6] == 5:
             week_day = 'Суббота'
+            tmp_week = 'субботу'
         elif tmp_date[6] == 6:
             week_day = 'Воскресенье'
-        schedule += pretext + ' ' + week_day + ':\n \n'
+            tmp_week = 'воскресенье'
+        schedule += pretext + ' ' + tmp_week + ':\n \n'
 
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
         soup = Soup(resp.content)
