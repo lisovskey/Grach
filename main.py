@@ -33,9 +33,8 @@ def handle_shutdown(message):
     except KeyError:
         answer = phrases.UNKNOWN_USER
 
-    bot.log_message(message, answer)
-    bot.send_message(message.chat.id, answer)
-    
+    bot.reply(message, bot.send_message, message.chat.id, answer)
+
     if shutdown:
         sys.exit(0)
 
@@ -46,8 +45,7 @@ def handle_help(message):
     чо делать, если халп
     '''
     answer = phrases.HELP
-    bot.log_message(message, answer)
-    bot.send_message(message.chat.id, answer)
+    bot.reply(message, bot.send_message, message.chat.id, answer)
 
 
 @bot.message_handler(commands=['schedule'])
@@ -62,8 +60,7 @@ def handle_schedule(message):
                 answer = user['group'] + ' ' +  bot.get_schedule(user['id'], 1)
     except KeyError:
         answer = phrases.UNKNOWN_USER
-    bot.log_message(message, answer)
-    bot.send_message(message.chat.id, answer)
+    bot.reply(message, bot.send_message, message.chat.id, answer)
 
 
 @bot.message_handler(content_types=['text'])
@@ -120,12 +117,10 @@ def handle_text(message):
         if any(item == text_message for item in phrases.NAMES):
             answer = random.choice(phrases.WHAT_LIST)
 
-        bot.log_message(message, answer)
-
         if text:
-            bot.send_message(message.chat.id, answer)
+            bot.reply(message, bot.send_message, message.chat.id, answer)
         if photo:
-            bot.send_photo(message.chat.id, answer)
+            bot.reply(message, bot.send_photo, message.chat.id, answer)
         if leave:
             bot.leave_chat(message.chat.id)
 
