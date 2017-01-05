@@ -90,8 +90,6 @@ def handle_text(message):
                     i = text_message.find(word)
                     length = text_message.find(' ', i)
                     for exception in command['exceptions']:
-                        print(exception)
-                        print(text_message[i:length])
                         if exception in text_message[i: length]:
                             right = False
                             break
