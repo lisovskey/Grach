@@ -4,7 +4,7 @@
 работаем
 '''
 
-from datetime import datetime, date, time, timedelta
+from datetime import datetime, timedelta
 import telebot
 import requests
 from bs4 import BeautifulStoneSoup as Soup
