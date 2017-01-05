@@ -24,6 +24,7 @@ def handle_shutdown(message):
     чо делать, если шатдаун
     '''
     shutdown = False
+
     try:
         for user in DATABASE['users']:
             if user['name'] == message.from_user.username:
@@ -34,6 +35,7 @@ def handle_shutdown(message):
 
     bot.log_message(message, answer)
     bot.send_message(message.chat.id, answer)
+
     if shutdown:
         sys.exit(0)
 
