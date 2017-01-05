@@ -23,14 +23,19 @@ def handle_shutdown(message):
     '''
     чо делать, если шатдаун
     '''
+    shutdown = False
     try:
         for user in DATABASE['users']:
             if user['name'] == message.from_user.username:
-                sys.exit(0)
+                answer = random.choice(phrases.OKAY_LIST)
+                shutdown = True
     except KeyError:
         answer = phrases.UNKNOWN_USER
-        bot.log_message(message, answer)
-        bot.send_message(message.chat.id, answer)
+
+    bot.log_message(message, answer)
+    bot.send_message(message.chat.id, answer)
+    if shutdown:
+        sys.exit(0)
 
 
 @bot.message_handler(commands=['help'])
