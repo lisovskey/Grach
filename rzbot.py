@@ -109,4 +109,3 @@ class RZTeleBot(telebot.TeleBot):
             schedule += '\n\n'
 
         return schedule
-   

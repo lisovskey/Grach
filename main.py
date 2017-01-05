@@ -17,6 +17,11 @@ with open('content.json') as json_data:
 
 bot = rzbot.RZTeleBot(DATABASE['config']['token'])
 
+def shutdown():
+    '''
+    как
+    '''
+    pass
 
 @bot.message_handler(commands=['help'])
 def handle_help(message):
@@ -24,7 +29,7 @@ def handle_help(message):
     чо делать, если халп
     '''
     answer = phrases.HELP
-    bot.log(message, answer)
+    bot.log_message(message, answer)
     bot.send_message(message.chat.id, answer)
 
 
@@ -40,7 +45,7 @@ def handle_schedule(message):
                 answer = user['group'] + ' ' +  bot.get_schedule(user['id'], 1)
     except KeyError:
         answer = phrases.UNKNOWN_USER
-    bot.log(message, answer)
+    bot.log_message(message, answer)
     bot.send_message(message.chat.id, answer)
 
 
@@ -106,6 +111,6 @@ def handle_text(message):
             bot.send_photo(message.chat.id, answer)
         if leave:
             bot.leave_chat(message.chat.id)
-            
+
 if __name__ == '__main__':
     bot.polling(none_stop=True, interval=0)
