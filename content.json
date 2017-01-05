@@ -36,11 +36,7 @@
         
         {
             "title": "shutdown",
-            "text": [
-                {"part": ["нахуй", "на хуй", "нахер", "на хер", "вон", "пиздуй",
-                          "пошел", "пошёл", "уебыва", "уёбыва", "уходи", "ливай"]},
-                {"part": ["отсюда", "отсюдо"]}
-            ],
+            "text": [],
             "output": ["ладно"],
             "answer": "bot.send_message(message.chat.id, random.choice(command['output']))"
         },
@@ -62,6 +58,17 @@
                           "до свидани", "досвидан", "пока", "пака", "ой ночи"]}
             ],
             "output": ["пока", "пака", "давай"],
+            "answer": "bot.send_message(message.chat.id, random.choice(command['output']))"
+        },
+
+        {
+            "title": "leave",
+            "text": [
+                {"part": ["нахуй", "на хуй", "нахер", "на хер", "вон", "пиздуй",
+                          "пошел", "пошёл", "уебыва", "уёбыва", "уходи", "ливай"]},
+                {"part": ["отсюда", "отсюдо"]}
+            ],
+            "output": ["ладно"],
             "answer": "bot.send_message(message.chat.id, random.choice(command['output']))"
         }
     ],
