@@ -27,7 +27,7 @@ def handle_help(message):
     bot.send_message(message.chat.id, answer)
 
 @bot.message_handler(commands=['schedule'])
-def handle_shedule(message):
+def handle_schedule(message):
     '''
     чо делать, если шедуле
     '''
