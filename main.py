@@ -70,18 +70,30 @@ def handle_text(message):
     '''
     чо делать, если текст
     '''
-    answer = DATABASE['congig']['bot_ignorance']
+    answer = DATABASE['config']['bot_ignorance']
     text_message = message.text.lower()
     text_message = text_message.replace('ё', 'е') + ' '
     no_commands = True
     need_name = True
     parts = 0
 
-    if message.chat.id != message.from_user.id:
-        if any(name in text_message for name in DATABASE['config']['bot_names']):
-            need_name = False
-    else:
+    if message.chat.id == message.from_user.id:
         need_name = False
+    else:
+        if any(name in text_message for name in DATABASE['config']['bot_names']):
+            bot.interlocutor_id = message.from_user.id
+            need_name = False
+        elif bot.interlocutor_id == message.from_user.id:
+            need_name = False
+        elif (bot.interlocutor_id != message.from_user.id) and any(name in text_message for name in DATABASE['config']['bot_names']):
+            bot.interlocutor_id = message.from_user.id
+            need_name = False
+        else:
+            bot.interlocutor_id = 0
+            need_name = True
+        '''message.from_user.id == bot.interlocutor_id:
+            bot.interlocutor_id = 0
+            need_name = False'''
 
     for command in DATABASE['commands']:
         for text in command['text']:
@@ -101,6 +113,7 @@ def handle_text(message):
             if parts == command['parts']:
                 no_commands = False
                 exec(command['method'])
+                break
         parts = 0
 
     if no_commands and not need_name:

@@ -14,11 +14,13 @@ class RZTeleBot(telebot.TeleBot):
     '''
     ну это типа грач
     '''
+    interlocutor_id = int
     def __init__(self, token):
         '''
         создаем грача
         '''
         super().__init__(token)
+        self.interlocutor_id = 0
         print(self.get_me())
 
     def log_message(self, received_message, answer):
@@ -41,7 +43,6 @@ class RZTeleBot(telebot.TeleBot):
     def reply(self, received_message, send_what, answer):
         '''
         посылаем с логом
-        экспериментальная хуйня
         '''
         self.log_message(received_message, answer)
         send_what(received_message.chat.id, answer)
@@ -109,3 +110,7 @@ class RZTeleBot(telebot.TeleBot):
             schedule += '\n\n'
 
         return schedule
+    
+    
+    def calculate(self, message):
+        text = message
