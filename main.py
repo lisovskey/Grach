@@ -70,54 +70,46 @@ def handle_text(message):
     '''
     чо делать, если текст
     '''
-    answer = DATABASE['config']['bot_ignorance']
     text_message = message.text.lower()
     text_message = text_message.replace('ё', 'е') + ' '
     no_commands = True
-    need_name = True
+    reaction = False
     parts = 0
 
     if message.chat.id == message.from_user.id:
-        need_name = False
+        reaction = True
     else:
         if any(name in text_message for name in DATABASE['config']['bot_names']):
             bot.interlocutor_id = message.from_user.id
-            need_name = False
-        elif bot.interlocutor_id == message.from_user.id:
-            need_name = False
-        elif (bot.interlocutor_id != message.from_user.id) and any(name in text_message for name in DATABASE['config']['bot_names']):
-            bot.interlocutor_id = message.from_user.id
-            need_name = False
-        else:
+            reaction = True
+        elif message.from_user.id == bot.interlocutor_id:
             bot.interlocutor_id = 0
-            need_name = True
-        '''message.from_user.id == bot.interlocutor_id:
-            bot.interlocutor_id = 0
-            need_name = False'''
+            reaction = True
 
-    for command in DATABASE['commands']:
-        for text in command['text']:
-            for word in text['part']:
-                if word in text_message:
-                    right = True
-                    i = text_message.find(word)
-                    length = text_message.find(' ', i)
-                    for exception in command['exceptions']:
-                        if exception in text_message[i: length]:
-                            right = False
+    if reaction:
+        for command in DATABASE['commands']:
+            for text in command['text']:
+                for word in text['part']:
+                    if word in text_message:
+                        right = True
+                        i = text_message.find(word)
+                        length = text_message.find(' ', i)
+                        for exception in command['exceptions']:
+                            if exception in text_message[i: length]:
+                                right = False
+                                break
+                        if right:
+                            parts += 1
                             break
-                    if right:
-                        parts += 1
-                        break
-        if not need_name:
             if parts == command['parts']:
                 no_commands = False
                 exec(command['method'])
                 break
-        parts = 0
+            parts = 0
 
-    if no_commands and not need_name:
-        bot.reply(message, bot.send_message, random.choice(DATABASE['config']['bot_call_answer']))
+        if no_commands:
+            bot.reply(message, bot.send_message,
+                      random.choice(DATABASE['config']['bot_call_answer']))
 
 
 if __name__ == '__main__':
