@@ -7,6 +7,7 @@
 from datetime import datetime, timedelta
 import telebot
 import requests
+import math
 from bs4 import BeautifulStoneSoup as Soup
 
 
@@ -128,6 +129,8 @@ class RZTeleBot(telebot.TeleBot):
                 pass
         if not numbers:
             return 'чота херня какаята'
+        elif len(numbers) == 1 and ('факториал' in message or '!' in message):
+            return math.factorial(numbers[0])
         print(numbers)
         try:
             if 'умнож' in message or '*' in message:

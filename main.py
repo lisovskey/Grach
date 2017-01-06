@@ -87,29 +87,29 @@ def handle_text(message):
             reaction = True
 
     if reaction:
-        for command in DATABASE['commands']:
-            for text in command['text']:
-                for word in text['part']:
-                    if word in text_message:
-                        right = True
-                        i = text_message.find(word)
-                        length = text_message.find(' ', i)
-                        for exception in command['exceptions']:
-                            if exception in text_message[i: length]:
-                                right = False
-                                break
-                        if right:
-                            parts += 1
-                            break
-            if parts == command['parts']:
-                no_commands = False
-                exec(command['method'])
-                break
-            parts = 0
+        for command in DATABASE['commands']:                                    # start searching for command
+            for text in command['text']:                                        # 
+                for word in text['part']:                                       # start checking command text part
+                    if word in text_message:                                    # if subline with command word in message
+                        right = True                                            # word is right
+                        i = text_message.find(word)                             # find out subline in message
+                        length = text_message.find(' ', i)                      # and save its length
+                        for exception in command['exceptions']:                 # start checking for exception
+                            if exception in text_message[i: length]:            # if exception in subline
+                                right = False                                   # word isn't right
+                                break                                           # end checking exceptions
+                        if right:                                               # if word is right
+                            parts += 1                                          # increment phrase parts
+                            break                                               # end checking command text part
+            if parts == command['parts']:                                       # if phrase parts equals command parts
+                no_commands = False                                             # 
+                exec(command['method'])                                         # do command
+                break                                                           # end search for command
+            parts = 0                                                           # set to zero phrase parts
 
-        if no_commands:
-            bot.reply(message, bot.send_message,
-                      random.choice(DATABASE['config']['bot_call_answer']))
+        if no_commands:                                                         # if it wasn't done any command
+            bot.reply(message, bot.send_message,                                # reply че
+                      random.choice(DATABASE['config']['bot_call_answer']))     #
 
 
 if __name__ == '__main__':

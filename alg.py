@@ -1,12 +1,16 @@
 import random
 import json
+import math
+
 
 with open('content.json') as json_data:
     DATABASE = json.load(json_data)
 
 
 def main():
-    calculate()
+    message = str(input())
+    message = message.replace('ё', 'е')
+    print(calculate(message))
 
 
 
@@ -56,36 +60,39 @@ def search_command():
         print(random.choice(DATABASE['config']['bot_call_output']))
     
     
-def calculate():
-    text_message = str(input()) + ' '
-    text_message = text_message.replace('ё', 'е')
+def calculate(message):
     answer = None
     numbers = []
-    for num in text_message.split():
+    for num in message.split():
         try:
             numbers.append(float(num))
         except ValueError:
             pass
     if not numbers:
-        answer = 'чота херня какаята\nвведи такЖ [первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
+        return 'чота херня какаята'
+    elif len(numbers) == 1 and ('факториал' in message or '!' in message):
+        return math.factorial(numbers[0])
     print(numbers)
     try:
-        if 'умножить' in text_message or '*' in text_message:
+        if 'умнож' in message or '*' in message:
             answer = numbers[0] * numbers[1]
-        elif 'делить' in text_message or '/' in text_message:
+        elif 'дели' in message or '/' in message:
             answer = numbers[0] / numbers[1]
-        elif 'плюс' in text_message or '+' in text_message:
+        elif 'плюс' in message or 'слож' in message or '+' in message:
             answer = numbers[0] + numbers[1]
-        elif 'минус' in text_message or '-' in text_message:
+        elif 'минус' in message or 'отним' in message or 'вычт' in message or '-' in message:
             answer = numbers[0] - numbers[1]
-        elif 'остаток' in text_message or '%' in text_message:
-            answer = numbers[0] - numbers[1]
+        elif 'остаток' in message or '%' in message:
+            answer = numbers[0] % numbers[1]
     except IndexError:
-        answer = 'чота херня какаята\nвведи такЖ [первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
-    print(answer)
-    
-    
-    
+        answer = 'чота херня какаята'
+    if answer / int(answer) == 1:
+        answer = int(answer)
+    if answer > 999999999:
+        return answer
+    else:
+        return round(answer, 3)
+
     
 if __name__ == '__main__':
     main()
