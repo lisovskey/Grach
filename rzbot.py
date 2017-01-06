@@ -115,13 +115,13 @@ class RZTeleBot(telebot.TeleBot):
         return schedule
 
 
-    def calculate(self, text_message):
+    def calculate(self, message):
         '''
         5 arithmetic operations
         '''
         answer = None
         numbers = []
-        for num in text_message.split():
+        for num in message.split():
             try:
                 numbers.append(float(num))
             except ValueError:
@@ -130,15 +130,15 @@ class RZTeleBot(telebot.TeleBot):
             return 'чота херня какаята'
         print(numbers)
         try:
-            if 'умнож' in text_message or '*' in text_message:
+            if 'умнож' in message or '*' in message:
                 answer = numbers[0] * numbers[1]
-            elif 'дели' in text_message or '/' in text_message:
+            elif 'дели' in message or '/' in message:
                 answer = numbers[0] / numbers[1]
-            elif 'плюс' in text_message or 'слож' in text_message or '+' in text_message:
+            elif 'плюс' in message or 'слож' in message or '+' in message:
                 answer = numbers[0] + numbers[1]
-            elif 'минус' in text_message or 'отним' in text_message or 'вычт' in text_message or '-' in text_message:
+            elif 'минус' in message or 'отним' in message or 'вычт' in message or '-' in message:
                 answer = numbers[0] - numbers[1]
-            elif 'остаток' in text_message or '%' in text_message:
+            elif 'остаток' in message or '%' in message:
                 answer = numbers[0] % numbers[1]
         except IndexError:
             answer = 'чота херня какаята'
