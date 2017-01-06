@@ -125,15 +125,17 @@ class RZTeleBot(telebot.TeleBot):
         print(numbers)
         try:
             if 'умнож' in text_message or '*' in text_message:
-                answer = round(numbers[0] * numbers[1])
+                answer = numbers[0] * numbers[1]
             elif 'дели' in text_message or '/' in text_message:
-                answer = round(numbers[0] / numbers[1], 3)
+                answer = numbers[0] / numbers[1]
             elif 'плюс' in text_message or 'слож' in text_message or '+' in text_message:
-                answer = round(numbers[0] + numbers[1])
+                answer = numbers[0] + numbers[1]
             elif 'минус' in text_message or 'отним' in text_message or '-' in text_message:
-                answer = round(numbers[0] - numbers[1])
+                answer = numbers[0] - numbers[1]
             elif 'остаток' in text_message or '%' in text_message:
-                answer = round(numbers[0] % numbers[1])
+                answer = numbers[0] % numbers[1]
         except IndexError:
             answer = 'чота херня какаята\nвведи такЖ [первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
+        if answer / int(answer) == 1:
+                answer = int(answer)
         return answer
