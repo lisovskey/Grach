@@ -112,5 +112,28 @@ class RZTeleBot(telebot.TeleBot):
         return schedule
     
     
-    def calculate(self, message):
-        text = message
+    def calculate(self, text_message):
+        answer = None
+        numbers = []
+        for num in text_message.split():
+            try:
+                numbers.append(float(num))
+            except ValueError:
+                pass
+        if not numbers:
+            return 'чота херня какаята, введи так: \n[первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
+        print(numbers)
+        try:
+            if 'умнож' in text_message or '*' in text_message:
+                answer = numbers[0] * numbers[1]
+            elif 'дели' in text_message or '/' in text_message:
+                answer = numbers[0] / numbers[1]
+            elif 'плюс' in text_message or 'слож' in text_message or '+' in text_message:
+                answer = numbers[0] + numbers[1]
+            elif 'минус' in text_message or 'отним' in text_message or '-' in text_message:
+                answer = numbers[0] - numbers[1]
+            elif 'остаток' in text_message or '%' in text_message:
+                answer = numbers[0] - numbers[1]
+        except IndexError:
+            answer = 'чота херня какаята\nвведи такЖ [первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
+        return answer

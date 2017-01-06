@@ -59,20 +59,32 @@ def search_command():
 def calculate():
     text_message = str(input()) + ' '
     text_message = text_message.replace('ё', 'е')
-    words = text_message.split()
+    answer = None
     numbers = []
-    num_index = []
-    for num in words:
+    for num in text_message.split():
         try:
             numbers.append(float(num))
-            num_index.append(words.index(num))
         except ValueError:
             pass
-    
-    print(num_index)
+    if not numbers:
+        answer = 'чота херня какаята\nвведи такЖ [первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
     print(numbers)
-    print(words)
-
+    try:
+        if 'умножить' in text_message or '*' in text_message:
+            answer = numbers[0] * numbers[1]
+        elif 'делить' in text_message or '/' in text_message:
+            answer = numbers[0] / numbers[1]
+        elif 'плюс' in text_message or '+' in text_message:
+            answer = numbers[0] + numbers[1]
+        elif 'минус' in text_message or '-' in text_message:
+            answer = numbers[0] - numbers[1]
+        elif 'остаток' in text_message or '%' in text_message:
+            answer = numbers[0] - numbers[1]
+    except IndexError:
+        answer = 'чота херня какаята\nвведи такЖ [первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
+    print(answer)
+    
+    
     
     
 if __name__ == '__main__':
