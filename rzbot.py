@@ -38,13 +38,13 @@ class RZTeleBot(telebot.TeleBot):
         print('Отвечаю: ')
         print(' - {}'.format(answer))
 
-    def reply(self, received_message, send_what, to_chat_id, answer):
+    def reply(self, received_message, send_what, answer):
         '''
         посылаем с логом
         экспериментальная хуйня
         '''
         self.log_message(received_message, answer)
-        send_what(to_chat_id, answer)
+        send_what(received_message.chat.id, answer)
 
     def get_schedule(self, group, delta):
         '''

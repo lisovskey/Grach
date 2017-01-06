@@ -59,7 +59,7 @@
                               "здаровая", "здаровы", "ехай", "ухай", "ихай", "хайп", "хайс"],
             "parts": 1,
             "answer": ["привет", "здрасте", "приветик", "у аппарата", "да да", "ало"],
-            "method": "bot.reply(message, bot.send_message, message.chat.id, random.choice(command['answer']))"
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         },
 
         {
@@ -72,7 +72,7 @@
                            "пока н", "пока чт", "пока ты", "пока я", "пока он", "пока вс", "пока р"],
             "parts": 1,
             "answer": ["пока", "пака", "давай"],
-            "method": "bot.reply(message, bot.send_message, message.chat.id, random.choice(command['answer']))"
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         },
 
         {
@@ -85,13 +85,16 @@
             "exceptions": ["вонь", "авон", "вонз", "воня", "воне"],
             "parts": 2,
             "answer": ["ладно"],
-            "method": "bot.reply(message, bot.send_message, message.chat.id, random.choice(command['answer']))"
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         }
     ],
 
     "config": {
         "bot_names": ["гриша", "грач", "григорий"],
-        "bot_call_answer": ["что", "a", "че", "што"],
+        "bot_call_answer": ["что", "че", "што"],
+        "bot_ignorance": "не понял щас",
+        "bot_devotion": "я тебя не знаю дядя",
+        "bot_okay": "ладно",
         "bot_token": "280995361:AAFPietXTGxRttwiE8GIn4xVRGBW6VJmXVk"
     }
 }
