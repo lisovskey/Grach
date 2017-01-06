@@ -70,7 +70,6 @@ def handle_text(message):
     '''
     чо делать, если текст
     '''
-    answer = DATABASE['config']['bot_ignorance']
     text_message = message.text.lower()
     text_message = text_message.replace('ё', 'е') + ' '
     no_commands = True
