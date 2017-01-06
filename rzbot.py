@@ -138,4 +138,7 @@ class RZTeleBot(telebot.TeleBot):
             answer = 'чота херня какаята\nвведи такЖ [первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
         if answer / int(answer) == 1:
                 answer = int(answer)
-        return answer
+        if answer > 999999999:
+            return answer
+        else:
+            return round(answer, 3)
