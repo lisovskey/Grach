@@ -79,12 +79,16 @@ def handle_text(message):
     if message.chat.id == message.from_user.id:
         reaction = True
     else:
-        if any(name in text_message for name in DATABASE['config']['bot_names']):
-            bot.interlocutor_id = message.from_user.id
-            reaction = True
-        elif message.from_user.id == bot.interlocutor_id:
-            bot.interlocutor_id = 0
-            reaction = True
+        for name in DATABASE['config']['bot_names']:
+            if name in text_message:
+                text_message = text_message.replace(name, '')
+                bot.interlocutor_id = message.from_user.id
+                reaction = True
+                break
+            elif message.from_user.id == bot.interlocutor_id:
+                bot.interlocutor_id = 0
+                reaction = True
+                break
 
     if reaction:
         for command in DATABASE['commands']:                                    # start searching for command
@@ -108,7 +112,7 @@ def handle_text(message):
             parts = 0                                                           # set to zero phrase parts
 
         if no_commands:
-            if len(text_message) < 8:
+            if len(text_message) < 4:
                 bot.reply(message, bot.send_message,
                           random.choice(DATABASE['config']['bot_call_answer']))
             else:
