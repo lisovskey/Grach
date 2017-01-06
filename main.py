@@ -108,7 +108,7 @@ def handle_text(message):
             parts = 0                                                           # set to zero phrase parts
 
         if no_commands:
-            if text_message.length() < 8:
+            if len(text_message) < 8:
                 bot.reply(message, bot.send_message,
                           random.choice(DATABASE['config']['bot_call_answer']))
             else:
