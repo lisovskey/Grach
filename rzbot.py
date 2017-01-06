@@ -5,9 +5,10 @@
 '''
 
 from datetime import datetime, timedelta
+import math
+import time
 import telebot
 import requests
-import math
 from bs4 import BeautifulStoneSoup as Soup
 
 
@@ -118,7 +119,7 @@ class RZTeleBot(telebot.TeleBot):
 
     def calculate(self, message):
         '''
-        5 arithmetic operations
+        6 arithmetic operations
         '''
         answer = None
         numbers = []
@@ -129,9 +130,9 @@ class RZTeleBot(telebot.TeleBot):
                 pass
         if not numbers:
             return 'чота херня какаята'
-        elif len(numbers) == 1 and ('факториал' in message or '!' in message):
+        elif len(numbers) < 3 and ('факториал' in message or '!' in message):
             return math.factorial(numbers[0])
-        print(numbers)
+
         try:
             if 'умнож' in message or '*' in message:
                 answer = numbers[0] * numbers[1]
@@ -145,6 +146,7 @@ class RZTeleBot(telebot.TeleBot):
                 answer = numbers[0] % numbers[1]
         except IndexError:
             answer = 'чота херня какаята'
+
         if answer / int(answer) == 1:
             answer = int(answer)
         if answer > 999999999:

@@ -88,7 +88,7 @@ def handle_text(message):
 
     if reaction:
         for command in DATABASE['commands']:                                    # start searching for command
-            for text in command['text']:                                        # 
+            for text in command['text']:                                        #
                 for word in text['part']:                                       # start checking command text part
                     if word in text_message:                                    # if subline with command word in message
                         right = True                                            # word is right
@@ -102,14 +102,18 @@ def handle_text(message):
                             parts += 1                                          # increment phrase parts
                             break                                               # end checking command text part
             if parts == command['parts']:                                       # if phrase parts equals command parts
-                no_commands = False                                             # 
+                no_commands = False                                             #
                 exec(command['method'])                                         # do command
                 break                                                           # end search for command
             parts = 0                                                           # set to zero phrase parts
 
-        if no_commands:                                                         # if it wasn't done any command
-            bot.reply(message, bot.send_message,                                # reply че
-                      random.choice(DATABASE['config']['bot_call_answer']))     #
+        if no_commands:
+            if text_message.length() < 8:
+                bot.reply(message, bot.send_message,
+                          random.choice(DATABASE['config']['bot_call_answer']))
+            else:
+                bot.reply(message, bot.send_message,
+                          DATABASE['config']['bot_ignorance'])
 
 
 if __name__ == '__main__':
