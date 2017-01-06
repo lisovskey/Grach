@@ -23,6 +23,7 @@ class RZTeleBot(telebot.TeleBot):
         self.interlocutor_id = 0
         print(self.get_me())
 
+
     def log_message(self, received_message, answer):
         '''
         логируем в консоль
@@ -40,12 +41,14 @@ class RZTeleBot(telebot.TeleBot):
         print('Отвечаю: ')
         print(' - {}'.format(answer))
 
+
     def reply(self, received_message, send_what, answer):
         '''
         посылаем с логом
         '''
         self.log_message(received_message, answer)
         send_what(received_message.chat.id, answer)
+
 
     def get_schedule(self, group, delta):
         '''
@@ -110,9 +113,12 @@ class RZTeleBot(telebot.TeleBot):
             schedule += '\n\n'
 
         return schedule
-    
-    
+
+
     def calculate(self, text_message):
+        '''
+        5 arithmetic operations
+        '''
         answer = None
         numbers = []
         for num in text_message.split():
@@ -121,7 +127,7 @@ class RZTeleBot(telebot.TeleBot):
             except ValueError:
                 pass
         if not numbers:
-            return 'чота херня какаята, введи так: \n[первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
+            return 'чота херня какаята'
         print(numbers)
         try:
             if 'умнож' in text_message or '*' in text_message:
@@ -130,14 +136,14 @@ class RZTeleBot(telebot.TeleBot):
                 answer = numbers[0] / numbers[1]
             elif 'плюс' in text_message or 'слож' in text_message or '+' in text_message:
                 answer = numbers[0] + numbers[1]
-            elif 'минус' in text_message or 'отним' in text_message or '-' in text_message:
+            elif 'минус' in text_message or 'отним' in text_message or 'вычт' in text_message or '-' in text_message:
                 answer = numbers[0] - numbers[1]
             elif 'остаток' in text_message or '%' in text_message:
                 answer = numbers[0] % numbers[1]
         except IndexError:
-            answer = 'чота херня какаята\nвведи такЖ [первое] (тут пробел) [чо хочешь] (тут тоже пробел) [второе]'
+            answer = 'чота херня какаята'
         if answer / int(answer) == 1:
-                answer = int(answer)
+            answer = int(answer)
         if answer > 999999999:
             return answer
         else:

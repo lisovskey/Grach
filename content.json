@@ -51,12 +51,12 @@
         {
             "title": "calculate",
             "text": [
-                {"part": ["посчитай", "умнож", "подели", "раздели", "сложи", "отними"]}
-                ],
-            "exceptions": ["умножа", "умножите", "поделит", "разделит", "поделис"],
+                {"part": ["посчитай", "сколько буде", "умнож", "подели", "раздели", "сложи", "отними"]}
+            ],
+            "exceptions": ["умножа", "умножите", "поделите", "разделите", "поделис"],
             "parts": 1,
             "answer": ["на"],
-            "method": "bot.reply(message, bot.send_message,  bot.calculate(text_message))"
+            "method": "bot.reply(message, bot.send_message,  bot.calculate(message))"
         },
 
         {
