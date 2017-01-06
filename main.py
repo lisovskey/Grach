@@ -82,7 +82,8 @@ def handle_text(message):
         for name in DATABASE['config']['bot_names']:
             if name in text_message:
                 text_message = text_message.replace(name, '')
-                bot.interlocutor_id = message.from_user.id
+                if len(text_message) < 4:
+                    bot.interlocutor_id = message.from_user.id
                 reaction = True
                 break
             elif message.from_user.id == bot.interlocutor_id:
