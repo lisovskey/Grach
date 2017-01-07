@@ -37,6 +37,19 @@
             "answer": ["на"],
             "method": "handle_schedule(message)"
         },
+
+        {
+            "title": "leave",
+            "text": [
+                {"part": ["нахуй", "на хуй", "нахер", "на хер", "вон", "пиздуй",
+                          "пошел", "уебыва", "уходи", "ливай"]},
+                {"part": ["отсюда", "отсюдо"]}
+            ],
+            "exceptions": ["вонь", "авон", "вонз", "воня", "воне"],
+            "parts": 2,
+            "answer": ["ладно"],
+            "method": "handle_leave(message)"
+        },
         
         {
             "title": "shutdown",
@@ -86,19 +99,6 @@
                            "пока н", "пока чт", "пока ты", "пока я", "пока он", "пока вс", "пока р"],
             "parts": 1,
             "answer": ["пока", "пака", "давай"],
-            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
-        },
-
-        {
-            "title": "leave",
-            "text": [
-                {"part": ["нахуй", "на хуй", "нахер", "на хер", "вон", "пиздуй",
-                          "пошел", "уебыва", "уходи", "ливай"]},
-                {"part": ["отсюда", "отсюдо"]}
-            ],
-            "exceptions": ["вонь", "авон", "вонз", "воня", "воне"],
-            "parts": 2,
-            "answer": ["ладно"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         }
     ],

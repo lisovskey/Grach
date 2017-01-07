@@ -17,25 +17,6 @@ with open('content.json') as json_data:
 bot = rzbot.RZTeleBot(DATABASE['config']['bot_token'])
 
 
-@bot.message_handler(commands=['shutdown'])
-def handle_shutdown(message):
-    '''
-    чо делать, если шатдаун
-    '''
-    shutdown = False
-    try:
-        for user in DATABASE['users']:
-            if user['name'] == message.from_user.username:
-                answer = DATABASE['config']['bot_okay']
-                shutdown = True
-    except KeyError:
-        answer = DATABASE['config']['bot_devotion']
-
-    bot.reply(message, bot.send_message, answer)
-    if shutdown:
-        sys.exit(0)
-
-
 @bot.message_handler(commands=['help'])
 def handle_help(message):
     '''
@@ -46,7 +27,7 @@ def handle_help(message):
             if user['name'] == message.from_user.username:
                 for command in DATABASE['commands']:
                     if command['title'] == 'help':
-                        answer = command['answer']
+                        answer = random.choice(command['answer'])
                         break
     except KeyError:
         answer = DATABASE['config']['bot_devotion']
@@ -68,6 +49,44 @@ def handle_schedule(message):
         answer = DATABASE['config']['bot_devotion']
 
     bot.reply(message, bot.send_message, answer)
+
+
+@bot.message_handler(commands=['leave'])
+def handle_leave(message):
+    '''
+    чо делать, если лив
+    '''
+    leave = False
+    try:
+        for user in DATABASE['users']:
+            if user['name'] == message.from_user.username:
+                answer = DATABASE['config']['bot_okay']
+                leave = True
+    except KeyError:
+        answer = DATABASE['config']['bot_devotion']
+
+    bot.reply(message, bot.send_message, answer)
+    if leave:
+        bot.leave_chat(message.chat.id)
+
+
+@bot.message_handler(commands=['shutdown'])
+def handle_shutdown(message):
+    '''
+    чо делать, если шатдаун
+    '''
+    shutdown = False
+    try:
+        for user in DATABASE['users']:
+            if user['name'] == message.from_user.username:
+                answer = DATABASE['config']['bot_okay']
+                shutdown = True
+    except KeyError:
+        answer = DATABASE['config']['bot_devotion']
+
+    bot.reply(message, bot.send_message, answer)
+    if shutdown:
+        sys.exit(0)
 
 
 @bot.message_handler(content_types=['text'])
