@@ -134,10 +134,11 @@ class RZTeleBot(telebot.TeleBot):
         if len(numbers) == 1 and ('факториал' in message or '!' in message):
             numbers[0] = int(numbers[0])
             if numbers[0] < 1001:
-                answer = str(math.factorial(numbers[0]))
+                answer = math.factorial(numbers[0])
+                answer = '{: }'.format(answer)
                 if numbers[0] > 100:
                     answer += ' но это не точно'
-                return '{: }'.format(answer)
+                return answer
             else:
                 return 'неенененене'
 
