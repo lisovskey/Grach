@@ -5,13 +5,10 @@
 '''
 
 from datetime import datetime, timedelta
-import locale
 import math
 import telebot
 import requests
 from bs4 import BeautifulStoneSoup as Soup
-
-locale.setlocale(locale.LC_ALL, '')
 
 class RZTeleBot(telebot.TeleBot):
     '''
@@ -137,7 +134,7 @@ class RZTeleBot(telebot.TeleBot):
             numbers[0] = int(numbers[0])
             if numbers[0] < 1001:
                 answer = math.factorial(numbers[0])
-                answer = '{: d}'.format(answer)
+                answer = '{:n}'.format(answer).replace(',', ' ')
                 if numbers[0] > 100:
                     answer += ', но это не точно'
                 return answer

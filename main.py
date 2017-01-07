@@ -97,8 +97,7 @@ def handle_text(message):
     '''
     чо делать, если текст
     '''
-    text_message = message.text.lower()
-    text_message = text_message.replace('ё', 'е') + ' '
+    text_message = message.text.lower().replace('ё', 'е') + ' '
     no_commands = True
     reaction = False
     parts = 0
