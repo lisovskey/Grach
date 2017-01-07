@@ -102,7 +102,7 @@ class RZTeleBot(telebot.TeleBot):
 
         for subject in subs:
             subject = subject.findParent('schedule')
-            schedule += (subject.lessonTime.text + ' ' +
+            schedule += (subject.lessonTime.text + '\n' +
                          subject.subject.text + ' (' +
                          subject.lessonType.text + ')')
             if subject.auditory is not None:
