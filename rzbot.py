@@ -136,7 +136,7 @@ class RZTeleBot(telebot.TeleBot):
                 answer = math.factorial(numbers[0])
                 answer = '{:,}'.format(answer).replace(',', ' ')
                 if numbers[0] > 100:
-                    answer += ', но это не точно'
+                    answer += ' но это не точно'
                 return answer
             else:
                 return 'неенененене'
