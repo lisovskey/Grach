@@ -117,7 +117,7 @@ def handle_text(message):
             for name in DATABASE['config']['bot_names']:
                 if name in text_message:
                     text_message = text_message.replace(name, '')
-                    if len(text_message) < 4:
+                    if len(text_message) < 5:
                         bot.interlocutor_id = message.from_user.id
                     break
             reaction = True
@@ -126,7 +126,7 @@ def handle_text(message):
             for name in DATABASE['config']['bot_names']:
                 if name in text_message:
                     text_message = text_message.replace(name, '')
-                    if len(text_message) < 4:
+                    if len(text_message) < 5:
                         bot.interlocutor_id = message.from_user.id
                     reaction = True
                     break
@@ -165,7 +165,7 @@ def handle_text(message):
             parts = 0
 
         if no_commands:
-            if len(text_message) < 4:
+            if len(text_message) < 5:
                 bot.reply(message, bot.send_message,
                           random.choice(DATABASE['config']['bot_call_answer']))
             else:
