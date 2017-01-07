@@ -16,6 +16,7 @@ class RZTeleBot(telebot.TeleBot):
     ну это типа грач
     '''
     interlocutor_id = int
+
     def __init__(self, token):
         '''
         создаем грача

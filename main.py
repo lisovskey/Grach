@@ -92,11 +92,13 @@ def handle_text(message):
     else:
         # собеседник
         if message.from_user.id == bot.interlocutor_id:
+            bot.interlocutor_id = 0
             for name in DATABASE['config']['bot_names']:
                 if name in text_message:
                     text_message = text_message.replace(name, '')
+                    if len(text_message) < 4:
+                        bot.interlocutor_id = message.from_user.id
                     break
-            bot.interlocutor_id = 0
             reaction = True
         # хер с горы
         else:
