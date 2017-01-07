@@ -133,7 +133,7 @@ class RZTeleBot(telebot.TeleBot):
         elif len(numbers) == 1 and 'факториал' in message or '!' in message:
             numbers[0] = int(numbers[0])
             if numbers[0] < 101:
-                return math.factorial(int(numbers[0]))
+                return math.factorial(numbers[0])
             else:
                 return 'неенененене'
 
