@@ -59,13 +59,16 @@ def handle_leave(message):
     '''
     answer = ''
     leave = False
-    try:
-        for user in DATABASE['users']:
-            if user['name'] == message.from_user.username:
-                answer = DATABASE['config']['bot_okay']
-                leave = True
-    except KeyError:
-        answer = DATABASE['config']['bot_devotion']
+    if message.chat.id == message.from_user.id:
+        answer = DATABASE['config']['bot_negation']
+    else:
+        try:
+            for user in DATABASE['users']:
+                if user['name'] == message.from_user.username:
+                    answer = DATABASE['config']['bot_okay']
+                    leave = True
+        except KeyError:
+            answer = DATABASE['config']['bot_devotion']
 
     bot.reply(message, bot.send_message, answer)
     if leave:
