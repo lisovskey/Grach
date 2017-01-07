@@ -130,7 +130,7 @@ class RZTeleBot(telebot.TeleBot):
                 pass
         if not numbers:
             return 'чота херня какаята'
-        elif len(numbers) == 1 and 'факториал' in message or '!' in message:
+        elif len(numbers) == 1 and ('факториал' in message or '!' in message):
             numbers[0] = int(numbers[0])
             if numbers[0] < 101:
                 return math.factorial(numbers[0])
