@@ -147,7 +147,7 @@ class RZTeleBot(telebot.TeleBot):
         except IndexError:
             answer = 'чота херня какаята'
 
-        if answer / int(answer) == 1:
+        if answer - int(answer) == 0:
             answer = int(answer)
         if answer > 999999999:
             return answer
