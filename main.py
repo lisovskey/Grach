@@ -76,46 +76,65 @@ def handle_text(message):
     reaction = False
     parts = 0
 
+    # личка
     if message.chat.id == message.from_user.id:
-        reaction = True
-    else:
         for name in DATABASE['config']['bot_names']:
             if name in text_message:
                 text_message = text_message.replace(name, '')
-                if len(text_message) < 4:
-                    bot.interlocutor_id = message.from_user.id
-                reaction = True
                 break
-            elif message.from_user.id == bot.interlocutor_id:
-                bot.interlocutor_id = 0
-                reaction = True
-                break
+        reaction = True
+    # конфа
+    else:
+        # собеседник
+        if message.from_user.id == bot.interlocutor_id:
+            for name in DATABASE['config']['bot_names']:
+                if name in text_message:
+                    text_message = text_message.replace(name, '')
+                    break
+            bot.interlocutor_id = 0
+            reaction = True
+        # хер с горы
+        else:
+            for name in DATABASE['config']['bot_names']:
+                if name in text_message:
+                    text_message = text_message.replace(name, '')
+                    if len(text_message) < 4:
+                        bot.interlocutor_id = message.from_user.id
+                    reaction = True
+                    break
 
-    if len(text_message) > 50:
+    # много буков
+    if reaction and len(text_message) > 50:
         bot.reply(message, bot.send_message,
                   DATABASE['config']['bot_overload'])
         reaction = False
 
     if reaction:
-        for command in DATABASE['commands']:                                    # start searching for command
-            for text in command['text']:                                        #
-                for word in text['part']:                                       # start checking command text part
-                    if word in text_message:                                    # if subline with command word in message
-                        right = True                                            # word is right
-                        i = text_message.find(word)                             # find out subline in message
-                        length = text_message.find(' ', i)                      # and save its length
-                        for exception in command['exceptions']:                 # start checking for exception
-                            if exception in text_message[i: length]:            # if exception in subline
-                                right = False                                   # word isn't right
-                                break                                           # end checking exceptions
-                        if right:                                               # if word is right
-                            parts += 1                                          # increment phrase parts
-                            break                                               # end checking command text part
-            if parts == command['parts']:                                       # if phrase parts equals command parts
-                no_commands = False                                             #
-                exec(command['method'])                                         # do command
-                break                                                           # end search for command
-            parts = 0                                                           # set to zero phrase parts
+        # start searching for command
+        for command in DATABASE['commands']:
+            for text in command['text']:
+                # start checking command text part
+                for word in text['part']:
+                    if word in text_message:
+                        right = True
+                        i = text_message.find(word)
+                        length = text_message.find(' ', i)
+                        # start checking for exceptions
+                        for exception in command['exceptions']:
+                            if exception in text_message[i: length]:
+                                right = False
+                                break
+                        # end checking exceptions
+                        if right:
+                            parts += 1
+                            break
+                # end checking command text part
+            if parts == command['parts']:
+                no_commands = False
+                exec(command['method'])
+                break
+        # end searching for command
+            parts = 0
 
         if no_commands:
             if len(text_message) < 4:
