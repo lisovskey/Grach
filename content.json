@@ -107,6 +107,7 @@
         "bot_call_answer": ["что", "че", "што"],
         "bot_ignorance": "не понял щас",
         "bot_devotion": "я тебя не знаю дядя",
+        "bot_overload": "много буков",
         "bot_okay": "ладно",
         "bot_token": "280995361:AAFPietXTGxRttwiE8GIn4xVRGBW6VJmXVk"
     }

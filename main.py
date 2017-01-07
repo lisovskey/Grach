@@ -91,6 +91,11 @@ def handle_text(message):
                 reaction = True
                 break
 
+    if len(text_message) > 50:
+        bot.reply(message, bot.send_message,
+                  DATABASE['config']['bot_overload'])
+        reaction = False
+
     if reaction:
         for command in DATABASE['commands']:                                    # start searching for command
             for text in command['text']:                                        #

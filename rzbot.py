@@ -6,7 +6,6 @@
 
 from datetime import datetime, timedelta
 import math
-import time
 import telebot
 import requests
 from bs4 import BeautifulStoneSoup as Soup
