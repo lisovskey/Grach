@@ -22,6 +22,7 @@ def handle_help(message):
     '''
     чо делать, если халп
     '''
+    answer = ''
     try:
         for user in DATABASE['users']:
             if user['name'] == message.from_user.username:
@@ -56,6 +57,7 @@ def handle_leave(message):
     '''
     чо делать, если лив
     '''
+    answer = ''
     leave = False
     try:
         for user in DATABASE['users']:
@@ -75,6 +77,7 @@ def handle_shutdown(message):
     '''
     чо делать, если шатдаун
     '''
+    answer = ''
     shutdown = False
     try:
         for user in DATABASE['users']:
