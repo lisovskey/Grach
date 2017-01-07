@@ -129,11 +129,15 @@ class RZTeleBot(telebot.TeleBot):
             except ValueError:
                 pass
         if not numbers:
-            return 'чота херня какаята'
-        elif len(numbers) == 1 and ('факториал' in message or '!' in message):
+            return 'не могу'
+
+        if len(numbers) == 1 and ('факториал' in message or '!' in message):
             numbers[0] = int(numbers[0])
             if numbers[0] < 1001:
-                return math.factorial(numbers[0])
+                answer = math.factorial(numbers[0])
+                if numbers[0] > 100:
+                    answer += ' но это не точно'
+                return answer
             else:
                 return 'неенененене'
 
@@ -149,7 +153,7 @@ class RZTeleBot(telebot.TeleBot):
             elif 'остаток' in message or '%' in message:
                 answer = numbers[0] % numbers[1]
         except IndexError:
-            return 'чота херня какаята'
+            return 'что считать дядя'
 
         if answer - int(answer) == 0:
             answer = int(answer)
