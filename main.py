@@ -41,10 +41,15 @@ def handle_help(message):
     '''
     чо делать, если халп
     '''
-    for command in DATABASE['commands']:
-        if command['title'] == 'help':
-            answer = command['answer']
-            break
+    try:
+        for user in DATABASE['users']:
+            if user['name'] == message.from_user.username:
+                for command in DATABASE['commands']:
+                    if command['title'] == 'help':
+                        answer = command['answer']
+                        break
+    except KeyError:
+        answer = DATABASE['config']['bot_devotion']
 
     bot.reply(message, bot.send_message, answer)
 

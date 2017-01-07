@@ -93,12 +93,12 @@ class RZTeleBot(telebot.TeleBot):
         soup = Soup(resp.content)
         day = soup.findAll('weekDay', text=week_day)
         if not day:
-            return 'нет у тебя пар'
+            return 'отдыхает'
 
         day = day[0].findParent('scheduleModel')
         subs = day.findAll('weekNumber', text=week_num)
         if not subs:
-            return 'нет у тебя пар'
+            return 'отдыхает'
 
         for subject in subs:
             subject = subject.findParent('schedule')

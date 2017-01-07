@@ -48,6 +48,7 @@
             "answer": ["ладно"],
             "method": "handle_shutdown(message)"
         },
+
         {
             "title": "calculate",
             "text": [
