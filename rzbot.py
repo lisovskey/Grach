@@ -134,6 +134,8 @@ class RZTeleBot(telebot.TeleBot):
             numbers[0] = int(numbers[0])
             if str(numbers[0]) < 3:
                 return math.factorial(int(numbers[0]))
+            else:
+                return 'неенененене'
 
         try:
             if 'умнож' in message or '*' in message:
@@ -147,7 +149,7 @@ class RZTeleBot(telebot.TeleBot):
             elif 'остаток' in message or '%' in message:
                 answer = numbers[0] % numbers[1]
         except IndexError:
-            answer = 'чота херня какаята'
+            return 'чота херня какаята'
 
         if answer - int(answer) == 0:
             answer = int(answer)
