@@ -82,3 +82,12 @@ class Unloader:
             schedule += '\n\n'
 
         return schedule
+
+
+    def get_premieres(self):
+        '''
+        получаем премьеры в лицо
+        '''
+        premieres = ''
+
+        return premieres
