@@ -15,7 +15,7 @@ import unloader
 with open('content.json') as json_data:
     DATABASE = json.load(json_data)
 
-bot = rzbot.RZTeleBot(DATABASE['config']['bot_token'])
+bot = rzbot.RZTeleBot(DATABASE['config']['token'])
 loader = unloader.Unloader()
 
 
@@ -33,7 +33,7 @@ def handle_help(message):
                         answer = random.choice(command['answer'])
                         break
     except KeyError:
-        answer = DATABASE['config']['bot_devotion']
+        answer = DATABASE['dictionary']['devotion']
 
     bot.reply(message, bot.send_message, answer)
 
@@ -49,7 +49,7 @@ def handle_schedule(message):
             if user['name'] == message.from_user.username:
                 answer = user['group'] + ' ' +  loader.get_schedule(user['id'], 1)
     except KeyError:
-        answer = DATABASE['config']['bot_devotion']
+        answer = DATABASE['dictionary']['devotion']
 
     bot.reply(message, bot.send_message, answer)
 
@@ -87,10 +87,10 @@ def handle_shutdown(message):
     try:
         for user in DATABASE['users']:
             if user['name'] == message.from_user.username:
-                answer = DATABASE['config']['bot_okay']
+                answer = DATABASE['dictionary']['okay']
                 shutdown = True
     except KeyError:
-        answer = DATABASE['config']['bot_devotion']
+        answer = DATABASE['dictionary']['devotion']
 
     bot.reply(message, bot.send_message, answer)
     if shutdown:
@@ -109,7 +109,7 @@ def handle_text(message):
 
     # личка
     if message.chat.id == message.from_user.id:
-        for name in DATABASE['config']['bot_names']:
+        for name in DATABASE['dictionary']['names']:
             if name in text_message:
                 text_message = text_message.replace(name, '')
                 break
@@ -119,7 +119,7 @@ def handle_text(message):
         # собеседник
         if message.from_user.id == bot.interlocutor_id:
             bot.interlocutor_id = 0
-            for name in DATABASE['config']['bot_names']:
+            for name in DATABASE['dictionary']['names']:
                 if name in text_message:
                     text_message = text_message.replace(name, '')
                     if len(text_message) < 5:
@@ -128,7 +128,7 @@ def handle_text(message):
             reaction = True
         # хер с горы
         else:
-            for name in DATABASE['config']['bot_names']:
+            for name in DATABASE['dictionary']['names']:
                 if name in text_message:
                     text_message = text_message.replace(name, '')
                     if len(text_message) < 5:
@@ -139,7 +139,7 @@ def handle_text(message):
     # много буков
     if reaction and len(text_message) > 50:
         bot.reply(message, bot.send_message,
-                  DATABASE['config']['bot_overload'])
+                  DATABASE['dictionary']['overload'])
         reaction = False
 
     if reaction:
@@ -172,10 +172,10 @@ def handle_text(message):
         if no_commands:
             if len(text_message) < 5:
                 bot.reply(message, bot.send_message,
-                          random.choice(DATABASE['config']['bot_call_answer']))
+                          random.choice(DATABASE['dictionary']['call_answers']))
             else:
                 bot.reply(message, bot.send_message,
-                          DATABASE['config']['bot_ignorance'])
+                          DATABASE['dictionary']['ignorance'])
 
 
 if __name__ == '__main__':
