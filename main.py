@@ -10,11 +10,13 @@ import sys
 import random
 import json
 import rzbot
+import unloader
 
 with open('content.json') as json_data:
     DATABASE = json.load(json_data)
 
 bot = rzbot.RZTeleBot(DATABASE['config']['bot_token'])
+loader = unloader.Unloader()
 
 
 @bot.message_handler(commands=['help'])
@@ -45,7 +47,7 @@ def handle_schedule(message):
     try:
         for user in DATABASE['users']:
             if user['name'] == message.from_user.username:
-                answer = user['group'] + ' ' +  bot.get_schedule(user['id'], 1)
+                answer = user['group'] + ' ' +  loader.get_schedule(user['id'], 1)
     except KeyError:
         answer = DATABASE['config']['bot_devotion']
 
