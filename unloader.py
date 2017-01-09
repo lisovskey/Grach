@@ -55,7 +55,7 @@ class Unloader:
         elif tmp_date[6] == 6:
             week_day = 'Воскресенье'
             tmp_week = 'воскресенье'
-        schedule += pretext + ' ' + tmp_week + ':\n \n'
+        schedule += pretext + ' ' + tmp_week + ':'
 
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
         soup = Soup(resp.content)
@@ -69,6 +69,7 @@ class Unloader:
             return 'отдыхает'
 
         for subject in subs:
+            schedule += '\n\n'
             subject = subject.findParent('schedule')
             schedule += (subject.lessonTime.text + '\n' +
                          subject.subject.text + ' (' +
@@ -79,7 +80,6 @@ class Unloader:
                 schedule += ' (' + subject.numSubgroup.text + ')'
             if subject.lastName is not None and subject.numSubgroup.text == '0':
                 schedule += ' ' + subject.lastName.text
-            schedule += '\n\n'
 
         return schedule
 

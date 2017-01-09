@@ -5,22 +5,22 @@
                 "id": "21833",
                 "group": "614302"
             },
-
+            
             {
                 "name": "hetchback",
                 "id": "21830",
                 "group": "610901"
             }
     ],
-
+    
     "commands": [
         {
             "title": "help", 
             "text": [
-                {"part": ["умееш", "можеш"]}, 
-                {"part": ["че", "что", "чо", "?"]}
+                {"part": [" умееш", " можеш"]}, 
+                {"part": [" че", " что", " чо", "?"]}
             ],
-            "exceptions": ["чес", "чос", "чер", "чор", "рчо", "уче", "чел", "чол"],
+            "exceptions": ["чес", "чос", "чер", "чор", "чел", "чол"],
             "parts": 2,
             "answer": ["могу расписание твое показать"],
             "method": "handle_help(message)"
@@ -29,23 +29,23 @@
         {
             "title": "schedule",
             "text": [
-                {"part":["какое", "какие", "покажи", "скажи", "поведай", "показывай"]},
-                {"part":["расписание", "пары"]}
+                {"part":["какое ", "какие ", " покажи", " скажи", "поведай", "показывай"]},
+                {"part":["расписание", " пары"]}
             ],
-            "exceptions": ["апары", "упары", "парый", "какое-", "какие-"],
+            "exceptions": [],
             "parts": 2,
             "answer": ["на"],
             "method": "handle_schedule(message)"
         },
-
+        
         {
             "title": "leave",
             "text": [
-                {"part": ["нахуй", "на хуй", "нахер", "на хер", "вон", "пиздуй",
-                          "пошел", "уебыва", "уходи", "ливай"]},
+                {"part": ["нахуй", "на хуй", "нахер", "на хер", " вон ", " пиздуй",
+                          " пошел", " уебыва", " уходи", " ливай"]},
                 {"part": ["отсюда", "отсюдо"]}
             ],
-            "exceptions": ["вонь", "авон", "вонз", "воня", "воне"],
+            "exceptions": [],
             "parts": 2,
             "answer": ["ладно"],
             "method": "handle_leave(message)"
@@ -54,14 +54,25 @@
         {
             "title": "shutdown",
             "text": [
-                {"part": ["авадакедавра"]}
+                {"part": [" авадакедавра"]}
             ],
             "exceptions": ["ска", "пиш"],
             "parts": 1,
             "answer": ["ладно"],
             "method": "handle_shutdown(message)"
         },
-
+        
+        {
+            "title": "who",
+            "text": [
+                {"part": ["ты кто", "кто ты", "кто такой?", "ты что такое", "что ты такое"]}
+            ],
+            "exceptions": ["кто-", "кто то", "что-", "что то", "еты"],
+            "parts": 1,
+            "answer": ["бот", "грач", "бобич", "бог"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
         {
             "title": "calculate",
             "text": [
@@ -73,9 +84,9 @@
             "exceptions": ["умножа", "умножите", "поделите", "разделите", "поделис"],
             "parts": 2,
             "answer": ["на"],
-            "method": "bot.reply(message, bot.send_message,  bot.calculate(text_message))"
+            "method": "bot.reply(message, bot.send_message, bot.calculate(text_message))"
         },
-
+        
         {
             "title": "hi",
             "text": [
@@ -88,7 +99,47 @@
             "answer": ["привет", "здрасте", "приветик", "у аппарата", "да да", "ало"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         },
-
+        
+        {
+            "title": "swear",
+            "text": [
+                {"part": [" ты ", "грач", "гриша", "григри", " бот "]},
+                {"part": ["даун ", "калич", "еблан", " гной", "дура", "дурень", " чмо", " пизд",
+                          "оеб ", "аеб ", " деби", "лох ", " диби", "залуп", " хуи", "педрил",
+                          "пидар", "пидор", "член", "петух", "питух", "тупой", "гавно", "говно",
+                          "шлюха", "очко", "бляд", "пердун", " мудил", "муда", " гей ", "ебан",
+                          " гомо", " гомик", "малафья", " елда", "воняеш"]}
+            ],
+            "exceptions": ["кдаун", "гомоса", " не "],
+            "parts": 2,
+            "answer": ["сам", "ебало наноль", "пошел ты нахуй червячок", "ха", "чекай мать",
+                       "у тебя там все живы?", "ты охуевший дурачок?", "дрочи мой хуй себе в рот",
+                       "ты пьяный?"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "you",
+            "text": [
+                {"part": [" ты ", " бот "]}
+            ],
+            "exceptions": ["?"],
+            "parts": 1,
+            "answer": ["спасибо"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "question",
+            "text": [
+                {"part": [" че ", " что ", " чо ", "? "]}
+            ],
+            "exceptions": [],
+            "parts": 1,
+            "answer": ["да", "конечно", "не", "нет"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
         {
             "title": "bye",
             "text": [
@@ -102,17 +153,17 @@
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         }
     ],
-
+    
     "dictionary": {
         "names": ["гриша", "грач", "григорий"],
         "call_answers": ["что", "че", "што"],
-        "ignorance": "не понял щас",
+        "ignorance": "BQADAgADBAEAAhCnqQKUJ1nt0KbUFQI",
         "devotion": "я тебя не знаю дядя",
-        "overload": "много буков",
+        "overload": "BQADAgADBAEAAhCnqQKUJ1nt0KbUFQI",
         "okay": "ладно",
         "negation": "не"
     },
-
+    
     "config": {
         "token": "280995361:AAFPietXTGxRttwiE8GIn4xVRGBW6VJmXVk"
     }

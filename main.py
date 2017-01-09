@@ -25,14 +25,17 @@ def handle_help(message):
     чо делать, если халп
     '''
     answer = ''
-    try:
-        for user in DATABASE['users']:
-            if user['name'] == message.from_user.username:
-                for command in DATABASE['commands']:
-                    if command['title'] == 'help':
-                        answer = random.choice(command['answer'])
-                        break
-    except KeyError:
+    admin = False
+
+    for user in DATABASE['users']:
+        if user['name'] == message.from_user.username:
+            admin = True
+            for command in DATABASE['commands']:
+                if command['title'] == 'help':
+                    answer = random.choice(command['answer'])
+                    break
+
+    if not admin:
         answer = DATABASE['dictionary']['devotion']
 
     bot.reply(message, bot.send_message, answer)
@@ -44,11 +47,15 @@ def handle_schedule(message):
     чо делать, если шедуле
     '''
     answer = ''
-    try:
-        for user in DATABASE['users']:
-            if user['name'] == message.from_user.username:
-                answer = user['group'] + ' ' +  loader.get_schedule(user['id'], 1)
-    except KeyError:
+    admin = False
+
+    for user in DATABASE['users']:
+        if user['name'] == message.from_user.username:
+            answer = user['group'] + ' ' +  loader.get_schedule(user['id'], 1)
+            admin = True
+            break
+
+    if not admin:
         answer = DATABASE['dictionary']['devotion']
 
     bot.reply(message, bot.send_message, answer)
@@ -60,20 +67,23 @@ def handle_leave(message):
     чо делать, если лив
     '''
     answer = ''
-    leave = False
+    admin = False
+
     if message.chat.id == message.from_user.id:
         answer = DATABASE['dictionary']['negation']
     else:
-        try:
-            for user in DATABASE['users']:
-                if user['name'] == message.from_user.username:
-                    answer = DATABASE['dictionary']['okay']
-                    leave = True
-        except KeyError:
+        for user in DATABASE['users']:
+            if user['name'] == message.from_user.username:
+                answer = DATABASE['dictionary']['okay']
+                admin = True
+                break
+
+        if not admin:
             answer = DATABASE['dictionary']['devotion']
 
     bot.reply(message, bot.send_message, answer)
-    if leave:
+
+    if admin:
         bot.leave_chat(message.chat.id)
 
 
@@ -83,18 +93,31 @@ def handle_shutdown(message):
     чо делать, если шатдаун
     '''
     answer = ''
-    shutdown = False
-    try:
-        for user in DATABASE['users']:
-            if user['name'] == message.from_user.username:
-                answer = DATABASE['dictionary']['okay']
-                shutdown = True
-    except KeyError:
+    admin = False
+
+    for user in DATABASE['users']:
+        if user['name'] == message.from_user.username:
+            answer = DATABASE['dictionary']['okay']
+            admin = True
+            break
+
+    if not admin:
         answer = DATABASE['dictionary']['devotion']
 
     bot.reply(message, bot.send_message, answer)
-    if shutdown:
+
+    if admin:
         sys.exit(0)
+
+
+@bot.message_handler(content_types=['sticker'])
+def handle_sticker(message):
+    '''
+    чо делать, если стикос
+    '''
+    print('----------------------------------------------------------------')
+    print(message.sticker.file_id)
+    print('----------------------------------------------------------------')
 
 
 @bot.message_handler(content_types=['text'])
@@ -102,17 +125,13 @@ def handle_text(message):
     '''
     чо делать, если текст
     '''
-    text_message = message.text.lower().replace('ё', 'е') + ' '
+    text_message = ' ' + message.text.lower().replace('ё', 'е') + ' '
     no_commands = True
     reaction = False
     parts = 0
 
     # личка
     if message.chat.id == message.from_user.id:
-        for name in DATABASE['dictionary']['names']:
-            if name in text_message:
-                text_message = text_message.replace(name, '')
-                break
         reaction = True
     # конфа
     else:
@@ -121,8 +140,7 @@ def handle_text(message):
             bot.interlocutor_id = 0
             for name in DATABASE['dictionary']['names']:
                 if name in text_message:
-                    text_message = text_message.replace(name, '')
-                    if len(text_message) < 5:
+                    if len(text_message.replace(name, '')) < 5:
                         bot.interlocutor_id = message.from_user.id
                     break
             reaction = True
@@ -130,8 +148,7 @@ def handle_text(message):
         else:
             for name in DATABASE['dictionary']['names']:
                 if name in text_message:
-                    text_message = text_message.replace(name, '')
-                    if len(text_message) < 5:
+                    if len(text_message.replace(name, '')) < 5:
                         bot.interlocutor_id = message.from_user.id
                     reaction = True
                     break
@@ -154,7 +171,7 @@ def handle_text(message):
                         length = text_message.find(' ', i)
                         # start checking for exceptions
                         for exception in command['exceptions']:
-                            if exception in text_message[i: length]:
+                            if exception in text_message[i:length]:
                                 right = False
                                 break
                         # end checking exceptions
@@ -170,11 +187,11 @@ def handle_text(message):
             parts = 0
 
         if no_commands:
-            if len(text_message) < 5:
+            if len(text_message) < 10:
                 bot.reply(message, bot.send_message,
                           random.choice(DATABASE['dictionary']['call_answers']))
             else:
-                bot.reply(message, bot.send_message,
+                bot.reply(message, bot.send_sticker,
                           DATABASE['dictionary']['ignorance'])
 
 
