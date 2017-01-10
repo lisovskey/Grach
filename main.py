@@ -135,6 +135,10 @@ def handle_text(message):
         reaction = True
     # конфа
     else:
+        # собеседник
+        if message.from_user.id == bot.interlocutor_id:
+            bot.interlocutor_id = 0
+            reaction = True
         for name in DATABASE['dictionary']['names']:
             if name in text_message:
                 if len(text_message.replace(name, '')) < 4:
@@ -143,10 +147,6 @@ def handle_text(message):
                               random.choice(DATABASE['dictionary']['call_answers']))
                     reaction = False
                     break
-        # собеседник
-        if message.from_user.id == bot.interlocutor_id:
-            bot.interlocutor_id = 0
-            reaction = True
     # много буков
     if reaction and len(text_message) > 50:
         bot.reply(message, bot.send_sticker,
