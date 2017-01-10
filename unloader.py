@@ -58,7 +58,7 @@ class Unloader:
         schedule += pretext + ' ' + tmp_week + ':'
 
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
-        soup = BeautifulStoneSoup(resp.content, features="xml")
+        soup = BeautifulStoneSoup(features="xml", resp.content)
         day = soup.find_all('weekDay', text=week_day)
         if not day:
             return 'отдыхает'
