@@ -30,10 +30,8 @@ def handle_help(message):
     for user in DATABASE['users']:
         if user['name'] == message.from_user.username:
             admin = True
-            for command in DATABASE['commands']:
-                if command['title'] == 'help':
-                    answer = random.choice(command['answer'])
-                    break
+            answer = DATABASE['dictionary']['help']
+            break
 
     if not admin:
         answer = DATABASE['dictionary']['devotion']
@@ -62,11 +60,11 @@ def handle_schedule(message):
 
 
 @bot.message_handler(commands=['cinema'])
-def handle_schedule(message):
+def handle_cinema(message):
     '''
     чо делать, если синема
     '''
-    answer = loader.get_films(0)
+    answer = loader.get_films(1)
     bot.reply(message, bot.send_message, answer)
 
 @bot.message_handler(commands=['leave'])
@@ -82,7 +80,7 @@ def handle_leave(message):
     else:
         for user in DATABASE['users']:
             if user['name'] == message.from_user.username:
-                answer = DATABASE['dictionary']['okay']
+                answer = DATABASE['dictionary']['obedience']
                 admin = True
                 break
 
@@ -105,7 +103,7 @@ def handle_shutdown(message):
 
     for user in DATABASE['users']:
         if user['name'] == message.from_user.username:
-            answer = DATABASE['dictionary']['okay']
+            answer = DATABASE['dictionary']['obedience']
             admin = True
             break
 
