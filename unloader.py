@@ -72,7 +72,7 @@ class Unloader:
             schedule += '\n\n'
             subject = subject.findParent('schedule')
             schedule += (subject.lessonTime.text + '\n' +
-                         subject.subject.text + ' (' +
+                         subject.subject.text + '\t(' +
                          subject.lessonType.text + ')')
             if subject.auditory is not None:
                 schedule += ' ' + subject.auditory.text
