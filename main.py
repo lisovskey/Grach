@@ -141,7 +141,7 @@ def handle_text(message):
             reaction = True
         for name in DATABASE['dictionary']['names']:
             if name in text_message:
-                if len(text_message.replace(name, '')) < 4:
+                if len(text_message.replace(name, '')) < 5:
                     bot.interlocutor_id = message.from_user.id
                     bot.reply(message, bot.send_message,
                               random.choice(DATABASE['dictionary']['call_answers']))
