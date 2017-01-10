@@ -105,25 +105,20 @@ def get_films():
     date = date.strftime('%d.%m.%Y')
     resp = requests.get('http://afisha.360.by/category-films_schedule.html')
     soup = BeautifulSoup(resp.content, 'html.parser') 
-    sub_soup = soup.body.section.select('.content > .items-block > .items-sub-block > .cinema_slider')[0]
-    films = sub_soup.find_all('div', class_='item clearfix films', date=date)
-
-    print(sub_soup)
-    print(films)
+    films = soup.find_all('div', class_='item clearfix films', date=date)
 
     for film in films:
-        sub_sub_soup = film.select('.cinemas-cell')[0]
-        cinemas = sub_sub_soup.find_all('div', class_='item clearfix films')
         print(film.get('letter'))
 
     film_title = str(input())
-
+    
     for film in films:
         if film_title.lower() in film.get('letter').lower():
             current_film = film
     
     
-    print(current_film.find_next_sibling())
+    print(current_film.find_next_sibling())    
+    
     
 if __name__ == '__main__':
     main()
