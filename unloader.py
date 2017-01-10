@@ -63,7 +63,7 @@ class Unloader:
         if not day:
             return 'отдыхает'
 
-        day = day[0].find_parent('scheduleModel')
+        day = day[0].findParent('scheduleModel')
         subs = day.find_all('weekNumber', text=week_num)
         if not subs:
             return 'отдыхает'
@@ -71,15 +71,15 @@ class Unloader:
         for subject in subs:
             schedule += '\n\n'
             subject = subject.find_parent('schedule')
-            schedule += (subject.lesson_time.text + '\n' +
+            schedule += (subject.lessonTime.text + '\n' +
                          subject.subject.text + ' (' +
-                         subject.lesson_type.text + ') ')
+                         subject.lessonType.text + ') ')
             if subject.auditory is not None:
                 schedule += subject.auditory.text
-            if subject.num_subgroup.text != '0':
-                schedule += ' (' + subject.num_subgroup.text + ')'
-            if subject.last_name is not None and subject.num_subgroup.text == '0':
-                schedule += ' ' + subject.last_name.text
+            if subject.numSubgroup.text != '0':
+                schedule += ' (' + subject.numSubgroup.text + ')'
+            if subject.lastName is not None and subject.numSubgroup.text == '0':
+                schedule += ' ' + subject.lastName.text
 
         return schedule
 
