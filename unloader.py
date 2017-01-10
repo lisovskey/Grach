@@ -59,27 +59,27 @@ class Unloader:
 
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
         soup = Soup(resp.content)
-        day = soup.findAll('weekDay', text=week_day)
+        day = soup.find_all('weekDay', text=week_day)
         if not day:
             return 'отдыхает'
 
-        day = day[0].findParent('scheduleModel')
-        subs = day.findAll('weekNumber', text=week_num)
+        day = day[0].find_parent('scheduleModel')
+        subs = day.find_all('weekNumber', text=week_num)
         if not subs:
             return 'отдыхает'
 
         for subject in subs:
             schedule += '\n\n'
-            subject = subject.findParent('schedule')
-            schedule += (subject.lessonTime.text + '\n' +
+            subject = subject.find_parent('schedule')
+            schedule += (subject.lesson_time.text + '\n' +
                          subject.subject.text + ' (' +
-                         subject.lessonType.text + ') ')
+                         subject.lesson_type.text + ') ')
             if subject.auditory is not None:
                 schedule += subject.auditory.text
-            if subject.numSubgroup.text != '0':
-                schedule += ' (' + subject.numSubgroup.text + ')'
-            if subject.lastName is not None and subject.numSubgroup.text == '0':
-                schedule += ' ' + subject.lastName.text
+            if subject.num_subgroup.text != '0':
+                schedule += ' (' + subject.num_subgroup.text + ')'
+            if subject.last_name is not None and subject.num_subgroup.text == '0':
+                schedule += ' ' + subject.last_name.text
 
         return schedule
 

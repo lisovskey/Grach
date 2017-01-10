@@ -1,6 +1,9 @@
 import random
 import json
 import math
+import requests
+from bs4 import BeautifulSoup as Soup
+from datetime import datetime, timedelta
 
 
 with open('content.json') as json_data:
@@ -8,9 +11,10 @@ with open('content.json') as json_data:
 
 
 def main():
-    message = str(input())
-    message = message.replace('ё', 'е')
-    print(calculate(message))
+    get_films()
+    # message = str(input())
+    # message = message.replace('ё', 'е')
+    # print(calculate(message))
 
 
 
@@ -93,6 +97,34 @@ def calculate(message):
     else:
         return round(answer, 3)
 
+
+def get_films():
+    current_film = None
+    date = datetime.now() + timedelta(hours = 3)                                # find out today's date
+    date = date.strftime('%d.%m.%Y')                                            # convert date into string
+    resp = requests.get('http://afisha.360.by/category-films_schedule.html')    # download page
+    soup = Soup(resp.content, 'html.parser') 
+    films = soup.find_all('div', class_ = 'item clearfix films', date= date)    # find films
+
+    for film in films:
+        '''
+        cinemas = film.findAllNext('div', class_ = 'cinema clearfix')
+        cinemas_num = 0
+        for cinema in cinemas:
+            cinemas_num += 1
+        if cinemas_num > 6:
+            '''
+        print(film.get('letter'))                                               # print only popular films
+
+    film_title = str(input())
+    
+    for film in films:
+        if film_title.lower() in film.get('letter').lower():
+            current_film = film
+    
+    
+    print(current_film.find_next_sibling())    
+    
     
 if __name__ == '__main__':
     main()
