@@ -135,27 +135,21 @@ def handle_text(message):
         reaction = True
     # конфа
     else:
+        for name in DATABASE['dictionary']['names']:
+            if name in text_message:
+                if len(text_message.replace(name, '')) < 4:
+                    bot.interlocutor_id = message.from_user.id
+                    bot.reply(message, bot.send_message,
+                              random.choice(DATABASE['dictionary']['call_answers']))
+                    reaction = False
+                    break
         # собеседник
         if message.from_user.id == bot.interlocutor_id:
             bot.interlocutor_id = 0
-            for name in DATABASE['dictionary']['names']:
-                if name in text_message:
-                    if len(text_message.replace(name, '')) < 5:
-                        bot.interlocutor_id = message.from_user.id
-                    break
             reaction = True
-        # хер с горы
-        else:
-            for name in DATABASE['dictionary']['names']:
-                if name in text_message:
-                    if len(text_message.replace(name, '')) < 5:
-                        bot.interlocutor_id = message.from_user.id
-                    reaction = True
-                    break
-
     # много буков
     if reaction and len(text_message) > 50:
-        bot.reply(message, bot.send_message,
+        bot.reply(message, bot.send_sticker,
                   DATABASE['dictionary']['overload'])
         reaction = False
 
@@ -187,12 +181,8 @@ def handle_text(message):
             parts = 0
 
         if no_commands:
-            if len(text_message) < 10:
-                bot.reply(message, bot.send_message,
-                          random.choice(DATABASE['dictionary']['call_answers']))
-            else:
-                bot.reply(message, bot.send_sticker,
-                          DATABASE['dictionary']['ignorance'])
+            bot.reply(message, bot.send_message,
+                      DATABASE['dictionary']['ignorance'])
 
 
 if __name__ == '__main__':
