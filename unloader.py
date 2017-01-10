@@ -75,7 +75,7 @@ class Unloader:
                          subject.subject.text + ' (' +
                          subject.lessonType.text + ') ')
             if subject.auditory is not None:
-                schedule = '{:12s}'.format(schedule) + subject.auditory.text
+                schedule = '{:16s}'.format(schedule) + subject.auditory.text
             if subject.numSubgroup.text != '0':
                 schedule += ' (' + subject.numSubgroup.text + ')'
             if subject.lastName is not None and subject.numSubgroup.text == '0':
