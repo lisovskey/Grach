@@ -6,7 +6,7 @@
 
 from datetime import datetime, timedelta
 import requests
-from bs4 import BeautifulStoneSoup as Soup
+from bs4 import BeautifulStoneSoup
 
 class Unloader:
     '''
@@ -58,7 +58,7 @@ class Unloader:
         schedule += pretext + ' ' + tmp_week + ':'
 
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
-        soup = Soup(resp.content)
+        soup = BeautifulStoneSoup(resp.content, features="xml")
         day = soup.find_all('weekDay', text=week_day)
         if not day:
             return 'отдыхает'
