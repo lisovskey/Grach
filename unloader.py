@@ -84,10 +84,22 @@ class Unloader:
         return schedule
 
 
-    def get_premieres(self):
+    def get_films(self, delta):
         '''
         получаем премьеры в лицо
         '''
         premieres = ''
+
+        date = datetime.now() + timedelta(days=delta, hours=3)
+        date = date.strftime('%d.%m.%Y')
+        resp = requests.get('http://afisha.360.by/category-films_schedule.html')
+        soup = BeautifulSoup(resp.content, 'html.parser')
+
+        sub_soup = soup.body.section.select('.items-block > .items-sub-block > .cinema_slider > ul')[0]
+        films = sub_soup.find_all('li', class_='scene')
+
+        for film in films:
+            film_title = film.select('.movie > .info > header > h1')[0]
+            premieres += film_title.string
 
         return premieres

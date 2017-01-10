@@ -61,6 +61,14 @@ def handle_schedule(message):
     bot.reply(message, bot.send_message, answer)
 
 
+@bot.message_handler(commands=['cinema'])
+def handle_schedule(message):
+    '''
+    чо делать, если синема
+    '''
+    answer = loader.get_films(0)
+    bot.reply(message, bot.send_message, answer)
+
 @bot.message_handler(commands=['leave'])
 def handle_leave(message):
     '''

@@ -2,7 +2,7 @@ import random
 import json
 import math
 import requests
-from bs4 import BeautifulSoup as Soup
+from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 
 
@@ -100,31 +100,30 @@ def calculate(message):
 
 def get_films():
     current_film = None
-    date = datetime.now() + timedelta(hours = 3)                                # find out today's date
-    date = date.strftime('%d.%m.%Y')                                            # convert date into string
-    resp = requests.get('http://afisha.360.by/category-films_schedule.html')    # download page
-    soup = Soup(resp.content, 'html.parser') 
-    films = soup.find_all('div', class_ = 'item clearfix films', date= date)    # find films
+
+    date = datetime.now() + timedelta(hours=3)
+    date = date.strftime('%d.%m.%Y')
+    resp = requests.get('http://afisha.360.by/category-films_schedule.html')
+    soup = BeautifulSoup(resp.content, 'html.parser') 
+    sub_soup = soup.body.section.select('.content > .items-block > .items-sub-block > .cinema_slider')[0]
+    films = sub_soup.find_all('div', class_='item clearfix films', date=date)
+
+    print(sub_soup)
+    print(films)
 
     for film in films:
-        '''
-        cinemas = film.findAllNext('div', class_ = 'cinema clearfix')
-        cinemas_num = 0
-        for cinema in cinemas:
-            cinemas_num += 1
-        if cinemas_num > 6:
-            '''
-        print(film.get('letter'))                                               # print only popular films
+        sub_sub_soup = film.select('.cinemas-cell')[0]
+        cinemas = sub_sub_soup.find_all('div', class_='item clearfix films')
+        print(film.get('letter'))
 
     film_title = str(input())
-    
+
     for film in films:
         if film_title.lower() in film.get('letter').lower():
             current_film = film
     
     
-    print(current_film.find_next_sibling())    
-    
+    print(current_film.find_next_sibling())
     
 if __name__ == '__main__':
     main()
