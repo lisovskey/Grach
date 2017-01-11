@@ -64,6 +64,8 @@ def handle_cinema(message):
     '''
     чо делать, если синема
     '''
+    answer = DATABASE['dictionary']['solving']
+    bot.reply(message, bot.send_message, answer)
     answer = loader.get_films(1)
     bot.reply(message, bot.send_message, answer)
 
