@@ -26,12 +26,14 @@ def handle_help(message):
     '''
     answer = ''
     admin = False
-
+    
     for user in DATABASE['users']:
         if user['name'] == message.from_user.username:
             admin = True
-            answer = DATABASE['dictionary']['help']
-            break
+            for command in DATABASE['commands']:
+                if command['title'] == 'help':
+                    answer = random.choice(command['answer'])
+                    break
 
     if not admin:
         answer = DATABASE['dictionary']['devotion']
@@ -59,14 +61,6 @@ def handle_schedule(message):
     bot.reply(message, bot.send_message, answer)
 
 
-@bot.message_handler(commands=['cinema'])
-def handle_cinema(message):
-    '''
-    чо делать, если синема
-    '''
-    answer = loader.get_films(1)
-    bot.reply(message, bot.send_message, answer)
-
 @bot.message_handler(commands=['leave'])
 def handle_leave(message):
     '''
@@ -80,10 +74,8 @@ def handle_leave(message):
     else:
         for user in DATABASE['users']:
             if user['name'] == message.from_user.username:
-                answer = DATABASE['dictionary']['obedience']
+                answer = DATABASE['dictionary']['okay']
                 admin = True
-                break
-
         if not admin:
             answer = DATABASE['dictionary']['devotion']
 
@@ -103,10 +95,10 @@ def handle_shutdown(message):
 
     for user in DATABASE['users']:
         if user['name'] == message.from_user.username:
-            answer = DATABASE['dictionary']['obedience']
+            answer = DATABASE['dictionary']['okay']
             admin = True
-            break
-
+            b
+    if not a:
     if not admin:
         answer = DATABASE['dictionary']['devotion']
 
@@ -114,15 +106,6 @@ def handle_shutdown(message):
 
     if admin:
         sys.exit(0)
-
-
-@bot.message_handler(content_types=['sticker'])
-def handle_sticker(message):
-    '''
-    чо делать, если стикос
-    '''
-    print('----------------------------------------------------------------')
-    print(message.sticker.file_id)
 
 
 @bot.message_handler(content_types=['text'])
@@ -143,26 +126,24 @@ def handle_text(message):
         # собеседник
         if message.from_user.id == bot.interlocutor_id:
             bot.interlocutor_id = 0
-            reaction = True
-
-        for name in DATABASE['dictionary']['names']:
-            if name in text_message:
-                reaction = True
-                if len(text_message.replace(name, '')) < 5:
-                    bot.interlocutor_id = message.from_user.id
-                    bot.reply(message, bot.send_message,
-                              random.choice(DATABASE['dictionary']['call_answers']))
-                    reaction = False
+            for name in DATABASE['dictionary']['names']:
+                if name in text_message:
+                    if len(text_message.replace(name, '')) < 5:
+                        bot.interlocutor_id = message.from_user.id
                     break
-        # мало буков
-        if reaction and len(text_message.replace(name, '')) < 5:
-            bot.reply(message, bot.send_message,
-                      random.choice(DATABASE['dictionary']['call_answers']))
-            reaction = False
+            reaction = True
+        # хер с горы
+        else:
+            for name in DATABASE['dictionary']['names']:
+                if name in text_message:
+                    if len(text_message.replace(name, '')) < 5:
+                        bot.interlocutor_id = message.from_user.id
+                    reaction = True
+                    break
 
     # много буков
     if reaction and len(text_message) > 50:
-        bot.reply(message, bot.send_sticker,
+        bot.reply(message, bot.send_message,
                   DATABASE['dictionary']['overload'])
         reaction = False
 
@@ -194,8 +175,12 @@ def handle_text(message):
             parts = 0
 
         if no_commands:
-            bot.reply(message, bot.send_message,
-                      DATABASE['dictionary']['ignorance'])
+            if len(text_message) < 10:
+                bot.reply(message, bot.send_message,
+                          random.choice(DATABASE['dictionary']['call_answers']))
+            else:
+                bot.reply(message, bot.send_message,
+                          DATABASE['dictionary']['ignorance'])
 
 
 if __name__ == '__main__':

@@ -5,8 +5,9 @@
 '''
 
 from datetime import datetime, timedelta
+import time
 import requests
-from bs4 import BeautifulStoneSoup
+from bs4 import BeautifulSoup
 
 class Unloader:
     '''
@@ -58,7 +59,7 @@ class Unloader:
         schedule += pretext + ' ' + tmp_week + ':'
 
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
-        soup = BeautifulStoneSoup(resp.content)
+        soup = BeautifulSoup(resp.content, 'xml')
         day = soup.find_all('weekDay', text=week_day)
         if not day:
             return 'отдыхает'
@@ -89,6 +90,7 @@ class Unloader:
         получаем премьеры в лицо
         '''
         premieres = ''
+        num = 1
 
         date = datetime.now() + timedelta(days=delta, hours=3)
         date = date.strftime('%d.%m.%Y')
@@ -100,6 +102,7 @@ class Unloader:
 
         for film in films:
             film_title = film.select('.movie > .info > header > h1')[0]
-            premieres += film_title.string
-
+            premieres += str(num) + '. ' + film_title.string + '\n'
+            num += 1
+        print(time.process_time())
         return premieres
