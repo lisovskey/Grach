@@ -159,7 +159,7 @@
             "text": [
                 {"part": ["? "]}
             ],
-            "exceptions": ["когда ", "где ", "кто ", "что "],
+            "exceptions": ["когда ", "где ", "кто ", "что ", "почему "],
             "parts": 1,
             "answer": ["да", "конечно", "не", "нет"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
