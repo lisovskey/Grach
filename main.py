@@ -9,10 +9,10 @@
 import sys
 import random
 import json
-import rzbot
-import unloader
 import itertools
 import re
+import rzbot
+import unloader
 
 with open('content.json') as json_data:
     DATABASE = json.load(json_data)
