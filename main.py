@@ -11,6 +11,8 @@ import random
 import json
 import rzbot
 import unloader
+import itertools
+import re
 
 with open('content.json') as json_data:
     DATABASE = json.load(json_data)
@@ -132,7 +134,13 @@ def handle_text(message):
     '''
     чо делать, если текст
     '''
+    # опускаем строку
     text_message = ' ' + message.text.lower().replace('ё', 'е') + ' '
+    # оставляем только буквы, пробелы и вопросительный знак
+    text_message = re.sub('[^a-z]+[^а-я]+[ ]+[?]', '', text_message)
+    # обрезаем очередь повторяющихся символов
+    text_message = ''.join(ch for ch, _ in itertools.groupby(text_message))
+
     no_commands = True
     reaction = False
     parts = 0
@@ -140,6 +148,13 @@ def handle_text(message):
     # личка
     if message.chat.id == message.from_user.id:
         reaction = True
+        for name in DATABASE['dictionary']['names']:
+            if name in text_message:
+                if len(text_message.replace(name, '')) < 5:
+                    bot.reply(message, bot.send_message,
+                              random.choice(DATABASE['dictionary']['call_answers']))
+                    reaction = False
+                    break
     # конфа
     else:
         # собеседник
@@ -163,7 +178,7 @@ def handle_text(message):
             reaction = False
 
     # много буков
-    if reaction and len(text_message) > 50:
+    if reaction and len(text_message) > 60:
         bot.reply(message, bot.send_sticker,
                   DATABASE['dictionary']['overload'])
         reaction = False
@@ -176,11 +191,9 @@ def handle_text(message):
                 for word in text['part']:
                     if word in text_message:
                         right = True
-                        i = text_message.find(word)
-                        length = text_message.find(' ', i)
                         # start checking for exceptions
                         for exception in command['exceptions']:
-                            if exception in text_message[i:length]:
+                            if exception in text_message:
                                 right = False
                                 break
                         # end checking exceptions
@@ -201,4 +214,4 @@ def handle_text(message):
 
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True, interval=0)
+    bot.polling(none_stop=True, interval=0.5, timeout=10)
