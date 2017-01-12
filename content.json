@@ -36,7 +36,7 @@
             "exceptions": [],
             "parts": 2,
             "answer": [],
-            "method": "handle_schedule(message, text_message)"
+            "method": "handle_schedule(message, text_message=None)"
         },
         
         {
@@ -49,7 +49,7 @@
             "exceptions": [],
             "parts": 2,
             "answer": [],
-            "method": "handle_cinema(message, text_message)"
+            "method": "handle_cinema(message, text_message=None)"
         },
         
         {
