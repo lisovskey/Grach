@@ -49,7 +49,7 @@ def handle_schedule(message, text_message=None):
     admin = False
 
     delta = 1
-    if '/' not in message.text:
+    if text_message != None:
         if any(word in DATABASE['dictionary']['today'] for word in text_message):
             delta = 0
         elif any(word in DATABASE['dictionary']['after_tomorrow'] for word in text_message):
@@ -76,7 +76,7 @@ def handle_cinema(message, text_message=None):
     bot.reply(message, bot.send_message, answer)
 
     delta = 1
-    if '/' not in message.text:
+    if text_message != None:
         if any(word in DATABASE['dictionary']['today'] for word in text_message):
             delta = 0
         elif any(word in DATABASE['dictionary']['after_tomorrow'] for word in text_message):
