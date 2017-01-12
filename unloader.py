@@ -60,12 +60,12 @@ class Unloader:
         soup = BeautifulSoup(resp.content, 'xml')
         day = soup.find_all('weekDay', text=week_day)
         if not day:
-            return 'отдыхает'
+            return ' отдыхает'
 
         day = day[0].findParent('scheduleModel')
         subs = day.find_all('weekNumber', text=week_num)
         if not subs:
-            return 'отдыхает'
+            return ' отдыхает'
 
         for subject in subs:
             schedule += '\n\n'
