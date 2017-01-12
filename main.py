@@ -50,9 +50,9 @@ def handle_schedule(message, text_message=None):
 
     delta = 1
     if text_message != None:
-        if any(word in DATABASE['dictionary']['today'] for word in text_message):
+        if any(word in text_message for word in DATABASE['dictionary']['today']):
             delta = 0
-        elif any(word in DATABASE['dictionary']['after_tomorrow'] for word in text_message):
+        elif any(word in text_message for word in DATABASE['dictionary']['after_tomorrow']):
             delta = 2
 
     for user in DATABASE['users']:
@@ -77,9 +77,9 @@ def handle_cinema(message, text_message=None):
 
     delta = 1
     if text_message != None:
-        if any(word in DATABASE['dictionary']['today'] for word in text_message):
+        if any(word in text_message for word in DATABASE['dictionary']['today']):
             delta = 0
-        elif any(word in DATABASE['dictionary']['after_tomorrow'] for word in text_message):
+        elif any(word in text_message for word in DATABASE['dictionary']['after_tomorrow']):
             delta = 2
 
     answer = loader.get_films(delta)
