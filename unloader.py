@@ -33,30 +33,28 @@ class Unloader:
 
         tmp_week = requests.get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
         week_num = str(tmp_week.content)[2]
-        pretext = 'в'
         if tmp_date[6] == 0:
             week_day = 'Понедельник'
-            tmp_week = 'понедельник'
+            tmp_week = ' в понедельник'
         elif tmp_date[6] == 1:
             week_day = 'Вторник'
-            pretext = 'во'
-            tmp_week = 'вторник'
+            tmp_week = ' во вторник'
         elif tmp_date[6] == 2:
             week_day = 'Среда'
-            tmp_week = 'среду'
+            tmp_week = ' в среду'
         elif tmp_date[6] == 3:
             week_day = 'Четверг'
-            tmp_week = 'четверг'
+            tmp_week = ' в четверг'
         elif tmp_date[6] == 4:
             week_day = 'Пятница'
-            tmp_week = 'пятницу'
+            tmp_week = ' в пятницу'
         elif tmp_date[6] == 5:
             week_day = 'Суббота'
-            tmp_week = 'субботу'
+            tmp_week = ' в субботу'
         elif tmp_date[6] == 6:
             week_day = 'Воскресенье'
-            tmp_week = 'воскресенье'
-        schedule += pretext + ' ' + tmp_week + ':'
+            tmp_week = ' в воскресенье'
+        schedule += tmp_week + ':'
 
         resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
         soup = BeautifulSoup(resp.content, 'xml')

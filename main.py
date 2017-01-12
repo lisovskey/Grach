@@ -51,7 +51,7 @@ def handle_schedule(message):
 
     for user in DATABASE['users']:
         if user['name'] == message.from_user.username:
-            answer = user['group'] + ' ' +  loader.get_schedule(user['id'], 1)
+            answer = user['group'] + loader.get_schedule(user['id'], 1)
             admin = True
             break
 
