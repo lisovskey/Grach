@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 '''
-умеет мало
-работаем дальше
-надо в рзбот перенести все
+здеся обработчики команд
+алгоритмы больно сложные
+надо упростить
 '''
 
 import sys
@@ -30,11 +30,9 @@ def handle_help(message):
     answer = ''
     admin = False
 
-    for user in DATABASE['users']:
-        if user['name'] == message.from_user.username:
-            admin = True
-            answer = DATABASE['dictionary']['help']
-            break
+    if any(user == message.from_user.username for user in DATABASE['users']):
+        admin = True
+        answer = DATABASE['dictionary']['help']
 
     if not admin:
         answer = DATABASE['dictionary']['devotion']
@@ -83,11 +81,9 @@ def handle_leave(message):
     if message.chat.id == message.from_user.id:
         answer = DATABASE['dictionary']['negation']
     else:
-        for user in DATABASE['users']:
-            if user['name'] == message.from_user.username:
-                answer = DATABASE['dictionary']['obedience']
-                admin = True
-                break
+        if any(user == message.from_user.username for user in DATABASE['users']):
+            answer = DATABASE['dictionary']['obedience']
+            admin = True
 
         if not admin:
             answer = DATABASE['dictionary']['devotion']
@@ -106,11 +102,9 @@ def handle_shutdown(message):
     answer = ''
     admin = False
 
-    for user in DATABASE['users']:
-        if user['name'] == message.from_user.username:
-            answer = DATABASE['dictionary']['obedience']
-            admin = True
-            break
+    if any(user == message.from_user.username for user in DATABASE['users']):
+        answer = DATABASE['dictionary']['obedience']
+        admin = True
 
     if not admin:
         answer = DATABASE['dictionary']['devotion']
