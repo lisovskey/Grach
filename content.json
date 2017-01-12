@@ -36,7 +36,7 @@
             "exceptions": [],
             "parts": 2,
             "answer": [],
-            "method": "handle_schedule(message)"
+            "method": "handle_schedule(message, text_message)"
         },
         
         {
@@ -49,7 +49,7 @@
             "exceptions": [],
             "parts": 2,
             "answer": [],
-            "method": "handle_cinema(message)"
+            "method": "handle_cinema(message, text_message)"
         },
         
         {
@@ -351,6 +351,8 @@
     
     "dictionary": {
         "names": ["гриша", "грач", "григорий"],
+        "today": ["сегодня", "седня", "сеня"],
+        "after_tomorrow": ["послезавтр", "после завтр"],
         "call_answers": ["что", "че", "што"],
         "help": "могу сказать, какие завтра пары в бугоре и фильмецы в кино",
         "obedience": "ладно",

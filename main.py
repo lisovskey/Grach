@@ -41,16 +41,23 @@ def handle_help(message):
 
 
 @bot.message_handler(commands=['schedule'])
-def handle_schedule(message):
+def handle_schedule(message, text_message):
     '''
     чо делать, если шедуле
     '''
     answer = ''
     admin = False
 
+    delta = 1
+    if '/' not in message.text:
+        if any(DATABASE['dictionary']['today'] in text_message):
+            delta = 0
+        elif any(DATABASE['dictionary']['after_tomorrow'] in text_message):
+            delta = 2
+
     for user in DATABASE['users']:
         if user['name'] == message.from_user.username:
-            answer = user['group'] + loader.get_schedule(user['id'], 1)
+            answer = user['group'] + loader.get_schedule(user['id'], delta)
             admin = True
             break
 
@@ -61,13 +68,21 @@ def handle_schedule(message):
 
 
 @bot.message_handler(commands=['cinema'])
-def handle_cinema(message):
+def handle_cinema(message, text_message):
     '''
     чо делать, если синема
     '''
     answer = DATABASE['dictionary']['solving']
     bot.reply(message, bot.send_message, answer)
-    answer = loader.get_films(1)
+
+    delta = 1
+    if '/' not in message.text:
+        if any(DATABASE['dictionary']['today'] in text_message):
+            delta = 0
+        elif any(DATABASE['dictionary']['after_tomorrow'] in text_message):
+            delta = 2
+
+    answer = loader.get_films(delta)
     bot.reply(message, bot.send_message, answer)
 
 @bot.message_handler(commands=['leave'])
