@@ -41,7 +41,7 @@ def handle_help(message):
 
 
 @bot.message_handler(commands=['schedule'])
-def handle_schedule(message, text_message):
+def handle_schedule(message, text_message=None):
     '''
     чо делать, если шедуле
     '''
@@ -68,7 +68,7 @@ def handle_schedule(message, text_message):
 
 
 @bot.message_handler(commands=['cinema'])
-def handle_cinema(message, text_message):
+def handle_cinema(message, text_message=None):
     '''
     чо делать, если синема
     '''
