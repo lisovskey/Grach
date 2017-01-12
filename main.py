@@ -11,13 +11,14 @@ import random
 import json
 import itertools
 import re
+import config
 import rzbot
 import unloader
 
 with open('content.json') as json_data:
     DATABASE = json.load(json_data)
 
-bot = rzbot.RZTeleBot(DATABASE['config']['token'])
+bot = rzbot.RZTeleBot(config.TOKEN)
 loader = unloader.Unloader()
 
 
