@@ -50,6 +50,7 @@ class RZTeleBot(telebot.TeleBot):
         '''
         6 arithmetic operations
         '''
+        text_message = ' ' + message.lower().replace('ё', 'е') + ' '
         answer = None
         numbers = []
         for num in message.split():

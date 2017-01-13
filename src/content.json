@@ -77,17 +77,6 @@
         },
         
         {
-            "title": "who",
-            "text": [
-                {"part": ["ты кто", "кто ты", "кто такой?", "ты что такое", "что ты такое"]}
-            ],
-            "exceptions": ["кто-", "кто то", "что-", "что то", "еты"],
-            "parts": 1,
-            "answer": ["бот", "грач", "бобич", "бог", "всего лишь машина, имитация жизни"],
-            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
-        },
-        
-        {
             "title": "calculate",
             "text": [
                 {"part": ["посчитай", "сколько буде", "умнож", "подели", "раздели",
@@ -98,7 +87,7 @@
             "exceptions": ["умножа", "умножите", "поделите", "разделите", "поделис"],
             "parts": 2,
             "answer": ["на"],
-            "method": "bot.reply(message, bot.send_message, bot.calculate(text_message))"
+            "method": "bot.reply(message, bot.send_message, bot.calculate(message.text))"
         },
         
         {
@@ -129,7 +118,7 @@
         {
             "title": "mid_swear",
             "text": [
-                {"part": [" иди ", "пошел", "пошол", "пиздуй", " ебаш", " ди ", "соси "]},
+                {"part": [" иди ", "пошел", "пошла", "пошол", "пиздуй", " ебаш", " ди ", "соси "]},
                 {"part": ["нахуй", " хуй ", "нахер", "на хер", " нах ", "в пизд", "в очко",
                           "блять", "блядь", " член "]}
             ],
@@ -175,7 +164,7 @@
             "exceptions": ["когда ", "где ", "кто ", "что ", "почему ", "как ", "каков",
                            "какой ", "какая ", "какое ", "какие "],
             "parts": 1,
-            "answer": ["да", "конечно", "не", "нет"],
+            "answer": ["да", "ну да", "конечно", "не", "да не", "нет", "тупой вопрос", "а тебе не похуй?"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         },
         
@@ -198,6 +187,17 @@
             "exceptions": [],
             "parts": 1,
             "answer": ["не знаю", "где-нибудь", "где надо", "нигде", "в жопi", "вон там"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "who_are_you",
+            "text": [
+                {"part": ["ты кто", "кто ты", "кто такой?", "ты что такое", "что ты такое"]}
+            ],
+            "exceptions": ["кто-", "кто то", "что-", "что то", "еты"],
+            "parts": 1,
+            "answer": ["бот", "грач", "бобич", "бог", "всего лишь машина, имитация жизни"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         },
         
@@ -272,9 +272,9 @@
         {
             "title": "you",
             "text": [
-                {"part": [" ты ", " бот "]}
+                {"part": [" ты "]}
             ],
-            "exceptions": ["?"],
+            "exceptions": [],
             "parts": 1,
             "answer": ["спасибо"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
@@ -312,15 +312,83 @@
             "answer": ["ладно"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         },
-
+        
         {
-            "title": "y_or_n",
+            "title": "good",
             "text": [
-                {"part": [" да ", " нет ", " ага ", " конечно ", "естественно"]}
+                {"part": [" хорошо", "хорашо", "харашо", "отлично", " супер", " ништяк",
+                          " норм", "неплохо", " ого ", "пиздато", "заебись", "охуенно", 
+                          "ахуенно", "ахуена", "зачот"]}
             ],
-            "exceptions": ["?"],
+            "exceptions": [" не "],
             "parts": 1,
-            "answer": ["ну вот и все", "норм", "хорошо"],
+            "answer": ["ага", "да, норм", "знаю", "е"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "bad",
+            "text": [
+                {"part": ["плохо", "хуево", "отвратительно", "нехорошо", " пизда ", "говно ", "хуйня"]}
+            ],
+            "exceptions": [" не "],
+            "parts": 1,
+            "answer": ["да ваще жопа", "наверное", "не могу не согласиться", "на самом деле нет"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "lets",
+            "text": [
+                {"part": [" давай", " дай "]}
+            ],
+            "exceptions": [],
+            "parts": 1,
+            "answer": ["даю", "чо тебе дать", "а по ебалу не дать?"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "yourself",
+            "text": [
+                {"part": [" сам "]}
+            ],
+            "exceptions": [],
+            "parts": 1,
+            "answer": ["ха, пиздюк", "нет", "я выше этого", "я охуенный"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "yes",
+            "text": [
+                {"part": [" да ", " ага ", " конечно ", "естественно"]}
+            ],
+            "exceptions": [],
+            "parts": 1,
+            "answer": ["ну вот и все", "ну и отлично", "ага", "ну ладно"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "no",
+            "text": [
+                {"part": [" не ", " нет ", " неа "]}
+            ],
+            "exceptions": [],
+            "parts": 1,
+            "answer": ["ты чо дурень", "ладно", "точно?"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "understand",
+            "text": [
+                {"part": [" понял ", "понятно ", "ясно "]}
+            ],
+            "exceptions": [],
+            "parts": 1,
+            "answer": ["это хорошо", "было сложно?", "я рад", "отлично"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         },
         
@@ -339,12 +407,23 @@
         {
             "title": "bye",
             "text": [
-                {"part": ["все давай", "датвиданья", "до связи", " дасвидан",
+                {"part": ["все давай", "датвиданья", "до связи", " дасвидан", " пакес ",
                           " до свидан", " досвидан", " пока ", " пака ", "ой ночи "]}
             ],
             "exceptions": ["пока н", "пока чт", "пока ты", "пока я", "пока он", "пока вс", "пока р"],
             "parts": 1,
             "answer": ["пока", "пака", "давай"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "swear",
+            "text": [
+                {"part": [" сука", " блять", "ебать", "пиздец", " мля ", "нахуй"]}
+            ],
+            "exceptions": [],
+            "parts": 1,
+            "answer": ["чо такое", "ты ебонутый?", "мда"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         }
     ],
