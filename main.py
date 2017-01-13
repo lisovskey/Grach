@@ -27,16 +27,7 @@ def handle_help(message):
     '''
     чо делать, если халп
     '''
-    answer = ''
-    admin = False
-
-    if any(username == message.from_user.username for username in DATABASE['users']['username']):
-        admin = True
-        answer = DATABASE['dictionary']['help']
-
-    if not admin:
-        answer = DATABASE['dictionary']['devotion']
-
+    answer = DATABASE['dictionary']['help']
     bot.reply(message, bot.send_message, answer)
 
 
@@ -96,7 +87,7 @@ def handle_leave(message):
     if message.chat.id == message.from_user.id:
         answer = DATABASE['dictionary']['negation']
     else:
-        if any(user == message.from_user.username for user in DATABASE['users']):
+        if any(user['name'] == message.from_user.username for user in DATABASE['users']):
             answer = DATABASE['dictionary']['obedience']
             admin = True
 
@@ -117,7 +108,7 @@ def handle_shutdown(message):
     answer = ''
     admin = False
 
-    if any(user == message.from_user.username for user in DATABASE['users']):
+    if any(user['name'] == message.from_user.username for user in DATABASE['users']):
         answer = DATABASE['dictionary']['obedience']
         admin = True
 
