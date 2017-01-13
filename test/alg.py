@@ -7,8 +7,8 @@ from datetime import datetime, timedelta
 
 def main():
     get_films()
-    
-    
+
+
 def calculate(message):
     answer = None
     numbers = []
@@ -56,14 +56,15 @@ def get_films():
         print(film.get('letter'))
 
     film_title = str(input())
-    
+
     for film in films:
         if film_title.lower() in film.get('letter').lower():
             current_film = film
-    
-    
+
+
     print(current_film.find_next_sibling())    
-    
-    
+
+
 if __name__ == '__main__':
     main()
+    
