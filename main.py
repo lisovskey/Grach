@@ -30,7 +30,7 @@ def handle_help(message):
     answer = ''
     admin = False
 
-    if any(user == message.from_user.username for user in DATABASE['users']):
+    if any(username == message.from_user.username for username in DATABASE['users']['username']):
         admin = True
         answer = DATABASE['dictionary']['help']
 
