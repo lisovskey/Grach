@@ -50,7 +50,7 @@ class RZTeleBot(telebot.TeleBot):
         '''
         6 arithmetic operations
         '''
-        text_message = ' ' + message.lower().replace('ё', 'е') + ' '
+        text = ' ' + message.lower().replace('ё', 'е') + ' '
         answer = None
         numbers = []
         for num in message.split():
@@ -61,7 +61,7 @@ class RZTeleBot(telebot.TeleBot):
         if not numbers:
             return 'не могу'
 
-        if len(numbers) == 1 and ('факториал' in message or '!' in message):
+        if len(numbers) == 1 and ('факториал' in text or '!' in text):
             numbers[0] = int(numbers[0])
             if numbers[0] < 1001:
                 answer = math.factorial(numbers[0])
@@ -73,15 +73,15 @@ class RZTeleBot(telebot.TeleBot):
                 return 'неенененене'
 
         try:
-            if 'умнож' in message or '*' in message:
+            if 'умнож' in text or '*' in text:
                 answer = numbers[0] * numbers[1]
-            elif 'дели' in message or '/' in message:
+            elif 'дели' in text or '/' in text:
                 answer = numbers[0] / numbers[1]
-            elif 'плюс' in message or 'слож' in message or '+' in message:
+            elif 'плюс' in text or 'слож' in text or '+' in text:
                 answer = numbers[0] + numbers[1]
-            elif 'минус' in message or 'отним' in message or 'вычт' in message or '-' in message:
+            elif 'минус' in text or 'отним' in text or 'вычт' in text or '-' in text:
                 answer = numbers[0] - numbers[1]
-            elif 'остаток' in message or '%' in message:
+            elif 'остаток' in text or '%' in text:
                 answer = numbers[0] % numbers[1]
         except IndexError:
             return 'что считать дядя'
