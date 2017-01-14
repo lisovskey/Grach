@@ -172,7 +172,7 @@ def handle_text(message):
                 reaction = False
     if reaction:
         # мало буков
-        if len(text_message) < 6:
+        if len(text_message) < 5:
             bot.reply(message, bot.send_message,
                       random.choice(DATABASE['dictionary']['call_answers']))
             reaction = False
