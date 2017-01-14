@@ -137,25 +137,25 @@ def handle_text(message):
     '''
     # опускаем строку
     text_message = ' ' + message.text.lower().replace('ё', 'е') + ' '
-    # оставляем только буквы, пробелы и вопросительный знак
-    text_message = re.sub('[^a-z]+[^а-я]+[ ]+[?]', '', text_message)
     # обрезаем очередь повторяющихся символов
     text_message = ''.join(ch for ch, _ in itertools.groupby(text_message))
 
     no_commands = True
     reaction = False
     parts = 0
+    call = ''
+
+    for name in DATABASE['dictionary']['names']:
+        if name in text_message:
+            call += name
 
     # личка
     if message.chat.id == message.from_user.id:
         reaction = True
-        for name in DATABASE['dictionary']['names']:
-            if name in text_message:
-                if len(text_message.replace(name, '')) < 5:
-                    bot.reply(message, bot.send_message,
-                              random.choice(DATABASE['dictionary']['call_answers']))
-                    reaction = False
-                    break
+        if len(text_message.replace(call, '')) < 6:
+            bot.reply(message, bot.send_message,
+                      random.choice(DATABASE['dictionary']['call_answers']))
+            reaction = False
     # конфа
     else:
         # собеседник
@@ -163,26 +163,24 @@ def handle_text(message):
             bot.interlocutor_id = 0
             reaction = True
 
-        for name in DATABASE['dictionary']['names']:
-            if name in text_message:
-                reaction = True
-                if len(text_message.replace(name, '')) < 5:
-                    bot.interlocutor_id = message.from_user.id
-                    bot.reply(message, bot.send_message,
-                              random.choice(DATABASE['dictionary']['call_answers']))
-                    reaction = False
-                    break
+        if any(name in text_message for name in DATABASE['dictionary']['names']):
+            reaction = True
+            if len(text_message.replace(call, '')) < 6:
+                bot.interlocutor_id = message.from_user.id
+                bot.reply(message, bot.send_message,
+                          random.choice(DATABASE['dictionary']['call_answers']))
+                reaction = False
+    if reaction:
         # мало буков
-        if reaction and len(text_message) < 5:
+        if len(text_message) < 6:
             bot.reply(message, bot.send_message,
                       random.choice(DATABASE['dictionary']['call_answers']))
             reaction = False
-
-    # много буков
-    if reaction and len(text_message) > 60:
-        bot.reply(message, bot.send_sticker,
-                  DATABASE['dictionary']['overload'])
-        reaction = False
+        # много буков
+        elif len(text_message) > 60:
+            bot.reply(message, bot.send_sticker,
+                      DATABASE['dictionary']['overload'])
+            reaction = False
 
     if reaction:
         # start searching for command

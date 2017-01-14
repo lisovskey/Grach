@@ -46,49 +46,32 @@ class RZTeleBot(telebot.TeleBot):
         send_what(received_message.chat.id, answer)
 
 
-    def calculate(self, message):
+    def factorial(self, received_message):
         '''
-        6 arithmetic operations
+        считаем факториал
         '''
-        text = ' ' + message.lower().replace('ё', 'е') + ' '
-        answer = None
+        text_message = ' ' + received_message.lower().replace('ё', 'е') + ' '
         numbers = []
-        for num in message.split():
+
+        for num in text_message.split():
             try:
+                if '!' in text_message:
+                    text_message.replace('!', '')
                 numbers.append(float(num))
             except ValueError:
                 pass
         if not numbers:
             return 'не могу'
 
-        if len(numbers) == 1 and ('факториал' in text or '!' in text):
-            numbers[0] = int(numbers[0])
-            if numbers[0] < 1001:
-                answer = math.factorial(numbers[0])
+        if len(numbers) == 1:
+            number = int(numbers[0])
+            if number < 1001:
+                answer = math.factorial(number)
                 answer = '{:,}'.format(answer).replace(',', ' ')
-                if numbers[0] > 100:
+                if number > 99:
                     answer += ' но это не точно'
                 return answer
             else:
                 return 'неенененене'
-
-        try:
-            if 'умнож' in text or '*' in text:
-                answer = numbers[0] * numbers[1]
-            elif 'дели' in text or '/' in text:
-                answer = numbers[0] / numbers[1]
-            elif 'плюс' in text or 'слож' in text or '+' in text:
-                answer = numbers[0] + numbers[1]
-            elif 'минус' in text or 'отним' in text or 'вычт' in text or '-' in text:
-                answer = numbers[0] - numbers[1]
-            elif 'остаток' in text or '%' in text:
-                answer = numbers[0] % numbers[1]
-        except IndexError:
-            return 'что считать дядя'
-
-        if answer - int(answer) == 0:
-            answer = int(answer)
-        if answer > 999999999:
-            return answer
         else:
-            return round(answer, 3)
+            return 'чо считать дядя'
