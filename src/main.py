@@ -147,7 +147,8 @@ def handle_text(message):
 
     for name in DATABASE['dictionary']['names']:
         if name in text_message:
-            call += name + ' '
+            call = name
+            break
 
     # личка
     if message.chat.id == message.from_user.id:
