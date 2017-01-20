@@ -9,7 +9,6 @@ import sys
 import random
 import json
 import itertools
-import re
 import config
 import bot
 import unloader
