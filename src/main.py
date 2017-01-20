@@ -2,8 +2,7 @@
 
 '''
 здеся обработчики команд
-алгоритмы больно сложные
-надо упростить
+надо вебхуки напиздячить
 '''
 
 import sys
@@ -190,16 +189,9 @@ def handle_text(message):
                 # start checking command text part
                 for word in text['part']:
                     if word in text_message:
-                        right = True
-                        # start checking for exceptions
-                        for exception in command['exceptions']:
-                            if exception in text_message:
-                                right = False
-                                break
-                        # end checking exceptions
-                        if right:
+                        # checking for exceptions
+                        if not any(exc in text_message for exc in command['exceptions']):
                             parts += 1
-                            break
                 # end checking command text part
             if parts == command['parts']:
                 no_commands = False
