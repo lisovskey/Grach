@@ -184,14 +184,13 @@ def handle_text(message):
     if reaction:
         # start searching for command
         for command in DATABASE['commands']:
-            for text in command['text']:
-                # start checking command text part
-                for word in text['part']:
-                    if word in text_message:
-                        # checking for exceptions
-                        if not any(exc in text_message for exc in command['exceptions']):
-                            parts += 1
-                # end checking command text part
+            # start checking command text part
+            for word in command['text']['part']:
+                if word in text_message:
+                    # checking for exceptions
+                    if not any(exc in text_message for exc in command['exceptions']):
+                        parts += 1
+            # end checking command text part
             if parts == command['parts']:
                 no_commands = False
                 exec(command['method'])
