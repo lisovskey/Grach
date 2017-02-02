@@ -2,18 +2,18 @@
 
 '''
 здеся обработчики команд
-надо вебхуки напиздячить
 '''
 
+import io
 import sys
 import random
 import json
 import itertools
-import config
-import bot
-import unloader
+from src import config
+from src import bot
+from src import unloader
 
-with open('content.json') as json_data:
+with io.open('src\\content.json', encoding='utf-8') as json_data:
     DATABASE = json.load(json_data)
 
 bot = bot.RZTeleBot(config.TOKEN)
@@ -204,5 +204,12 @@ def handle_text(message):
                       DATABASE['dictionary']['ignorance'])
 
 
-if __name__ == '__main__':
+def main():
+    '''
+    пуск бот в рот
+    '''
     bot.polling(none_stop=True, interval=0.5)
+
+
+if __name__ == '__main__':
+    main()
