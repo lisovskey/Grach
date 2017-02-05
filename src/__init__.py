@@ -6,5 +6,5 @@
 
 from src import __main__
 
-__version__ = 0.1
+__version__ = '0.1'
 __main__.main()
