@@ -4,9 +4,9 @@
 работаем жопай
 '''
 
+import logging
 import math
 import telebot
-
 
 class RZTeleBot(telebot.TeleBot):
     '''
@@ -18,6 +18,8 @@ class RZTeleBot(telebot.TeleBot):
         '''
         super().__init__(token)
         self.interlocutor_id = 0
+        logger = telebot.logger
+        telebot.logger.setLevel(logging.CRITICAL)
         print(self.get_me())
 
 

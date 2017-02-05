@@ -4,19 +4,22 @@
 здеся обработчики команд
 '''
 
-import sys
+import os
 import random
 import json
 import itertools
-from src import config
-from src import bot
-from src import unloader
+from . import config, bot, unloader
 
-with open('src/content.json', encoding='utf-8') as json_data:
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+with open(os.path.join(__location__, 'content.json'), encoding='utf-8') as json_data:
     DATABASE = json.load(json_data)
 
-bot = bot.RZTeleBot(config.TOKEN)
-loader = unloader.Unloader()
+try:
+    bot = bot.RZTeleBot(config.TOKEN)
+    loader = unloader.Unloader()
+except bot.telebot.apihelper.ApiException:
+    print('invalid token error')
+    exit(1)
 
 
 @bot.message_handler(commands=['help'])
@@ -115,7 +118,7 @@ def handle_shutdown(message):
     bot.reply(message, bot.send_message, answer)
 
     if admin:
-        sys.exit(0)
+        exit(0)
 
 
 @bot.message_handler(content_types=['sticker'])
@@ -203,12 +206,5 @@ def handle_text(message):
                       DATABASE['dictionary']['ignorance'])
 
 
-def main():
-    '''
-    пуск бот в рот
-    '''
-    bot.polling(none_stop=True, interval=0.5)
-
-
 if __name__ == '__main__':
-    main()
+    bot.polling(none_stop=True, interval=0.5)
