@@ -4,4 +4,4 @@
 сюда токен вставлять
 '''
 
-TOKEN = 'some_characters'
+TOKEN = '133505823:AAHZFMHno3mzVLErU5b5jJvaeG--qUyLyG0'
