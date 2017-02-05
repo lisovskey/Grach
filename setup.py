@@ -28,5 +28,5 @@ setup(
     url='https://github.com/lisovskey/grach',
     packages=['src'],
     install_requires=requirements(),
-    data_files=['config', ['src\\config.py']]
+    data_files=['config', ['src/config.py']]
 )
