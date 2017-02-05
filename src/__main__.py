@@ -4,7 +4,6 @@
 здеся обработчики команд
 '''
 
-import io
 import sys
 import random
 import json
@@ -13,7 +12,7 @@ from src import config
 from src import bot
 from src import unloader
 
-with io.open('src\\content.json', encoding='utf-8') as json_data:
+with open('src/content.json', encoding='utf-8') as json_data:
     DATABASE = json.load(json_data)
 
 bot = bot.RZTeleBot(config.TOKEN)
