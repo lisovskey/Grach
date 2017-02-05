@@ -5,9 +5,8 @@
 '''
 
 from setuptools import setup
-import src
 
-def requirements():
+def get_requirements():
     '''
     устанавливаю все
     '''
@@ -21,12 +20,13 @@ def requirements():
 
 setup(
     name='grach',
-    version=src.__version__,
+    version='0.2',
     description='Telegram Bot',
     author='lisovskey',
+    author_email='ritofzeed@gmail.com',
+    include_package_data=True,
     license='MIT',
     url='https://github.com/lisovskey/grach',
-    packages=['src'],
-    install_requires=requirements(),
-    data_files=['config', ['src/config.py']]
+    packages=['grach'],
+    install_requires=get_requirements()
 )
