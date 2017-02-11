@@ -22,7 +22,7 @@ except bot.telebot.apihelper.ApiException:
     exit(1)
 
 
-@bot.message_handler(commands=['help'])
+@bot.message_handler(commands=['help', 'start'])
 def handle_help(message):
     '''
     чо делать, если халп
@@ -84,7 +84,7 @@ def handle_leave(message):
     answer = ''
     admin = False
 
-    if message.chat.id == message.from_user.id:
+    if message.chat.type == 'private':
         answer = DATABASE['dictionary']['negation']
     else:
         if any(user['name'] == message.from_user.username for user in DATABASE['users']):
@@ -151,7 +151,7 @@ def handle_text(message):
             break
 
     # личка
-    if message.chat.id == message.from_user.id:
+    if message.chat.type == 'private':
         reaction = True
         if len(text_message.replace(call, '')) < 6:
             bot.reply(message, bot.send_message,
@@ -207,4 +207,4 @@ def handle_text(message):
 
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True, interval=0.5)
+    bot.polling(none_stop=True, interval=0.5, timeout=10)

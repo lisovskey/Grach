@@ -8,7 +8,7 @@ import logging
 import math
 import telebot
 
-class RZTeleBot(telebot.TeleBot):
+class RZTeleBot(telebot.AsyncTeleBot):
     '''
     ну это типа грач
     '''
@@ -56,15 +56,15 @@ class RZTeleBot(telebot.TeleBot):
         text_message = ' ' + received_message.lower().replace('ё', 'е') + ' '
         numbers = []
 
+        if '!' in text_message:
+            text_message.replace('!', '')
         for num in text_message.split():
             try:
-                if '!' in text_message:
-                    text_message.replace('!', '')
                 numbers.append(float(num))
             except ValueError:
                 pass
         if not numbers:
-            return 'не могу'
+            return 'чо считать дядя'
 
         if len(numbers) == 1:
             number = int(numbers[0])
