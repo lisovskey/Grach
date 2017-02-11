@@ -77,18 +77,6 @@
         },
         
         {
-            "title": "factorial",
-            "text": [
-                {"part": ["фактори", "кториал", "! "]},
-                {"part": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]}
-            ],
-            "exceptions": ["умножа", "умножите", "поделите", "разделите", "поделис"],
-            "parts": 2,
-            "answer": ["на"],
-            "method": "bot.reply(message, bot.send_message, bot.factorial(message.text))"
-        },
-        
-        {
             "title": "percentage",
             "text": [
                 {"part": ["вероятность", "процент", " доля"]}
@@ -97,6 +85,17 @@
             "parts": 1,
             "answer": ["%", "% палюбому", "% но это не точно"],
             "method": "bot.reply(message, bot.send_message, str(random.randint(0, 100)) + random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "fact",
+            "text": [
+                {"part": ["фактори", "кториал"]}
+            ],
+            "exceptions": [],
+            "parts": 1,
+            "answer": ["на"],
+            "method": "bot.reply(message, bot.send_message, bot.factorial(message.text))"
         },
         
         {
@@ -131,9 +130,9 @@
         {
             "title": "do_swear",
             "text": [
-                {"part": [" иди ", "пошел", "пошла", "пошол", "пиздуй", " ебаш", " ди ", "соси "]},
+                {"part": [" иди ", "пошел", "пошла", "пошол", "пиздуй", " ебаш", " ди ", "соси ", " наверни", "наверну"]},
                 {"part": ["нахуй", " хуй ", "нахер", "на хер", " нах ", "в пизд", "в очко",
-                          "блять", "блядь", " член "]}
+                          "блять", "блядь", " член ", "говна"]}
             ],
             "exceptions": ["сюда"],
             "parts": 2,
@@ -218,6 +217,17 @@
             "exceptions": [],
             "parts": 1,
             "answer": ["не знаю", "кто-нибудь", "кто надо", "никто", "я"],
+            "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
+        },
+        
+        {
+            "title": "whom",
+            "text": [
+                {"part": [" кем ", " кем-"]}
+            ],
+            "exceptions": [],
+            "parts": 1,
+            "answer": ["гавном", "грачом", "разносчиком гавна", "программистом, очевидно", "сабакой"],
             "method": "bot.reply(message, bot.send_message, random.choice(command['answer']))"
         },
         

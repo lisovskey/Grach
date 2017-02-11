@@ -117,9 +117,7 @@ def handle_shutdown(message):
 
     bot.reply(message, bot.send_message, answer)
 
-    if admin:
-        bot.stop_polling()
-        exit(0)
+    
 
 
 @bot.message_handler(content_types=['sticker'])
@@ -194,6 +192,7 @@ def handle_text(message):
                         # checking for exceptions
                         if not any(exc in text_message for exc in command['exceptions']):
                             parts += 1
+                            break
                 # end checking command text part
             if parts == command['parts']:
                 no_commands = False
