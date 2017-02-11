@@ -118,6 +118,7 @@ def handle_shutdown(message):
     bot.reply(message, bot.send_message, answer)
 
     if admin:
+        bot.stop_polling()
         exit(0)
 
 
