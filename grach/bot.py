@@ -27,7 +27,7 @@ class RZTeleBot(telebot.TeleBot):
         '''
         логируем в консоль
         '''
-        print('----------------------------------------------------------------')
+        print(32*'-')
         print('{0} {1} (id {2})'.format(received_message.from_user.first_name,
                                         received_message.from_user.last_name,
                                         received_message.from_user.id), end='')

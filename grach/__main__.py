@@ -117,15 +117,13 @@ def handle_shutdown(message):
 
     bot.reply(message, bot.send_message, answer)
 
-    
-
 
 @bot.message_handler(content_types=['sticker'])
 def handle_sticker(message):
     '''
     чо делать, если стикос
     '''
-    print('----------------------------------------------------------------')
+    print(32*'-')
     print(message.sticker.file_id)
 
 
