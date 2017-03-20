@@ -31,7 +31,7 @@ class RZTeleBot(telebot.TeleBot):
         print('{0} {1} (id {2})'.format(received_message.from_user.first_name,
                                         received_message.from_user.last_name,
                                         received_message.from_user.id), end='')
-        if received_message.chat.id != received_message.from_user.id:
+        if received_message.chat.type != 'private':
             print(' in {0} (id {1}): '.format(received_message.chat.title,
                                               received_message.chat.id))
         else:

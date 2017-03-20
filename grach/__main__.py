@@ -16,7 +16,6 @@ with open(os.path.join(__location__, 'content.json'), encoding='utf-8') as json_
 
 try:
     bot = bot.RZTeleBot(config.TOKEN)
-    loader = unloader.Unloader()
 except bot.telebot.apihelper.ApiException:
     print('invalid token error')
     exit(1)
@@ -48,7 +47,7 @@ def handle_schedule(message, text_message=None):
 
     for user in DATABASE['users']:
         if user['name'] == message.from_user.username:
-            answer = user['group'] + loader.get_schedule(user['id'], delta)
+            answer = user['group'] + unloader.get_schedule(user['id'], delta)
             admin = True
             break
 
@@ -66,14 +65,14 @@ def handle_cinema(message, text_message=None):
     answer = DATABASE['dictionary']['solving']
     bot.reply(message, bot.send_message, answer)
 
-    delta = 1
+    delta = 0
     if text_message != None:
-        if any(word in text_message for word in DATABASE['dictionary']['today']):
-            delta = 0
+        if any(word in text_message for word in DATABASE['dictionary']['tomorrow']):
+            delta = 1
         elif any(word in text_message for word in DATABASE['dictionary']['after_tomorrow']):
             delta = 2
 
-    answer = loader.get_films(delta)
+    answer = unloader.get_films(delta)
     bot.reply(message, bot.send_message, answer)
 
 @bot.message_handler(commands=['leave'])
@@ -111,11 +110,13 @@ def handle_shutdown(message):
     if any(user['name'] == message.from_user.username for user in DATABASE['users']):
         answer = DATABASE['dictionary']['obedience']
         admin = True
-
-    if not admin:
+    else:
         answer = DATABASE['dictionary']['devotion']
 
     bot.reply(message, bot.send_message, answer)
+    if admin:
+        bot.stop_polling()
+        exit(0)
 
 
 @bot.message_handler(content_types=['sticker'])
@@ -132,9 +133,9 @@ def handle_text(message):
     '''
     чо делать, если текст
     '''
-    # опускаем строку
+    # lower string
     text_message = ' ' + message.text.lower().replace('ё', 'е') + ' '
-    # обрезаем очередь повторяющихся символов
+    # cut rows of identical chars
     text_message = ''.join(ch for ch, _ in itertools.groupby(text_message))
 
     no_commands = True
@@ -147,16 +148,16 @@ def handle_text(message):
             call = name
             break
 
-    # личка
+    # private
     if message.chat.type == 'private':
         reaction = True
         if len(text_message.replace(call, '')) < 6:
             bot.reply(message, bot.send_message,
                       random.choice(DATABASE['dictionary']['call_answers']))
             reaction = False
-    # конфа
+    # group
     else:
-        # собеседник
+        # interlocutor
         if message.from_user.id == bot.interlocutor_id:
             bot.interlocutor_id = 0
             reaction = True
@@ -169,12 +170,12 @@ def handle_text(message):
                           random.choice(DATABASE['dictionary']['call_answers']))
                 reaction = False
     if reaction:
-        # мало буков
+        # too few chars
         if len(text_message) < 5:
             bot.reply(message, bot.send_message,
                       random.choice(DATABASE['dictionary']['call_answers']))
             reaction = False
-        # много буков
+        # too many chars
         elif len(text_message) > 60:
             bot.reply(message, bot.send_sticker,
                       DATABASE['dictionary']['overload'])
@@ -205,4 +206,4 @@ def handle_text(message):
 
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True, interval=0.5, timeout=10)
+    bot.polling(none_stop=True, timeout=10)
