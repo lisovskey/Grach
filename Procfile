@@ -1,1 +1,1 @@
-web: python -m grach
+bot: python -m grach
