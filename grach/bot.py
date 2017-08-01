@@ -4,11 +4,12 @@
 работаем жопай
 '''
 
-import logging
+from logging import WARNING
+from datetime import datetime
 import math
 import telebot
 
-class RZTeleBot(telebot.TeleBot):
+class Bot(telebot.TeleBot):
     '''
     ну это типа грач
     '''
@@ -19,7 +20,7 @@ class RZTeleBot(telebot.TeleBot):
         super().__init__(token)
         self.interlocutor_id = 0
         logger = telebot.logger
-        telebot.logger.setLevel(logging.CRITICAL)
+        telebot.logger.setLevel(WARNING)
         print(self.get_me())
 
 
@@ -27,15 +28,14 @@ class RZTeleBot(telebot.TeleBot):
         '''
         логируем в консоль
         '''
-        print(32*'-')
-        print('{0} {1} (id {2})'.format(received_message.from_user.first_name,
-                                        received_message.from_user.last_name,
-                                        received_message.from_user.id), end='')
+        print(16*'-' + str(datetime.now().strftime('%d.%m.%y-%H:%M')) + 16*'-')
+        print('{} {} (id {})'.format(received_message.from_user.first_name,
+                                     received_message.from_user.last_name,
+                                     received_message.from_user.id), end='')
         if received_message.chat.type != 'private':
-            print(' in {0} (id {1}): '.format(received_message.chat.title,
-                                              received_message.chat.id))
-        else:
-            print(': ')
+            print(' in {} (id {})'.format(received_message.chat.title,
+                                          received_message.chat.id), end='')
+        print(': ')
         print(' - {}'.format(received_message.text))
         print('Отвечаю: ')
         print(' - {}'.format(answer))

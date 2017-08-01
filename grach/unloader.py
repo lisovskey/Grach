@@ -5,9 +5,8 @@
 '''
 
 from datetime import datetime, timedelta
-import time
 import requests
-from bs4 import BeautifulSoup
+import bs4
 
 def get_schedule(group, delta):
     '''
@@ -15,10 +14,9 @@ def get_schedule(group, delta):
     '''
     schedule = ''
 
-    date = ''
     tmp_date = datetime.today() + timedelta(days=delta, hours=3)
     tmp_date = tmp_date.timetuple()
-    date += str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
+    date = str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
 
     tmp_week = requests.get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
     week_num = str(tmp_week.content)[2]
@@ -46,7 +44,11 @@ def get_schedule(group, delta):
     schedule += tmp_week + ':'
 
     resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
-    soup = BeautifulSoup(resp.content, 'xml')
+    try:
+        soup = bs4.BeautifulSoup(resp.content, 'xml')
+    except bs4.FeatureNotFound:
+        return ' хз чо делает'
+
     day = soup.find_all('weekDay', text=week_day)
     if not day:
         return ' отдыхает'
@@ -77,19 +79,17 @@ def get_films(delta):
     получаем премьеры в лицо
     '''
     premieres = ''
-    num = 1
 
     date = datetime.now() + timedelta(days=delta, hours=3)
     date = date.strftime('%d.%m.%Y')
     resp = requests.get('http://afisha.360.by/category-films_schedule.html')
-    soup = BeautifulSoup(resp.content, 'html.parser')
+    soup = bs4.BeautifulSoup(resp.content, 'html.parser')
 
     sub_soup = soup.body.section.select('.items-block > .items-sub-block > .cinema_slider > ul')[0]
     films = sub_soup.find_all('li', class_='scene')
 
-    for film in films:
+    for i, film in enumerate(films):
         film_title = film.select('.movie > .info > header > h1')[0]
-        premieres += str(num) + '. ' + film_title.string + '\n'
-        num += 1
-    print(time.process_time())
+        premieres += str(i + 1) + '. ' + film_title.string + '\n'
+
     return premieres

@@ -4,39 +4,38 @@
 здеся обработчики команд
 '''
 
-import os
+from os import path, getcwd
 import random
 import json
 import itertools
 from . import config, bot, unloader
 
-__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-with open(os.path.join(__location__, 'content.json'), encoding='utf-8') as json_data:
+__location__ = path.join(getcwd(), path.dirname(__file__))
+with open(path.join(__location__, 'content.json'), encoding='utf-8') as json_data:
     DATABASE = json.load(json_data)
 
 try:
-    bot = bot.RZTeleBot(config.TOKEN)
+    grach = bot.Bot(config.TOKEN)
 except bot.telebot.apihelper.ApiException:
     print('invalid token error')
     exit(1)
 
 
-@bot.message_handler(commands=['help', 'start'])
+@grach.message_handler(commands=['help', 'start'])
 def handle_help(message):
     '''
     чо делать, если халп
     '''
     answer = DATABASE['dictionary']['help']
-    bot.reply(message, bot.send_message, answer)
+    grach.reply(message, grach.send_message, answer)
 
 
-@bot.message_handler(commands=['schedule'])
+@grach.message_handler(commands=['schedule'])
 def handle_schedule(message, text_message=None):
     '''
     чо делать, если шедуле
     '''
     answer = ''
-    admin = False
 
     delta = 1
     if text_message != None:
@@ -48,22 +47,20 @@ def handle_schedule(message, text_message=None):
     for user in DATABASE['users']:
         if user['name'] == message.from_user.username:
             answer = user['group'] + unloader.get_schedule(user['id'], delta)
-            admin = True
             break
-
-    if not admin:
+    else:
         answer = DATABASE['dictionary']['devotion']
 
-    bot.reply(message, bot.send_message, answer)
+    grach.reply(message, grach.send_message, answer)
 
 
-@bot.message_handler(commands=['cinema'])
+@grach.message_handler(commands=['cinema'])
 def handle_cinema(message, text_message=None):
     '''
     чо делать, если синема
     '''
     answer = DATABASE['dictionary']['solving']
-    bot.reply(message, bot.send_message, answer)
+    grach.reply(message, grach.send_message, answer)
 
     delta = 0
     if text_message != None:
@@ -73,9 +70,9 @@ def handle_cinema(message, text_message=None):
             delta = 2
 
     answer = unloader.get_films(delta)
-    bot.reply(message, bot.send_message, answer)
+    grach.reply(message, grach.send_message, answer)
 
-@bot.message_handler(commands=['leave'])
+@grach.message_handler(commands=['leave'])
 def handle_leave(message):
     '''
     чо делать, если лив
@@ -89,17 +86,16 @@ def handle_leave(message):
         if any(user['name'] == message.from_user.username for user in DATABASE['users']):
             answer = DATABASE['dictionary']['obedience']
             admin = True
-
-        if not admin:
+        else:
             answer = DATABASE['dictionary']['devotion']
 
-    bot.reply(message, bot.send_message, answer)
+    grach.reply(message, grach.send_message, answer)
 
     if admin:
-        bot.leave_chat(message.chat.id)
+        grach.leave_chat(message.chat.id)
 
 
-@bot.message_handler(commands=['shutdown'])
+@grach.message_handler(commands=['shutdown'])
 def handle_shutdown(message):
     '''
     чо делать, если шатдаун
@@ -113,22 +109,22 @@ def handle_shutdown(message):
     else:
         answer = DATABASE['dictionary']['devotion']
 
-    bot.reply(message, bot.send_message, answer)
+    grach.reply(message, grach.send_message, answer)
+    
     if admin:
-        bot.stop_polling()
+        grach.stop_polling()
         exit(0)
 
 
-@bot.message_handler(content_types=['sticker'])
+@grach.message_handler(content_types=['sticker'])
 def handle_sticker(message):
     '''
     чо делать, если стикос
     '''
-    print(32*'-')
-    print(message.sticker.file_id)
+    grach.reply(message, grach.send_sticker, DATABASE['dictionary']['overload'])
 
 
-@bot.message_handler(content_types=['text'])
+@grach.message_handler(content_types=['text'])
 def handle_text(message):
     '''
     чо делать, если текст
@@ -138,7 +134,6 @@ def handle_text(message):
     # cut rows of identical chars
     text_message = ''.join(ch for ch, _ in itertools.groupby(text_message))
 
-    no_commands = True
     reaction = False
     parts = 0
     call = ''
@@ -151,34 +146,35 @@ def handle_text(message):
     # private
     if message.chat.type == 'private':
         reaction = True
-        if len(text_message.replace(call, '')) < 6:
-            bot.reply(message, bot.send_message,
-                      random.choice(DATABASE['dictionary']['call_answers']))
+        text_message += 'ты '
+        if len(text_message.replace(call, '')) < 8:
+            grach.reply(message, grach.send_message,
+                        random.choice(DATABASE['dictionary']['call_answers']))
             reaction = False
     # group
     else:
         # interlocutor
-        if message.from_user.id == bot.interlocutor_id:
-            bot.interlocutor_id = 0
+        if message.from_user.id == grach.interlocutor_id:
+            grach.interlocutor_id = 0
             reaction = True
 
         if any(name in text_message for name in DATABASE['dictionary']['names']):
             reaction = True
             if len(text_message.replace(call, '')) < 6:
-                bot.interlocutor_id = message.from_user.id
-                bot.reply(message, bot.send_message,
-                          random.choice(DATABASE['dictionary']['call_answers']))
+                grach.interlocutor_id = message.from_user.id
+                grach.reply(message, grach.send_message,
+                            random.choice(DATABASE['dictionary']['call_answers']))
                 reaction = False
     if reaction:
         # too few chars
         if len(text_message) < 5:
-            bot.reply(message, bot.send_message,
-                      random.choice(DATABASE['dictionary']['call_answers']))
+            grach.reply(message, grach.send_message,
+                        random.choice(DATABASE['dictionary']['call_answers']))
             reaction = False
         # too many chars
         elif len(text_message) > 60:
-            bot.reply(message, bot.send_sticker,
-                      DATABASE['dictionary']['overload'])
+            grach.reply(message, grach.send_sticker,
+                        DATABASE['dictionary']['overload'])
             reaction = False
 
     if reaction:
@@ -192,18 +188,14 @@ def handle_text(message):
                         if not any(exc in text_message for exc in command['exceptions']):
                             parts += 1
                             break
-                # end checking command text part
             if parts == command['parts']:
-                no_commands = False
                 exec(command['method'])
                 break
-        # end searching for command
             parts = 0
-
-        if no_commands:
-            bot.reply(message, bot.send_message,
-                      DATABASE['dictionary']['ignorance'])
+        else:
+            grach.reply(message, grach.send_message,
+                        DATABASE['dictionary']['ignorance'])
 
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True, timeout=10)
+    grach.polling(none_stop=True, timeout=10)
