@@ -4,11 +4,10 @@
 инит пять
 '''
 
-from os import path, getcwd
-
 try:
     from .config import TOKEN
 except ImportError:
+    from os import path, getcwd
     print('Token not found')
     TOKEN = input('Enter token (\'c\' to cancel): ')
     if TOKEN != 'c':

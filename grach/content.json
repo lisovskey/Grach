@@ -2,13 +2,13 @@
     "users": [
             {
                 "name": "lisovskey",
-                "id": "21833",
+                "group_id": "21833",
                 "group": "614302"
             },
             
             {
                 "name": "hetchback",
-                "id": "21830",
+                "group_id": "21830",
                 "group": "610901"
             }
     ],
@@ -17,11 +17,10 @@
         {
             "title": "help", 
             "text": [
-                {"part": [" умеш", " можеш", " могеш"]}, 
-                {"part": [" шо", " што", " че", " что", " чо"]}
+                [" умеш", " можеш", " могеш"],
+                [" шо", " што", " че", " что", " чо"]
             ],
             "exceptions": ["чес", "чос", "чер", "чор", "чел", "чол"],
-            "parts": 2,
             "answers": [],
             "method": "handle_help(message)"
         },
@@ -29,12 +28,11 @@
         {
             "title": "schedule",
             "text": [
-                {"part": ["какое ", "какие ", " покажи", " скажи", "поведай", "показывай",
-                          " чо ", " че ", " что ", " шо ", " што "]},
-                {"part": ["расписание", " пары", "бугор", "бугре"]}
+                ["какое ", "какие ", " покажи", " скажи", "поведай", "показывай",
+                 " чо ", " че ", " что ", " шо ", " што "],
+                ["расписание", " пары", "бугор", "бугре"]
             ],
             "exceptions": [],
-            "parts": 2,
             "answers": [],
             "method": "handle_schedule(message, text_message)"
         },
@@ -42,12 +40,11 @@
         {
             "title": "cinema",
             "text": [
-                {"part": [" что", " куда", " покажи", " какое", " какой", " какие", " какая",
-                          " чо ", " што ", " че ", " шо "]},
-                {"part": ["смотрет", "сходит", " идет ", "фильм", "афиш", " кино", " идут"]}
+                [" что", " куда", " покажи", " какое", " какой", " какие", " какая",
+                 " чо ", " што ", " че ", " шо "],
+                ["смотрет", "сходит", " идет ", "фильм", "афиш", " кино", " идут"]
             ],
             "exceptions": [],
-            "parts": 2,
             "answers": [],
             "method": "handle_cinema(message, text_message)"
         },
@@ -55,12 +52,11 @@
         {
             "title": "leave",
             "text": [
-                {"part": ["нахуй", "на хуй", "нахер", "на хер", " вон ", " пиздуй",
-                          " пошел", " уебыва", " уходи", " ливай", " уйди"]},
-                {"part": ["отсюда", "отсюдо"]}
+                ["нахуй", "на хуй", "нахер", "на хер", " вон ", " пиздуй",
+                 " пошел", " уебыва", " уходи", " ливай", " уйди"],
+                ["отсюда", "отсюдо"]
             ],
             "exceptions": [],
-            "parts": 2,
             "answers": [],
             "method": "handle_leave(message)"
         },
@@ -68,10 +64,9 @@
         {
             "title": "shutdown",
             "text": [
-                {"part": [" авадакедавра"]}
+                [" авадакедавра"]
             ],
             "exceptions": ["ска", "пиш"],
-            "parts": 1,
             "answers": [],
             "method": "handle_shutdown(message)"
         },
@@ -79,10 +74,9 @@
         {
             "title": "percentage",
             "text": [
-                {"part": ["вероятность", "процент", " доля"]}
+                ["вероятность", "процент", " доля"]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["%", "% палюбому", "% но это не точно"],
             "method": "grach.reply(message, grach.send_message, str(random.randint(0, 100)) + random.choice(command['answers']))"
         },
@@ -90,11 +84,10 @@
         {
             "title": "fact",
             "text": [
-                {"part": ["фактори", "кториал", "!"]},
-                {"part": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]}
+                ["фактори", "кториал", "!"],
+                ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
             ],
             "exceptions": [],
-            "parts": 2,
             "answers": ["на"],
             "method": "grach.reply(message, grach.send_message, grach.factorial(message.text))"
         },
@@ -102,12 +95,11 @@
         {
             "title": "light_swear",
             "text": [
-                {"part": [" ты ", "грач", "гриша", "григри", " бот "]},
-                {"part": ["калич", "дура", "дурень", " чмо", " деби", " лох", " диби", "член", "петух",
-                          "питух", "тупой", " очко", " мудил", " муда", "блядь", "малафья", " кек ", " сука"]}
+                [" ты ", "грач", "гриша", "григри", " бот "],
+                ["калич", "дура", "дурень", " чмо", " деби", " лох", " диби", "член", "петух",
+                 "питух", "тупой", " очко", " мудил", " муда", "блядь", "малафья", " кек ", " сука"]
             ],
             "exceptions": [" не "],
-            "parts": 2,
             "answers": ["сам", "ха", "понял", "всмысле", "ты чо", "аккуратнее с языком", "и че"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -115,14 +107,13 @@
         {
             "title": "hard_swear",
             "text": [
-                {"part": [" ты ", "грач", "гриша", "григри", " бот "]},
-                {"part": ["еблан", " гной"," пизд", "оеб ", "аеб ", "залуп", " хуй", "педрил", " урод",
-                          "пидар", "пидор", "гавно", "говно", "шлюха", "бляд", "пердун", " гей ", "сосач",
-                          "даун", "ебан", " гомо", " гомик", " елда", "воняеш", "пидрил", "гнида", "шлепок",
-                          "уебок", "уебак"]}
+                [" ты ", "грач", "гриша", "григри", " бот "],
+                ["еблан", " гной"," пизд", "оеб ", "аеб ", "залуп", " хуй", "педрил", " урод",
+                 "пидар", "пидор", "гавно", "говно", "шлюха", "бляд", "пердун", " гей ", "сосач",
+                 "даун", "ебан", " гомо", " гомик", " елда", "воняеш", "пидрил", "гнида", "шлепок",
+                 "уебок", "уебак", "понос", "панос"]
             ],
             "exceptions": ["гомоса", " не "],
-            "parts": 2,
             "answers": ["ты охуевший дурачок?", "ебало наноль", "пошел ты нахуй червячок", "чекай мать",
                         "ты сасеш", "дрочи мой хуй себе в рот","ты долбаеб", "соси писюн",
                         "ваще похуй", "я насру на тебя гавном"],
@@ -132,13 +123,12 @@
         {
             "title": "do_swear",
             "text": [
-                {"part": [" иди ", "пошел", "пошла", "пошол", "пиздуй", " ебаш", " ди ", "соси ", " наверни",
-                          "наверну", "ебал", "ебу", " трах"]},
-                {"part": ["нахуй", " хуй ", "нахер", "на хер", " нах ", "в пизд", "в очко",
-                          "блять", "блядь", " член ", "говна", "писос", "тебя", " мам"]}
+                [" иди ", "пошел", "пошла", "пошол", "пиздуй", " ебаш", " ди ", "соси ", " наверни",
+                 "наверну", "ебал", "ебу", " трах", " обоср"],
+                ["нахуй", " хуй ", "нахер", "на хер", " нах ", "в пизд", "в очко",
+                 "блять", "блядь", " член ", "говна", "писос", "тебя", " мам"]
             ],
             "exceptions": ["сюда"],
-            "parts": 2,
             "answers": ["не лезь блять дебил сука ебаный", "ты чо охуел", "тебе делать нехуй?",
                         "залезь нахуй накка обратно блять"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
@@ -147,10 +137,9 @@
         {
             "title": "re_swear",
             "text": [
-                {"part": ["в очо ", "в оче ", "в аче ", " хуй на", "хуй через"]}
+                ["в очо ", "в оче ", "в аче ", " хуй на", "хуй через"]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["бля да ты совсем охуел", "ну ты и ущерб", "омг фейспалм", "ну и что"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -158,7 +147,7 @@
         {
             "title": "thanks",
             "text": [
-                {"part": [" спс ", "пасиб", " благодарю", "спосибо"]}
+                [" спс ", "пасиб", " благодарю", "спосибо"]
             ],
             "exceptions": ["?"],
             "parts": 1,
@@ -169,10 +158,9 @@
         {
             "title": "when",
             "text": [
-                {"part": [" когда ", " када ", " кагда "]}
+                [" когда ", " када ", " кагда "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["не знаю", "когда-нибудь", "когда надо", "никогда", "скоро очень скоро"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -180,10 +168,9 @@
         {
             "title": "where",
             "text": [
-                {"part": [" где ", " хде "]}
+                [" где ", " хде "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["не знаю", "где-нибудь", "где надо", "нигде", "в жопi", "вон там"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -191,10 +178,9 @@
         {
             "title": "where_to",
             "text": [
-                {"part": [" куда "]}
+                [" куда "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["в жопу", "куда-нибудь", "да ваще хз", "никуда"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -202,11 +188,10 @@
         {
             "title": "who_are_you",
             "text": [
-                {"part": ["ты кто", "ты хто", "кто ты", "хто ты", "кто такой?", "с кем говорю",
-                          "ты что такое", "что ты такое"]}
+                ["ты кто", "ты хто", "кто ты", "хто ты", "кто такой?", "с кем говорю",
+                 "ты что такое", "что ты такое", "как тебя з", "как зовут тебя"]
             ],
             "exceptions": ["кто-", "кто то", "что-", "что то", "еты"],
-            "parts": 1,
             "answers": ["бот", "грач", "бобич", "бог", "всего лишь машина, имитация жизни"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -214,11 +199,10 @@
         {
             "title": "who_is",
             "text": [
-                {"part": [" кто ", " хто "]},
-                {"part": ["такой ", "такая ", " таки ", " такi ", " это"]}
+                [" кто ", " хто "],
+                ["такой ", "такая ", " таки ", " такi ", " это"]
             ],
             "exceptions": [],
-            "parts": 2,
             "answers": ["это я", "это ты", "именитая личность", "мой братан", "это твоя мамаша"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -226,10 +210,9 @@
         {
             "title": "who",
             "text": [
-                {"part": [" кто ", " хто "]}
+                [" кто ", " хто "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["не знаю", "кто-нибудь", "кто надо", "никто", "я"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -237,10 +220,9 @@
         {
             "title": "whom",
             "text": [
-                {"part": [" кем ", " кем-"]}
+                [" кем ", " кем-"]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["гавном", "грачом", "разносчиком гавна", "программистом, очевидно", "сабакой"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -248,11 +230,10 @@
         {
             "title": "what_is",
             "text": [
-                {"part": [" что ", " чо ", " че ", " шо ", " што "]},
-                {"part": ["такое ", "токое ", "значит ", "обозначает ", " это"]}
+                [" что ", " чо ", " че ", " шо ", " што "],
+                ["такое ", "токое ", "значит ", "обозначает ", " это"]
             ],
             "exceptions": [],
-            "parts": 2,
             "answers": ["это жопа", "это ты", "это жопа негра", "а ты не знаешь?", "тыква"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -260,10 +241,9 @@
         {
             "title": "what",
             "text": [
-                {"part": [" что ", " чо ", " че ", " шо ", " што "]}
+                [" что ", " чо ", " че ", " шо ", " што "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["не знаю", "что надо", "ничего"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -271,10 +251,9 @@
         {
             "title": "which",
             "text": [
-                {"part": [" какой ", " какая ", "какое", "какие"]}
+                [" какой ", " какая ", "какое", "какие"]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["не знаю", "не владею такой информацией", "паркуюсь где хочу", "не скажу"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -282,10 +261,9 @@
         {
             "title": "why",
             "text": [
-                {"part": ["почему ", "пачаму ", "пачему "]}
+                ["почему ", "пачаму ", "пачему "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["не знаю", "потому что", "потому"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -293,10 +271,9 @@
         {
             "title": "how_much",
             "text": [
-                {"part": [" как много ", "сколько"]}
+                [" как много ", "сколько"]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["дохуя", "не помню уже", "много", "мало", "бля откуда мне знать"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -304,11 +281,10 @@
         {
             "title": "how_found",
             "text": [
-                {"part": [" как ", "откуда"]},
-                {"part": [" узнал", " знаеш"]}
+                [" как ", "откуда"],
+                [" узнал", " знаеш"]
             ],
             "exceptions": [],
-            "parts": 2,
             "answers": ["по сусекам наскреб", "ну я ж типа грач", "спросите высоцкого"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -316,10 +292,9 @@
         {
             "title": "how",
             "text": [
-                {"part": [" как "]}
+                [" как "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["не знаю", "как-нибудь", "как надо", "никак"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -327,10 +302,9 @@
         {
             "title": "question",
             "text": [
-                {"part": ["?"]}
+                ["?"]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["да", "ну да", "конечно", "не", "да не", "нет", "тупой вопрос", "а тебе не похуй?"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -338,10 +312,9 @@
         {
             "title": "you_said",
             "text": [
-                {"part": [" ты же ", " ты ж ", " ты ведь ", " ты говорил "]}
+                [" ты же ", " ты ж ", " ты ведь ", " ты говорил "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["да?", "не, не помню", "разве?", "не ты чота путаешь", "пиздеж"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -349,10 +322,9 @@
         {
             "title": "that",
             "text": [
-                {"part": [" это "]}
+                [" это "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["ого", "круто", "это жопа", "это пизда", "наверное"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -360,21 +332,29 @@
         {
             "title": "me",
             "text": [
-                {"part": [" я "]}
+                [" я "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["красава", "малаца", "интересно", "не можед быт", "да мне похуй"],
+            "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
+        },
+        
+        {
+            "title": "you",
+            "text": [
+                [" ты "]
+            ],
+            "exceptions": [],
+            "answers": ["спасибо", "наверное"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
         
         {
             "title": "nothing",
             "text": [
-                {"part": ["ничего", "ниче ", "ничо ", "ничиво", "ничево"]}
+                ["ничего", "ниче ", "ничо ", "ничиво", "ничево"]
             ],
             "exceptions": ["себе", " се "],
-            "parts": 1,
             "answers": ["ладно"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -382,12 +362,11 @@
         {
             "title": "good",
             "text": [
-                {"part": [" хорошо", "хорашо", "харашо", "отлично", " супер", " ништяк",
-                          " норм", "неплохо", " ого ", "пиздато", "заебись", "охуенно", 
-                          "ахуенно", "ахуена", "зачот"]}
+                [" хорошо", "хорашо", "харашо", "отлично", " супер", " ништяк",
+                 " норм", "неплохо", " ого ", "пиздато", "заебись", "охуенно", 
+                 "ахуенно", "ахуена", "зачот"]
             ],
             "exceptions": [" не "],
-            "parts": 1,
             "answers": ["ага", "да, норм", "знаю", "е"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -395,11 +374,10 @@
         {
             "title": "bad",
             "text": [
-                {"part": ["плохо", "хуево", "отвратительно", "нехорошо", "говно ",
-                          "хуйня", "говно", "гавно"]}
+                ["плохо", "хуево", "отвратительно", "нехорошо", "говно ",
+                 "хуйня", "говно", "гавно"]
             ],
             "exceptions": [" не "],
-            "parts": 1,
             "answers": ["да ваще жопа", "наверное", "не могу не согласиться", "на самом деле нет",
                        "ну смотря с какой стороны", "двачую"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
@@ -408,10 +386,9 @@
         {
             "title": "lets",
             "text": [
-                {"part": [" давай", " дай "]}
+                [" давай", " дай "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["даю", "чо тебе дать", "а по ебалу не дать?"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -419,10 +396,9 @@
         {
             "title": "yourself",
             "text": [
-                {"part": [" сам "]}
+                [" сам "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["ха, пиздюк", "нет", "я выше этого", "я охуенный"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -430,10 +406,9 @@
         {
             "title": "yes",
             "text": [
-                {"part": [" да ", " ага ", " конечно ", "естественно"]}
+                [" да ", " ага ", " конечно ", "естественно"]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["ну вот и все", "ну и отлично", "ага", "ну ладно", "заебись"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -441,10 +416,9 @@
         {
             "title": "no",
             "text": [
-                {"part": [" не ", " нет ", " неа "]}
+                [" не ", " нет ", " неа "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["ты чо дурень", "ну ладно", "точно?", "а зря"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -452,10 +426,9 @@
         {
             "title": "understand",
             "text": [
-                {"part": [" понял ", "понятно ", "ясно "]}
+                [" понял ", "понятно ", "ясно "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["это хорошо", "было сложно?", "я рад", "отлично"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -463,10 +436,9 @@
         {
             "title": "okay",
             "text": [
-                {"part": [" ладн", " лана ", " ок ", " оке"]}
+                [" ладн", " лана ", " ок ", " оке"]
             ],
             "exceptions": ["океа"],
-            "parts": 1,
             "answers": ["обращайся", "ага", "ну вот"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -474,11 +446,10 @@
         {
             "title": "hi",
             "text": [
-                {"part": [" прив ", " прива ", " привет", "здравствуй", " хай ", "хаюхай", "хаю хай",
-                          "дратут", " здаров ", " здарова ", "добрый день", "добрый вечер", "вечероче"]}
+                [" прив ", " прива ", " привет", "здравствуй", " хай ", "хаюхай", "хаю хай",
+                 "дратут", " здаров ", " здарова ", "добрый день", "добрый вечер", "вечероче"]
             ],
             "exceptions": ["приветл"],
-            "parts": 1,
             "answers": ["привет", "здрасте", "приветик", "у аппарата", "да да", "ало"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -486,11 +457,10 @@
         {
             "title": "bye",
             "text": [
-                {"part": ["все давай", "датвиданья", "до связи", " дасвидан", " пакес ",
-                          " до свидан", " досвидан", " пока ", " пака ", "ой ночи "]}
+                ["все давай", "датвиданья", "до связи", " дасвидан", " пакес ",
+                 " до свидан", " досвидан", " пока ", " пака ", "ой ночи "]
             ],
             "exceptions": ["пока н", "пока чт", "пока ты", "пока я", "пока он", "пока вс", "пока р"],
-            "parts": 1,
             "answers": ["пока", "пака", "давай"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         },
@@ -498,22 +468,10 @@
         {
             "title": "swear",
             "text": [
-                {"part": [" сука", "ебать", "пиздец", " мля ", "нахуй", "жопа", " бля", " пизда "]}
+                [" сука", "ебать", "пиздец", " мля ", "нахуй", "жопа", " бля", " пизда "]
             ],
             "exceptions": [],
-            "parts": 1,
             "answers": ["чо такое", "ты ебонутый?", "мда"],
-            "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
-        },
-        
-        {
-            "title": "you",
-            "text": [
-                {"part": [" ты "]}
-            ],
-            "exceptions": [],
-            "parts": 1,
-            "answers": ["спасибо", "наверное"],
             "method": "grach.reply(message, grach.send_message, random.choice(command['answers']))"
         }
     ],

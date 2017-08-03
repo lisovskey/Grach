@@ -28,7 +28,7 @@ class Bot(telebot.TeleBot):
         '''
         логируем в консоль
         '''
-        print(16*'-' + str(datetime.now().strftime('%d.%m.%y-%H:%M')) + 16*'-')
+        print(16*'-', str(datetime.now().strftime('%d.%m.%y-%H:%M')), 16*'-')
         print('{} {} (id {})'.format(received_message.from_user.first_name,
                                      received_message.from_user.last_name,
                                      received_message.from_user.id), end='')
@@ -36,9 +36,9 @@ class Bot(telebot.TeleBot):
             print(' in {} (id {})'.format(received_message.chat.title,
                                           received_message.chat.id), end='')
         print(': ')
-        print(' - {}'.format(received_message.text))
+        print(' -', received_message.text)
         print('Отвечаю: ')
-        print(' - {}'.format(answer))
+        print(' -', answer)
 
 
     def reply(self, received_message, send_what, answer):

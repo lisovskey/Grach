@@ -46,7 +46,7 @@ def handle_schedule(message, text_message=None):
 
     for user in DATABASE['users']:
         if user['name'] == message.from_user.username:
-            answer = user['group'] + unloader.get_schedule(user['id'], delta)
+            answer = user['group'] + unloader.get_schedule(user['group_id'], delta)
             break
     else:
         answer = DATABASE['dictionary']['devotion']
@@ -110,7 +110,7 @@ def handle_shutdown(message):
         answer = DATABASE['dictionary']['devotion']
 
     grach.reply(message, grach.send_message, answer)
-    
+
     if admin:
         grach.stop_polling()
         exit(0)
@@ -146,8 +146,7 @@ def handle_text(message):
     # private
     if message.chat.type == 'private':
         reaction = True
-        text_message += 'ты '
-        if len(text_message.replace(call, '')) < 8:
+        if len(text_message.replace(call, '')) < 6:
             grach.reply(message, grach.send_message,
                         random.choice(DATABASE['dictionary']['call_answers']))
             reaction = False
@@ -182,13 +181,13 @@ def handle_text(message):
         for command in DATABASE['commands']:
             for text in command['text']:
                 # start checking command text part
-                for word in text['part']:
+                for word in text:
                     if word in text_message:
                         # checking for exceptions
                         if not any(exc in text_message for exc in command['exceptions']):
                             parts += 1
                             break
-            if parts == command['parts']:
+            if parts == len(command['text']):
                 exec(command['method'])
                 break
             parts = 0

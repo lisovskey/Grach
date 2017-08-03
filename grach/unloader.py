@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 import requests
 import bs4
 
-def get_schedule(group, delta):
+def get_schedule(group_id, delta):
     '''
     получаем шедуле в лицо
     '''
@@ -43,7 +43,7 @@ def get_schedule(group, delta):
         tmp_week = ' в воскресенье'
     schedule += tmp_week + ':'
 
-    resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group))
+    resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group_id))
     try:
         soup = bs4.BeautifulSoup(resp.content, 'xml')
     except bs4.FeatureNotFound:
