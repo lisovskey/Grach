@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
 '''
-парсим жопу
+parsers
 '''
 
 from datetime import datetime, timedelta
-import requests
+from requests import get
+from requests.exceptions import ConnectionError
 import bs4
 
 def get_schedule(group_id, delta):
     '''
-    получаем шедуле в лицо
+    return schedule from bsuir.by with delta days
     '''
     schedule = ''
 
@@ -18,7 +19,7 @@ def get_schedule(group_id, delta):
     tmp_date = tmp_date.timetuple()
     date = str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
 
-    tmp_week = requests.get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
+    tmp_week = get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
     week_num = str(tmp_week.content)[2]
     if tmp_date[6] == 0:
         week_day = 'Понедельник'
@@ -43,11 +44,11 @@ def get_schedule(group_id, delta):
         tmp_week = ' в воскресенье'
     schedule += tmp_week + ':'
 
-    resp = requests.get('https://www.bsuir.by/schedule/rest/schedule/' + str(group_id))
     try:
+        resp = get('https://www.bsuir.by/schedule/rest/schedule/' + str(group_id))
         soup = bs4.BeautifulSoup(resp.content, 'xml')
-    except bs4.FeatureNotFound:
-        return ' хз чо делает'
+    except (ConnectionError, bs4.FeatureNotFound):
+        return None
 
     day = soup.find_all('weekDay', text=week_day)
     if not day:
@@ -76,14 +77,17 @@ def get_schedule(group_id, delta):
 
 def get_films(delta):
     '''
-    получаем премьеры в лицо
+    return list of films from 360.by
     '''
     premieres = ''
 
     date = datetime.now() + timedelta(days=delta, hours=3)
     date = date.strftime('%d.%m.%Y')
-    resp = requests.get('http://afisha.360.by/category-films_schedule.html')
-    soup = bs4.BeautifulSoup(resp.content, 'html.parser')
+    try:
+        resp = get('https://afisha.360.by/category-films_schedule.html')
+        soup = bs4.BeautifulSoup(resp.content, 'html.parser')
+    except (ConnectionError, bs4.FeatureNotFound):
+        return None
 
     sub_soup = soup.body.section.select('.items-block > .items-sub-block > .cinema_slider > ul')[0]
     films = sub_soup.find_all('li', class_='scene')
@@ -93,3 +97,15 @@ def get_films(delta):
         premieres += str(i + 1) + '. ' + film_title.string + '\n'
 
     return premieres
+
+def get_cryptorate(currency_name):
+    '''
+    return exchange rate if exists
+    '''
+    try:
+        currency = get('https://api.coinmarketcap.com/v1/ticker/' + currency_name).json()[0]
+        rate = currency['price_usd']
+    except KeyError:
+        rate = None
+
+    return rate

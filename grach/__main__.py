@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 
 '''
-здеся обработчики команд
+the bot and his handlers
 '''
 
 from os import path, getcwd
-import random
+from random import choice, randint
 import json
 import itertools
 from . import config, bot, unloader
 
-__location__ = path.join(getcwd(), path.dirname(__file__))
-with open(path.join(__location__, 'content.json'), encoding='utf-8') as json_data:
-    DATABASE = json.load(json_data)
+__location__ = path.join(getcwd(), path.dirname(__file__), 'content')
+with open(path.join(__location__, 'commands.json'), encoding='utf-8') as json_data:
+    COMMANDBASE = json.load(json_data)
+with open(path.join(__location__, 'users.json'), encoding='utf-8') as json_data:
+    USERBASE = json.load(json_data)
+with open(path.join(__location__, 'dictionary.json'), encoding='utf-8') as json_data:
+    DICTBASE = json.load(json_data)
+with open(path.join(__location__, 'crypto.json'), encoding='utf-8') as json_data:
+    CRYPTOBASE = json.load(json_data)
 
 try:
     grach = bot.Bot(config.TOKEN)
@@ -24,70 +30,97 @@ except bot.telebot.apihelper.ApiException:
 @grach.message_handler(commands=['help', 'start'])
 def handle_help(message):
     '''
-    чо делать, если халп
+    send help text
     '''
-    answer = DATABASE['dictionary']['help']
+    answer = choice(DICTBASE['help'])
     grach.reply(message, grach.send_message, answer)
 
 
 @grach.message_handler(commands=['schedule'])
-def handle_schedule(message, text_message=None):
+def handle_schedule(message, text_message=None, failure_answer=choice(DICTBASE['negation'])):
     '''
-    чо делать, если шедуле
+    send bsuir schedule if user in userbase
     '''
-    answer = ''
-
     delta = 1
-    if text_message != None:
-        if any(word in text_message for word in DATABASE['dictionary']['today']):
+
+    if text_message is not None:
+        if any(word in text_message for word in DICTBASE['today']):
             delta = 0
-        elif any(word in text_message for word in DATABASE['dictionary']['after_tomorrow']):
+        elif any(word in text_message for word in DICTBASE['after_tomorrow']):
             delta = 2
 
-    for user in DATABASE['users']:
+    for user in USERBASE:
         if user['name'] == message.from_user.username:
-            answer = user['group'] + unloader.get_schedule(user['group_id'], delta)
+            schedule = unloader.get_schedule(user['group_id'], delta)
+            if schedule is not None:
+                answer = user['group'] + schedule
+            else:
+                answer = failure_answer
             break
+
     else:
-        answer = DATABASE['dictionary']['devotion']
+        answer = choice(DICTBASE['devotion'])
 
     grach.reply(message, grach.send_message, answer)
 
 
 @grach.message_handler(commands=['cinema'])
-def handle_cinema(message, text_message=None):
+def handle_cinema(message, text_message=None, failure_answer=choice(DICTBASE['negation'])):
     '''
-    чо делать, если синема
+    send list of films at the minsk box office
     '''
-    answer = DATABASE['dictionary']['solving']
+    answer = choice(DICTBASE['solving'])
     grach.reply(message, grach.send_message, answer)
 
     delta = 0
-    if text_message != None:
-        if any(word in text_message for word in DATABASE['dictionary']['tomorrow']):
+    if text_message is not None:
+        if any(word in text_message for word in DICTBASE['tomorrow']):
             delta = 1
-        elif any(word in text_message for word in DATABASE['dictionary']['after_tomorrow']):
+        elif any(word in text_message for word in DICTBASE['after_tomorrow']):
             delta = 2
 
     answer = unloader.get_films(delta)
+    if answer is None:
+        answer = failure_answer
+
+    grach.reply(message, grach.send_message, answer)
+
+@grach.message_handler(commands=['crypto'])
+def handle_crypto(message, text_message=None, failure_answer=choice(DICTBASE['negation'])):
+    '''
+    send cryptocurrency exchange retes in usd
+    '''
+    currency_name = 'error'
+
+    if text_message is not None:
+        for currency in CRYPTOBASE:
+            if any(name in text_message for name in currency['verbose_names']):
+                currency_name = currency['name']
+                break
+    else:
+        currency_name = CRYPTOBASE[0]['name']
+
+    answer = unloader.get_cryptorate(currency_name)
+    if answer is None:
+        answer = failure_answer
+    else:
+        answer += ' ' + choice(DICTBASE['dollars'])
+
     grach.reply(message, grach.send_message, answer)
 
 @grach.message_handler(commands=['leave'])
-def handle_leave(message):
+def handle_leave(message, failure_answer=choice(DICTBASE['negation'])):
     '''
-    чо делать, если лив
+    leave chat if user in userbase and if possible
     '''
-    answer = ''
     admin = False
 
-    if message.chat.type == 'private':
-        answer = DATABASE['dictionary']['negation']
+    if (message.chat.type != 'private' and
+            any(user['name'] == message.from_user.username for user in USERBASE)):
+        answer = choice(DICTBASE['obedience'])
+        admin = True
     else:
-        if any(user['name'] == message.from_user.username for user in DATABASE['users']):
-            answer = DATABASE['dictionary']['obedience']
-            admin = True
-        else:
-            answer = DATABASE['dictionary']['devotion']
+        answer = failure_answer
 
     grach.reply(message, grach.send_message, answer)
 
@@ -98,16 +131,15 @@ def handle_leave(message):
 @grach.message_handler(commands=['shutdown'])
 def handle_shutdown(message):
     '''
-    чо делать, если шатдаун
+    shutdown if user in userbase
     '''
-    answer = ''
     admin = False
 
-    if any(user['name'] == message.from_user.username for user in DATABASE['users']):
-        answer = DATABASE['dictionary']['obedience']
+    if any(user['name'] == message.from_user.username for user in USERBASE):
+        answer = choice(DICTBASE['obedience'])
         admin = True
     else:
-        answer = DATABASE['dictionary']['devotion']
+        answer = choice(DICTBASE['devotion'])
 
     grach.reply(message, grach.send_message, answer)
 
@@ -119,15 +151,15 @@ def handle_shutdown(message):
 @grach.message_handler(content_types=['sticker'])
 def handle_sticker(message):
     '''
-    чо делать, если стикос
+    send sticker if sticker recieved
     '''
-    grach.reply(message, grach.send_sticker, DATABASE['dictionary']['overload'])
+    grach.reply(message, grach.send_sticker, choice(DICTBASE['overload']))
 
 
 @grach.message_handler(content_types=['text'])
 def handle_text(message):
     '''
-    чо делать, если текст
+    send message if message recieved depends on who, what and where sent it
     '''
     # lower string
     text_message = ' ' + message.text.lower().replace('ё', 'е') + ' '
@@ -138,7 +170,7 @@ def handle_text(message):
     parts = 0
     call = ''
 
-    for name in DATABASE['dictionary']['names']:
+    for name in DICTBASE['names']:
         if name in text_message:
             call = name
             break
@@ -148,7 +180,7 @@ def handle_text(message):
         reaction = True
         if len(text_message.replace(call, '')) < 6:
             grach.reply(message, grach.send_message,
-                        random.choice(DATABASE['dictionary']['call_answers']))
+                        choice(DICTBASE['call_answers']))
             reaction = False
     # group
     else:
@@ -157,28 +189,25 @@ def handle_text(message):
             grach.interlocutor_id = 0
             reaction = True
 
-        if any(name in text_message for name in DATABASE['dictionary']['names']):
+        if any(name in text_message for name in DICTBASE['names']):
             reaction = True
             if len(text_message.replace(call, '')) < 6:
                 grach.interlocutor_id = message.from_user.id
-                grach.reply(message, grach.send_message,
-                            random.choice(DATABASE['dictionary']['call_answers']))
+                grach.reply(message, grach.send_message, choice(DICTBASE['call_answers']))
                 reaction = False
     if reaction:
         # too few chars
         if len(text_message) < 5:
-            grach.reply(message, grach.send_message,
-                        random.choice(DATABASE['dictionary']['call_answers']))
+            grach.reply(message, grach.send_message, choice(DICTBASE['call_answers']))
             reaction = False
         # too many chars
         elif len(text_message) > 60:
-            grach.reply(message, grach.send_sticker,
-                        DATABASE['dictionary']['overload'])
+            grach.reply(message, grach.send_sticker, choice(DICTBASE['overload']))
             reaction = False
 
     if reaction:
         # start searching for command
-        for command in DATABASE['commands']:
+        for command in COMMANDBASE:
             for text in command['text']:
                 # start checking command text part
                 for word in text:
@@ -192,8 +221,7 @@ def handle_text(message):
                 break
             parts = 0
         else:
-            grach.reply(message, grach.send_message,
-                        DATABASE['dictionary']['ignorance'])
+            grach.reply(message, grach.send_message, choice(DICTBASE['incomprehension']))
 
 
 if __name__ == '__main__':

@@ -1,0 +1,36 @@
+[
+    {
+        "name": "bitcoin-cash",
+        "verbose_names": ["н кеш ", "н кэш ", "нкеш ", "нкэш ", " bcc ", " бкк "]
+    },
+
+    {
+        "name": "bitcoin",
+        "verbose_names": ["биткоин", "биткоен", "биткоэн", "биток", "битки", " btc ", " бтк "]
+    },
+
+    {
+        "name": "ethereum-classic",
+        "verbose_names": ["ир клас", "ер клас", " etc ", " етк "]
+    },
+
+    {
+        "name": "ethereum",
+        "verbose_names": ["эфир", "эзер", " eth ", " етх "]
+    },
+
+    {
+        "name": "litecoin",
+        "verbose_names": ["лайткоин", "лайткоен", "лайткоэн", "лайток", " ltc ", " лтк "]
+    },
+
+    {
+        "name": "ripple",
+        "verbose_names": ["рипл", "риппл", " xrp ", " хрп "]
+    },
+
+    {
+        "name": "dash",
+        "verbose_names": [" дэш", " даш", " деш", " dash "]
+    }
+]

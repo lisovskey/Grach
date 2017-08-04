@@ -1,0 +1,451 @@
+[
+    {
+        "title": "help", 
+        "text": [
+            [" умеш", " можеш", " могеш"],
+            [" шо", " што", " че", " что", " чо"]
+        ],
+        "exceptions": ["чес", "чос", "чер", "чор", "чел", "чол"],
+        "answers": [],
+        "method": "handle_help(message)"
+    },
+    
+    {
+        "title": "schedule",
+        "text": [
+            ["какое ", "какие ", " покажи", " скажи", "поведай", "показывай",
+                " чо ", " че ", " что ", " шо ", " што "],
+            ["расписание", " пары", "бугор", "бугре"]
+        ],
+        "exceptions": [],
+        "answers": ["хз, сервак лежит", "не могу"],
+        "method": "handle_schedule(message, text_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "cinema",
+        "text": [
+            [" что", " куда", " покажи", " какое", " какой", " какие", " какая",
+                " чо ", " што ", " че ", " шо "],
+            ["смотрет", "сходит", " идет ", "фильм", "афиш", " кино", " идут"]
+        ],
+        "exceptions": [],
+        "answers": ["шото не могу я", "не нашел ничего"],
+        "method": "handle_cinema(message, text_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "crypto",
+        "text": [
+            [" скольк", " скок", " скока", " по чем "]
+        ],
+        "exceptions": [],
+        "answers": ["дохуя", "не помню уже", "много", "мало", "бля откуда мне знать"],
+        "method": "handle_crypto(message, text_message, choice(command['answers']))"
+    },        
+
+    {
+        "title": "leave",
+        "text": [
+            ["нахуй", "на хуй", "нахер", "на хер", " вон ", " пиздуй",
+                " пошел", " уебыва", " уходи", " ливай", " уйди"],
+            ["отсюда", "отсюдо"]
+        ],
+        "exceptions": [],
+        "answers": ["не", "пошел нахуй дядя"],
+        "method": "handle_leave(message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "shutdown",
+        "text": [
+            [" авадакедавра"]
+        ],
+        "exceptions": ["ска", "пиш"],
+        "answers": [],
+        "method": "handle_shutdown(message)"
+    },
+    
+    {
+        "title": "light_swear",
+        "text": [
+            [" ты ", "грач", "гриша", "григри", " бот "],
+            ["калич", "дура", "дурень", " чмо", " деби", " лох", " диби", "член", "петух",
+                "питух", "тупой", " очко", " мудил", " муда", "блядь", "малафья", " кек ", " сука"]
+        ],
+        "exceptions": [" не "],
+        "answers": ["сам", "ха", "понял", "всмысле", "ты чо", "аккуратнее с языком", "и че"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "hard_swear",
+        "text": [
+            [" ты ", "грач", "гриша", "григри", " бот "],
+            ["еблан", " гной"," пизд", "оеб ", "аеб ", "залуп", " хуй", "педрил", " урод",
+                "пидар", "пидор", "гавно", "говно", "шлюха", "бляд", "пердун", " гей ", "сосач",
+                "даун", "ебан", " гомо", " гомик", " елда", "воняеш", "пидрил", "гнида", "шлепок",
+                "уебок", "уебак", "понос", "панос"]
+        ],
+        "exceptions": ["гомоса", " не "],
+        "answers": ["ты охуевший дурачок?", "ебало наноль", "пошел ты нахуй червячок", "чекай мать",
+                    "ты сасеш", "дрочи мой хуй себе в рот","ты долбаеб", "соси писюн",
+                    "ваще похуй", "я насру на тебя гавном"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "do_swear",
+        "text": [
+            [" иди ", "пошел", "пошла", "пошол", "пиздуй", " ебаш", " ди ", "соси ", " наверни",
+                "наверну", "ебал", "ебу", " трах", " обоср"],
+            ["нахуй", " хуй ", "нахер", "на хер", " нах ", "в пизд", "в очко",
+                "блять", "блядь", " член ", "говна", "писос", "тебя", " мам"]
+        ],
+        "exceptions": ["сюда"],
+        "answers": ["не лезь блять дебил сука ебаный", "ты чо охуел", "тебе делать нехуй?",
+                    "залезь нахуй накка обратно блять"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "re_swear",
+        "text": [
+            ["в очо ", "в оче ", "в аче ", " хуй на", "хуй через"]
+        ],
+        "exceptions": [],
+        "answers": ["бля да ты совсем охуел", "ну ты и ущерб", "омг фейспалм", "ну и что"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "percentage",
+        "text": [
+            ["вероятность", "процент", " доля"]
+        ],
+        "exceptions": [],
+        "answers": ["%", "% палюбому", "% но это не точно"],
+        "method": "grach.reply(message, grach.send_message, str(randint(0, 100)) + choice(command['answers']))"
+    },
+    
+    {
+        "title": "thanks",
+        "text": [
+            [" спс ", "пасиб", " благодарю", "спосибо"]
+        ],
+        "exceptions": ["?"],
+        "parts": 1,
+        "answers": ["нз", "пожалуйста", "к твоим услугам", "служу америке", "рад стараться"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "when",
+        "text": [
+            [" когда ", " када ", " кагда "]
+        ],
+        "exceptions": [],
+        "answers": ["не знаю", "когда-нибудь", "когда надо", "никогда", "скоро очень скоро"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "where",
+        "text": [
+            [" где ", " хде "]
+        ],
+        "exceptions": [],
+        "answers": ["не знаю", "где-нибудь", "где надо", "нигде", "в жопi", "вон там"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "where_to",
+        "text": [
+            [" куда "]
+        ],
+        "exceptions": [],
+        "answers": ["в жопу", "куда-нибудь", "да ваще хз", "никуда"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+
+    {
+        "title": "who_are_you",
+        "text": [
+            ["ты кто", "ты хто", "кто ты", "хто ты", "кто такой?", "с кем говорю",
+                "ты что такое", "что ты такое", "как тебя з", "как зовут тебя"]
+        ],
+        "exceptions": ["кто-", "кто то", "что-", "что то", "еты"],
+        "answers": ["бот", "грач", "бобич", "бог", "всего лишь машина, имитация жизни"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "who_is",
+        "text": [
+            [" кто ", " хто "],
+            ["такой ", "такая ", " таки ", " такi ", " это"]
+        ],
+        "exceptions": [],
+        "answers": ["это я", "это ты", "именитая личность", "мой братан", "это твоя мамаша"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "who",
+        "text": [
+            [" кто ", " хто "]
+        ],
+        "exceptions": [],
+        "answers": ["не знаю", "кто-нибудь", "кто надо", "никто", "я"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "whom",
+        "text": [
+            [" кем ", " кем-"]
+        ],
+        "exceptions": [],
+        "answers": ["гавном", "грачом", "разносчиком гавна", "программистом, очевидно", "сабакой"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "what_is",
+        "text": [
+            [" что ", " чо ", " че ", " шо ", " што "],
+            ["такое ", "токое ", "значит ", "обозначает ", " это"]
+        ],
+        "exceptions": [],
+        "answers": ["это жопа", "это ты", "это жопа негра", "а ты не знаешь?", "тыква"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "what",
+        "text": [
+            [" что ", " чо ", " че ", " шо ", " што "]
+        ],
+        "exceptions": [],
+        "answers": ["не знаю", "что надо", "ничего"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "which",
+        "text": [
+            [" какой ", " какая ", "какое", "какие"]
+        ],
+        "exceptions": [],
+        "answers": ["не знаю", "не владею такой информацией", "паркуюсь где хочу", "не скажу"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "why",
+        "text": [
+            ["почему ", "пачаму ", "пачему "]
+        ],
+        "exceptions": [],
+        "answers": ["не знаю", "потому что", "потому"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "how_found",
+        "text": [
+            [" как ", "откуда"],
+            [" узнал", " знаеш"]
+        ],
+        "exceptions": [],
+        "answers": ["по сусекам наскреб", "ну я ж типа грач", "спросите высоцкого"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "how",
+        "text": [
+            [" как "]
+        ],
+        "exceptions": [],
+        "answers": ["не знаю", "как-нибудь", "как надо", "никак"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "question",
+        "text": [
+            ["?"]
+        ],
+        "exceptions": [],
+        "answers": ["да", "ну да", "конечно", "не", "да не", "нет", "тупой вопрос", "а тебе не похуй?"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "you_said",
+        "text": [
+            [" ты же ", " ты ж ", " ты ведь ", " ты говорил "]
+        ],
+        "exceptions": [],
+        "answers": ["да?", "не, не помню", "разве?", "не ты чота путаешь", "пиздеж"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "that",
+        "text": [
+            [" это "]
+        ],
+        "exceptions": [],
+        "answers": ["ого", "круто", "это жопа", "это пизда", "наверное"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "me",
+        "text": [
+            [" я "]
+        ],
+        "exceptions": [],
+        "answers": ["красава", "малаца", "интересно", "не можед быт", "да мне похуй"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "you",
+        "text": [
+            [" ты "]
+        ],
+        "exceptions": [],
+        "answers": ["спасибо", "наверное"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "nothing",
+        "text": [
+            ["ничего", "ниче ", "ничо ", "ничиво", "ничево"]
+        ],
+        "exceptions": ["себе", " се "],
+        "answers": ["ладно"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "good",
+        "text": [
+            [" хорошо", "хорашо", "харашо", "отлично", " супер", " ништяк",
+                " норм", "неплохо", " ого ", "пиздато", "заебись", "охуенно", 
+                "ахуенно", "ахуена", "зачот"]
+        ],
+        "exceptions": [" не "],
+        "answers": ["ага", "да, норм", "знаю", "е"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "bad",
+        "text": [
+            ["плохо", "хуево", "отвратительно", "нехорошо", "говно ",
+                "хуйня", "говно", "гавно"]
+        ],
+        "exceptions": [" не "],
+        "answers": ["да ваще жопа", "наверное", "не могу не согласиться", "на самом деле нет",
+                    "ну смотря с какой стороны", "двачую"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "lets",
+        "text": [
+            [" давай", " дай "]
+        ],
+        "exceptions": [],
+        "answers": ["даю", "чо тебе дать", "а по ебалу не дать?"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "yourself",
+        "text": [
+            [" сам "]
+        ],
+        "exceptions": [],
+        "answers": ["ха, пиздюк", "нет", "я выше этого", "я охуенный"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "yes",
+        "text": [
+            [" да ", " ага ", " конечно ", "естественно"]
+        ],
+        "exceptions": [],
+        "answers": ["ну вот и все", "ну и отлично", "ага", "ну ладно", "заебись"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "no",
+        "text": [
+            [" не ", " нет ", " неа "]
+        ],
+        "exceptions": [],
+        "answers": ["ты чо дурень", "ну ладно", "точно?", "а зря"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "understand",
+        "text": [
+            [" понял ", "понятно ", "ясно "]
+        ],
+        "exceptions": [],
+        "answers": ["это хорошо", "было сложно?", "я рад", "отлично"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "okay",
+        "text": [
+            [" ладн", " лана ", " ок ", " оке"]
+        ],
+        "exceptions": ["океа"],
+        "answers": ["обращайся", "ага", "ну вот"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "hi",
+        "text": [
+            [" прив ", " прива ", " привет", "здравствуй", " хай ", "хаюхай", "хаю хай",
+                "дратут", " здаров ", " здарова ", "добрый день", "добрый вечер", "вечероче"]
+        ],
+        "exceptions": ["приветл"],
+        "answers": ["привет", "здрасте", "приветик", "у аппарата", "да да", "ало"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "bye",
+        "text": [
+            ["все давай", "датвиданья", "до связи", " дасвидан", " пакес ",
+                " до свидан", " досвидан", " пока ", " пака ", "ой ночи "]
+        ],
+        "exceptions": ["пока н", "пока чт", "пока ты", "пока я", "пока он", "пока вс", "пока р"],
+        "answers": ["пока", "пака", "давай"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    },
+    
+    {
+        "title": "swear",
+        "text": [
+            [" сука", "ебать", "пиздец", " мля ", "нахуй", "жопа", " бля", " пизда "]
+        ],
+        "exceptions": [],
+        "answers": ["чо такое", "ты ебонутый?", "мда"],
+        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+    }
+]

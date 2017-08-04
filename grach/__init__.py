@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-инит пять
+init five
 '''
 
 try:
