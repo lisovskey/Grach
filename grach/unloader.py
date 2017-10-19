@@ -5,72 +5,62 @@ parsers
 '''
 
 from datetime import datetime, timedelta
+import json
+from urllib.request import urlopen
 from requests import get
 from requests.exceptions import ConnectionError
 import bs4
 
-def get_schedule(group_id, delta):
+SHEDULE_URL = 'http://students.bsuir.by/api/v1/studentGroup/schedule?studentGroup='
+FILMS_URL = 'https://afisha.360.by/category-films_schedule.html'
+CRYPTORATE_URL = 'https://api.coinmarketcap.com/v1/ticker/'
+
+def get_schedule(group, delta):
     '''
     return schedule from bsuir.by with delta days
     '''
-    schedule = ''
-
-    tmp_date = datetime.today() + timedelta(days=delta, hours=3)
-    tmp_date = tmp_date.timetuple()
-    date = str(tmp_date[2]) + '.' + str(tmp_date[1]) + '.' + str(tmp_date[0])
-
-    tmp_week = get('https://www.bsuir.by/schedule/rest/currentWeek/date/' + date)
-    week_num = str(tmp_week.content)[2]
-    if tmp_date[6] == 0:
-        week_day = 'Понедельник'
-        tmp_week = ' в понедельник'
-    elif tmp_date[6] == 1:
-        week_day = 'Вторник'
-        tmp_week = ' во вторник'
-    elif tmp_date[6] == 2:
-        week_day = 'Среда'
-        tmp_week = ' в среду'
-    elif tmp_date[6] == 3:
-        week_day = 'Четверг'
-        tmp_week = ' в четверг'
-    elif tmp_date[6] == 4:
-        week_day = 'Пятница'
-        tmp_week = ' в пятницу'
-    elif tmp_date[6] == 5:
-        week_day = 'Суббота'
-        tmp_week = ' в субботу'
-    elif tmp_date[6] == 6:
-        week_day = 'Воскресенье'
-        tmp_week = ' в воскресенье'
-    schedule += tmp_week + ':'
+    week_days = ['в понедельник', 'во вторник', 'в среду', 'в четверг',
+                 'в пятницу', 'в субботу', 'в воскресенье']
 
     try:
-        resp = get('https://www.bsuir.by/schedule/rest/schedule/' + str(group_id))
-        soup = bs4.BeautifulSoup(resp.content, 'xml')
-    except (ConnectionError, bs4.FeatureNotFound):
+        full_schedule = json.load(urlopen(SHEDULE_URL + group))
+    except ConnectionError:
         return None
 
-    day = soup.find_all('weekDay', text=week_day)
-    if not day:
-        return ' отдыхает'
+    request_date = datetime.today() + timedelta(days=delta)
+    day_num = request_date.timetuple()[6]
+    week_num = full_schedule['currentWeekNumber']
+    if datetime.today().weekday() == 5 or datetime.today().weekday() == 6:
+        if week_num == 4:
+            week_num = 1
+        else:
+            week_num += 1
 
-    day = day[0].findParent('scheduleModel')
-    subs = day.find_all('weekNumber', text=week_num)
-    if not subs:
-        return ' отдыхает'
+    schedule = week_days[day_num] + ':'
+
+    try:
+        subject = full_schedule['schedules'][day_num]
+    except IndexError:
+        return 'отдыхает'
+
+    if delta == 0:
+        subs = full_schedule['todaySchedules']
+    elif delta == 1:
+        subs = full_schedule['tomorrowSchedules']
+    else:
+        subs = full_schedule['schedules'][day_num]['schedule']
 
     for subject in subs:
-        schedule += '\n\n'
-        subject = subject.find_parent('schedule')
-        schedule += (subject.lessonTime.text + '\n' +
-                     subject.subject.text + ' (' +
-                     subject.lessonType.text + ') ')
-        if subject.auditory is not None:
-            schedule += subject.auditory.text
-        if subject.numSubgroup.text != '0':
-            schedule += ' (' + subject.numSubgroup.text + ')'
-        if subject.lastName is not None and subject.numSubgroup.text == '0':
-            schedule += ' ' + subject.lastName.text
+        if week_num in subject['weekNumber']:
+            schedule += '\n\n{}\n{} ({}) '.format(subject['lessonTime'],
+                                                  subject['subject'],
+                                                  subject['lessonType'])
+            if subject['auditory']:
+                schedule += subject['auditory'][0]
+            if subject['numSubgroup'] != 0:
+                schedule += ' ({})'.format(str(subject['numSubgroup']))
+            if subject['employee'] and subject['numSubgroup'] == 0:
+                schedule += ' {}'.format(subject['employee'][0]['lastName'])
 
     return schedule
 
@@ -84,7 +74,7 @@ def get_films(delta):
     date = datetime.now() + timedelta(days=delta, hours=3)
     date = date.strftime('%d.%m.%Y')
     try:
-        resp = get('https://afisha.360.by/category-films_schedule.html')
+        resp = get(FILMS_URL)
         soup = bs4.BeautifulSoup(resp.content, 'html.parser')
     except (ConnectionError, bs4.FeatureNotFound):
         return None
@@ -94,16 +84,17 @@ def get_films(delta):
 
     for i, film in enumerate(films):
         film_title = film.select('.movie > .info > header > h1')[0]
-        premieres += str(i + 1) + '. ' + film_title.string + '\n'
+        premieres += '{}. {}\n'.format(str(i + 1), film_title.string)
 
     return premieres
+
 
 def get_cryptorate(currency_name):
     '''
     return exchange rate if exists
     '''
     try:
-        currency = get('https://api.coinmarketcap.com/v1/ticker/' + currency_name).json()[0]
+        currency = get(CRYPTORATE_URL + currency_name).json()[0]
         rate = currency['price_usd']
     except KeyError:
         rate = None
