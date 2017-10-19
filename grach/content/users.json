@@ -1,13 +1,21 @@
 [
     {
         "name": "lisovskey",
-        "group_id": "21833",
         "group": "614302"
     },
     
     {
         "name": "hetchback",
-        "group_id": "21830",
         "group": "610901"
+    },
+
+    {
+        "name": "Pavlinech",
+        "group": "641301"
+    },
+
+    {
+        "name": "Oleksha",
+        "group": "650503"
     }
 ]

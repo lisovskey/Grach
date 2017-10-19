@@ -51,13 +51,10 @@ def handle_schedule(message, text_message=None, failure_answer=choice(DICTBASE['
 
     for user in USERBASE:
         if user['name'] == message.from_user.username:
-            schedule = unloader.get_schedule(user['group'], delta)
-            if schedule is not None:
-                answer = '{} {}'.format(user['group'], schedule)
-            else:
+            answer = unloader.get_schedule(user['group'], delta)
+            if answer is None:
                 answer = failure_answer
             break
-
     else:
         answer = choice(DICTBASE['devotion'])
     grach.reply(message, grach.send_message, answer)

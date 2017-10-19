@@ -4,7 +4,7 @@
 bot wrapper class
 '''
 
-from logging import WARNING
+from logging import DEBUG
 from datetime import datetime
 import math
 import telebot
@@ -20,7 +20,7 @@ class Bot(telebot.TeleBot):
         super().__init__(token)
         self.interlocutor_id = 0
         logger = telebot.logger
-        telebot.logger.setLevel(WARNING)
+        telebot.logger.setLevel(DEBUG)
         print(self.get_me())
 
 

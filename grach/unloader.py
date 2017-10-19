@@ -36,12 +36,13 @@ def get_schedule(group, delta):
         else:
             week_num += 1
 
-    schedule = week_days[day_num] + ':'
+    schedule = '{} {}'.format(group, week_days[day_num])
 
     try:
         subject = full_schedule['schedules'][day_num]
+        schedule += ':'
     except IndexError:
-        return 'отдыхает'
+        return schedule + ' отдыхает'
 
     if delta == 0:
         subs = full_schedule['todaySchedules']
