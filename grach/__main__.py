@@ -53,7 +53,7 @@ def handle_schedule(message, text_message=None, failure_answer=choice(DICTBASE['
         if user['name'] == message.from_user.username:
             schedule = unloader.get_schedule(user['group'], delta)
             if schedule is not None:
-                answer = user['group'] + schedule
+                answer = '{} {}'.format(user['group'], schedule)
             else:
                 answer = failure_answer
             break
