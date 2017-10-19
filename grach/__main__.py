@@ -10,6 +10,7 @@ import json
 import itertools
 from . import config, bot, unloader
 
+
 __location__ = path.join(getcwd(), path.dirname(__file__), 'content')
 with open(path.join(__location__, 'commands.json'), encoding='utf-8') as json_data:
     COMMANDBASE = json.load(json_data)
@@ -42,7 +43,6 @@ def handle_schedule(message, text_message=None, failure_answer=choice(DICTBASE['
     send bsuir schedule if user in userbase
     '''
     delta = 1
-
     if text_message is not None:
         if any(word in text_message for word in DICTBASE['today']):
             delta = 0
@@ -51,7 +51,7 @@ def handle_schedule(message, text_message=None, failure_answer=choice(DICTBASE['
 
     for user in USERBASE:
         if user['name'] == message.from_user.username:
-            schedule = unloader.get_schedule(user['group_id'], delta)
+            schedule = unloader.get_schedule(user['group'], delta)
             if schedule is not None:
                 answer = user['group'] + schedule
             else:
@@ -60,7 +60,6 @@ def handle_schedule(message, text_message=None, failure_answer=choice(DICTBASE['
 
     else:
         answer = choice(DICTBASE['devotion'])
-
     grach.reply(message, grach.send_message, answer)
 
 
