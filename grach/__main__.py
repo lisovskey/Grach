@@ -7,6 +7,7 @@ the bot and his handlers
 from os import path, getcwd
 from random import choice, randint
 import json
+import logging
 import itertools
 from . import config, bot, unloader
 
@@ -221,4 +222,5 @@ def handle_text(message):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     grach.polling(none_stop=True, timeout=10)
