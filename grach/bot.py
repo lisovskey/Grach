@@ -8,6 +8,7 @@ import logging
 from datetime import datetime
 import telebot
 
+
 class Bot(telebot.TeleBot):
     '''
     a bot actually
@@ -27,7 +28,7 @@ class Bot(telebot.TeleBot):
         '''
         log to console
         '''
-        logging.info(' %s\n%s %s (id %s) in %s:\n - %s\nОтвечаю:\n - %s',
+        logging.info(' %s\n%s %s (id %s) in %s:\n - %s\nReplying:\n - %s',
                      datetime.now().strftime('%d.%m.%y %H:%M'),
                      received_message.from_user.first_name,
                      received_message.from_user.last_name,

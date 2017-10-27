@@ -15,6 +15,7 @@ SHEDULE_URL = 'http://students.bsuir.by/api/v1/studentGroup/schedule?studentGrou
 FILMS_URL = 'https://afisha.360.by/category-films_schedule.html'
 CRYPTORATE_URL = 'https://api.coinmarketcap.com/v1/ticker/'
 
+
 def get_schedule(group, delta):
     '''
     return schedule from bsuir.by with delta days

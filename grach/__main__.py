@@ -4,26 +4,27 @@
 the bot and his handlers
 '''
 
-from os import path, getcwd
+from os import path, getcwd, environ
 from random import choice, randint
 import json
 import logging
 import itertools
-from . import config, bot, unloader
+from . import bot, unloader
 
 
 __location__ = path.join(getcwd(), path.dirname(__file__), 'content')
-with open(path.join(__location__, 'commands.json'), encoding='utf-8') as json_data:
-    COMMANDBASE = json.load(json_data)
-with open(path.join(__location__, 'users.json'), encoding='utf-8') as json_data:
-    USERBASE = json.load(json_data)
-with open(path.join(__location__, 'dictionary.json'), encoding='utf-8') as json_data:
-    DICTBASE = json.load(json_data)
-with open(path.join(__location__, 'crypto.json'), encoding='utf-8') as json_data:
-    CRYPTOBASE = json.load(json_data)
+
+def load_json(filename):
+    with open(path.join(__location__, filename), encoding='utf-8') as json_data:
+        return json.load(json_data)
+
+COMMANDBASE = load_json('commands.json')
+USERBASE = load_json('users.json')
+DICTBASE = load_json('dictionary.json')
+CRYPTOBASE = load_json('crypto.json')
 
 try:
-    grach = bot.Bot(config.TOKEN)
+    grach = bot.Bot(environ['TOKEN'])
 except bot.telebot.apihelper.ApiException:
     print('invalid token error')
     exit(1)
@@ -82,6 +83,7 @@ def handle_cinema(message, text_message=None, failure_answer=choice(DICTBASE['ne
 
     grach.reply(message, grach.send_message, answer)
 
+
 @grach.message_handler(commands=['crypto'])
 def handle_crypto(message, text_message=None, failure_answer=choice(DICTBASE['negation'])):
     '''
@@ -104,6 +106,7 @@ def handle_crypto(message, text_message=None, failure_answer=choice(DICTBASE['ne
         answer += ' ' + choice(DICTBASE['dollars'])
 
     grach.reply(message, grach.send_message, answer)
+
 
 @grach.message_handler(commands=['leave'])
 def handle_leave(message, failure_answer=choice(DICTBASE['negation'])):
