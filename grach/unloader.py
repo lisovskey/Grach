@@ -11,8 +11,9 @@ from requests import get
 from requests.exceptions import ConnectionError
 import bs4
 
+
 SHEDULE_URL = 'http://students.bsuir.by/api/v1/studentGroup/schedule?studentGroup='
-FILMS_URL = 'https://afisha.360.by/category-films_schedule.html'
+FILMS_URL = 'http://afisha.360.by/category-films_schedule.html'
 CRYPTORATE_URL = 'https://api.coinmarketcap.com/v1/ticker/'
 
 
@@ -97,8 +98,6 @@ def get_cryptorate(currency_name):
     '''
     try:
         currency = get(CRYPTORATE_URL + currency_name).json()[0]
-        rate = currency['price_usd']
+        return currency['price_usd']
     except KeyError:
-        rate = None
-
-    return rate
+        return None

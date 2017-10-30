@@ -9,7 +9,7 @@ from datetime import datetime
 import telebot
 
 
-class Bot(telebot.TeleBot):
+class Bot(telebot.AsyncTeleBot):
     '''
     a bot actually
     '''
@@ -21,7 +21,7 @@ class Bot(telebot.TeleBot):
         self.interlocutor_id = 0
         logger = telebot.logger
         telebot.logger.setLevel(logging.INFO)
-        print(self.get_me())
+        logging.info(self.get_me())
 
 
     def log_message(self, received_message, answer):
@@ -42,5 +42,5 @@ class Bot(telebot.TeleBot):
         '''
         reply with logging
         '''
-        self.log_message(received_message, answer)
         send_what(received_message.chat.id, answer)
+        self.log_message(received_message, answer)

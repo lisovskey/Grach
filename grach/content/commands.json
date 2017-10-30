@@ -19,7 +19,7 @@
         ],
         "exceptions": [],
         "answers": ["хз, сервак лежит", "не могу"],
-        "method": "handle_schedule(message, text_message, choice(command['answers']))"
+        "method": "handle_schedule(message, text_message, answer)"
     },
     
     {
@@ -31,7 +31,7 @@
         ],
         "exceptions": [],
         "answers": ["шото не могу я", "не нашел ничего"],
-        "method": "handle_cinema(message, text_message, choice(command['answers']))"
+        "method": "handle_cinema(message, text_message, answer)"
     },
     
     {
@@ -41,7 +41,7 @@
         ],
         "exceptions": [],
         "answers": ["дохуя", "не помню уже", "много", "мало", "бля откуда мне знать"],
-        "method": "handle_crypto(message, text_message, choice(command['answers']))"
+        "method": "handle_crypto(message, text_message, answer)"
     },        
 
     {
@@ -53,7 +53,7 @@
         ],
         "exceptions": [],
         "answers": ["не", "пошел нахуй дядя"],
-        "method": "handle_leave(message, choice(command['answers']))"
+        "method": "handle_leave(message, answer)"
     },
     
     {
@@ -75,7 +75,7 @@
         ],
         "exceptions": [" не "],
         "answers": ["сам", "ха", "понял", "всмысле", "ты чо", "аккуратнее с языком", "и че"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -91,7 +91,7 @@
         "answers": ["ты охуевший дурачок?", "ебало наноль", "пошел ты нахуй червячок", "чекай мать",
                     "ты сасеш", "дрочи мой хуй себе в рот","ты долбаеб", "соси писюн",
                     "ваще похуй", "я насру на тебя гавном"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -105,7 +105,7 @@
         "exceptions": ["сюда"],
         "answers": ["не лезь блять дебил сука ебаный", "ты чо охуел", "тебе делать нехуй?",
                     "залезь нахуй накка обратно блять"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -115,7 +115,7 @@
         ],
         "exceptions": [],
         "answers": ["бля да ты совсем охуел", "ну ты и ущерб", "омг фейспалм", "ну и что"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -125,7 +125,7 @@
         ],
         "exceptions": [],
         "answers": ["%", "% палюбому", "% но это не точно"],
-        "method": "grach.reply(message, grach.send_message, str(randint(0, 100)) + choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, str(randint(0, 100)) + answer)"
     },
     
     {
@@ -136,7 +136,7 @@
         "exceptions": ["?"],
         "parts": 1,
         "answers": ["нз", "пожалуйста", "к твоим услугам", "служу америке", "рад стараться"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -146,7 +146,7 @@
         ],
         "exceptions": [],
         "answers": ["не знаю", "когда-нибудь", "когда надо", "никогда", "скоро очень скоро"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -156,7 +156,7 @@
         ],
         "exceptions": [],
         "answers": ["не знаю", "где-нибудь", "где надо", "нигде", "в жопi", "вон там"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -166,7 +166,7 @@
         ],
         "exceptions": [],
         "answers": ["в жопу", "куда-нибудь", "да ваще хз", "никуда"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
 
     {
@@ -177,7 +177,7 @@
         ],
         "exceptions": ["кто-", "кто то", "что-", "что то", "еты"],
         "answers": ["бот", "грач", "бобич", "бог", "всего лишь машина, имитация жизни"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -188,7 +188,7 @@
         ],
         "exceptions": [],
         "answers": ["это я", "это ты", "именитая личность", "мой братан", "это твоя мамаша"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -198,7 +198,7 @@
         ],
         "exceptions": [],
         "answers": ["не знаю", "кто-нибудь", "кто надо", "никто", "я"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -208,7 +208,7 @@
         ],
         "exceptions": [],
         "answers": ["гавном", "грачом", "разносчиком гавна", "программистом, очевидно", "сабакой"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -219,7 +219,7 @@
         ],
         "exceptions": [],
         "answers": ["это жопа", "это ты", "это жопа негра", "а ты не знаешь?", "тыква"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -229,7 +229,7 @@
         ],
         "exceptions": [],
         "answers": ["не знаю", "что надо", "ничего"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -239,7 +239,7 @@
         ],
         "exceptions": [],
         "answers": ["не знаю", "не владею такой информацией", "паркуюсь где хочу", "не скажу"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -249,7 +249,7 @@
         ],
         "exceptions": [],
         "answers": ["не знаю", "потому что", "потому"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -260,7 +260,7 @@
         ],
         "exceptions": [],
         "answers": ["по сусекам наскреб", "ну я ж типа грач", "спросите высоцкого"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -270,7 +270,7 @@
         ],
         "exceptions": [],
         "answers": ["не знаю", "как-нибудь", "как надо", "никак"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -280,7 +280,7 @@
         ],
         "exceptions": [],
         "answers": ["да", "ну да", "конечно", "не", "да не", "нет", "тупой вопрос", "а тебе не похуй?"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -290,7 +290,7 @@
         ],
         "exceptions": [],
         "answers": ["да?", "не, не помню", "разве?", "не ты чота путаешь", "пиздеж"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -300,7 +300,7 @@
         ],
         "exceptions": [],
         "answers": ["ого", "круто", "это жопа", "это пизда", "наверное"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -310,7 +310,7 @@
         ],
         "exceptions": [],
         "answers": ["красава", "малаца", "интересно", "не можед быт", "да мне похуй"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -320,7 +320,7 @@
         ],
         "exceptions": [],
         "answers": ["спасибо", "наверное"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -330,7 +330,7 @@
         ],
         "exceptions": ["себе", " се "],
         "answers": ["ладно"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -342,7 +342,7 @@
         ],
         "exceptions": [" не "],
         "answers": ["ага", "да, норм", "знаю", "е"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -354,7 +354,7 @@
         "exceptions": [" не "],
         "answers": ["да ваще жопа", "наверное", "не могу не согласиться", "на самом деле нет",
                     "ну смотря с какой стороны", "двачую"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -364,7 +364,7 @@
         ],
         "exceptions": [],
         "answers": ["даю", "чо тебе дать", "а по ебалу не дать?"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -374,7 +374,7 @@
         ],
         "exceptions": [],
         "answers": ["ха, пиздюк", "нет", "я выше этого", "я охуенный"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -384,7 +384,7 @@
         ],
         "exceptions": [],
         "answers": ["ну вот и все", "ну и отлично", "ага", "ну ладно", "заебись"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -394,7 +394,7 @@
         ],
         "exceptions": [],
         "answers": ["ты чо дурень", "ну ладно", "точно?", "а зря"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -404,7 +404,7 @@
         ],
         "exceptions": [],
         "answers": ["это хорошо", "было сложно?", "я рад", "отлично"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -414,18 +414,19 @@
         ],
         "exceptions": ["океа"],
         "answers": ["обращайся", "ага", "ну вот"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
         "title": "hi",
         "text": [
             [" прив ", " прива ", " привет", "здравствуй", " хай ", "хаюхай", "хаю хай",
-                "дратут", " здаров ", " здарова ", "добрый день", "добрый вечер", "вечероче"]
+                " даров ", "дратут", " здаров ", " здарова ", "доброе утро", "добрый день",
+                "добрый вечер", "вечероче", " дароу ", " салют"]
         ],
         "exceptions": ["приветл"],
         "answers": ["привет", "здрасте", "приветик", "у аппарата", "да да", "ало"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -436,7 +437,7 @@
         ],
         "exceptions": ["пока н", "пока чт", "пока ты", "пока я", "пока он", "пока вс", "пока р"],
         "answers": ["пока", "пака", "давай"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     },
     
     {
@@ -446,6 +447,6 @@
         ],
         "exceptions": [],
         "answers": ["чо такое", "ты ебонутый?", "мда"],
-        "method": "grach.reply(message, grach.send_message, choice(command['answers']))"
+        "method": "grach.reply(message, grach.send_message, answer)"
     }
 ]
