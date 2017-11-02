@@ -37,7 +37,7 @@
     {
         "title": "crypto",
         "text": [
-            [" скольк", " скок", " скока", " по чем "]
+            [" скольк", " скок", " скока", " по чем ", " курс"]
         ],
         "exceptions": [],
         "answers": ["дохуя", "не помню уже", "много", "мало", "бля откуда мне знать"],
@@ -54,16 +54,6 @@
         "exceptions": [],
         "answers": ["не", "пошел нахуй дядя"],
         "method": "handle_leave(message, answer)"
-    },
-    
-    {
-        "title": "shutdown",
-        "text": [
-            [" авадакедавра"]
-        ],
-        "exceptions": ["ска", "пиш"],
-        "answers": [],
-        "method": "handle_shutdown(message)"
     },
     
     {

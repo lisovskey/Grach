@@ -124,23 +124,6 @@ def handle_leave(message, failure_answer=choice(DICTBASE['negation'])):
         grach.leave_chat(message.chat.id)
 
 
-@grach.message_handler(commands=['shutdown'])
-def handle_shutdown(message):
-    '''
-    shutdown if user in userbase
-    '''
-    admin = False
-    if any(user['name'] == message.from_user.username for user in USERBASE):
-        answer = choice(DICTBASE['obedience'])
-        admin = True
-    else:
-        answer = choice(DICTBASE['devotion'])
-    grach.reply(message, grach.send_message, answer)
-    if admin:
-        grach.stop_polling()
-        exit(0)
-
-
 @grach.message_handler(content_types=['sticker'])
 def handle_sticker(message):
     '''
@@ -211,7 +194,7 @@ def find_command(text_message):
                         break
         if parts == len(command['text']):
             return command['method'], choice(command['answers'])
-    return None
+    return None, None
 
 
 @grach.message_handler(content_types=['text'])
