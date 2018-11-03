@@ -120,6 +120,16 @@ def handle_crypto(message, text_message=None,
     grach.reply(message, grach.send_message, answer)
 
 
+@grach.message_handler(commands=['weather'])
+def handle_weather(message, text_message=None,
+                   failure_answer=choice(DICTBASE['negation'])):
+    '''
+    send current weather information
+    '''
+    answer = unloader.get_weather()
+    grach.reply(message, grach.send_message, answer or failure_answer)
+
+
 @grach.message_handler(commands=['leave'])
 def handle_leave(message, failure_answer=choice(DICTBASE['negation'])):
     '''

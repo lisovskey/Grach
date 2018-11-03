@@ -13,6 +13,7 @@ import bs4
 SHEDULE_URL = '  https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup='
 FILMS_URL = 'http://afisha.360.by/category-films_schedule.html'
 CRYPTORATE_URL = 'https://api.coinmarketcap.com/v1/ticker/'
+WEATHER_URL = 'http://api.openweathermap.org/data/2.5/weather?id=625144&units=metric&lang=ru&appid=75c166eea6260f05d427e10e67c89d94'
 
 
 def get_schedule(group, delta):
@@ -83,5 +84,20 @@ def get_cryptorate(currency_name):
     try:
         currency = get(CRYPTORATE_URL + currency_name).json()[0]
         return str(round(float(currency['price_usd']), 2))
+    except KeyError:
+        return None
+
+
+def get_weather():
+    data = get(WEATHER_URL).json()
+    try:
+        weather = ''
+        for parameter in data['weather']:
+            weather += '{}, '.format(parameter['description'])
+        weather = weather.capitalize()
+        weather += '{} °C\n'.format(data['main']['temp'])
+        weather += 'Влажность {}%\n'.format(data['main']['humidity'])
+        weather += 'Ветер {} м/с'.format(data['wind']['speed'])
+        return weather
     except KeyError:
         return None
