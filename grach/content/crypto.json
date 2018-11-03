@@ -11,12 +11,12 @@
 
     {
         "name": "ethereum-classic",
-        "verbose_names": ["ир клас", "ер клас", " etc ", " етк "]
+        "verbose_names": ["ум клас", "ир клас", "ер клас", " etc ", " етк "]
     },
 
     {
         "name": "ethereum",
-        "verbose_names": ["эфир", "эзер", " eth ", " етх "]
+        "verbose_names": ["эфир", "эзер", "эзэр", " eth ", " етх "]
     },
 
     {
@@ -32,5 +32,10 @@
     {
         "name": "dash",
         "verbose_names": [" дэш", " даш", " деш", " dash "]
+    },
+
+    {
+        "name": "eos",
+        "verbose_names": ["еос", "иос", " eos "]
     }
 ]

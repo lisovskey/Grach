@@ -31,6 +31,21 @@ except bot.telebot.apihelper.ApiException:
     exit(1)
 
 
+def check_reaction(message, text_message):
+    '''
+    return True if reaction is necessary
+    '''
+    if message.chat.type == 'private':
+        return True
+    elif (text_message and
+          any(name in text_message for name in DICTBASE['names'])):
+        return True
+    elif message.from_user.id == grach.interlocutor_id:
+        grach.interlocutor_id = 0
+        return True
+    return False
+
+
 @grach.message_handler(commands=['help', 'start'])
 def handle_help(message):
     '''
@@ -127,7 +142,8 @@ def handle_sticker(message):
     '''
     send sticker if sticker recieved
     '''
-    grach.reply(message, grach.send_sticker, choice(DICTBASE['overload']))
+    if check_reaction(message, message.text):
+        grach.reply(message, grach.send_sticker, choice(DICTBASE['overload']))
 
 
 @grach.message_handler(content_types=['text'])
@@ -135,19 +151,6 @@ def handle_text(message):
     '''
     send message if message recieved depends on who, what and where sent it
     '''
-    def check_reaction(message, text_message):
-        '''
-        return True if reaction is necessary
-        '''
-        if (message.chat.type == 'private' or
-            any(name in text_message for name in DICTBASE['names'])):
-            return True
-        elif message.from_user.id == grach.interlocutor_id:
-            grach.interlocutor_id = 0
-            return True
-        return False
-
-
     def useful_text_len(text_message):
         '''
         return len of message without bot name
