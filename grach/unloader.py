@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 '''
 parsers
 '''
@@ -12,7 +10,7 @@ from requests.exceptions import ConnectionError
 import bs4
 
 
-SHEDULE_URL = 'http://students.bsuir.by/api/v1/studentGroup/schedule?studentGroup='
+SHEDULE_URL = '  https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup='
 FILMS_URL = 'http://afisha.360.by/category-films_schedule.html'
 CRYPTORATE_URL = 'https://api.coinmarketcap.com/v1/ticker/'
 
@@ -32,36 +30,22 @@ def get_schedule(group, delta):
     request_date = datetime.today() + timedelta(days=delta)
     day_num = request_date.timetuple()[6]
     week_num = full_schedule['currentWeekNumber']
-    if datetime.today().weekday() == 5 or datetime.today().weekday() == 6:
-        if week_num == 4:
-            week_num = 1
-        else:
-            week_num += 1
-
     schedule = '{} {}'.format(group, week_days[day_num])
-
     try:
         subject = full_schedule['schedules'][day_num]
         schedule += ':'
     except IndexError:
         return schedule + ' отдыхает'
 
-    if delta == 0:
-        subs = full_schedule['todaySchedules']
-    elif delta == 1:
-        subs = full_schedule['tomorrowSchedules']
-    else:
-        subs = full_schedule['schedules'][day_num]['schedule']
-
-    for subject in subs:
+    for subject in subject['schedule']:
         if week_num in subject['weekNumber']:
-            schedule += '\n\n{}\n{} ({}) '.format(subject['lessonTime'],
-                                                  subject['subject'],
-                                                  subject['lessonType'])
+            schedule += '\n\n{}'.format(subject['lessonTime'])
+            if subject['numSubgroup'] != 0:
+                schedule += ' ({} подгруппа)'.format(str(subject['numSubgroup']))
+            schedule += '\n{} ({}) '.format(subject['subject'],
+                                            subject['lessonType'])
             if subject['auditory']:
                 schedule += subject['auditory'][0]
-            if subject['numSubgroup'] != 0:
-                schedule += ' ({})'.format(str(subject['numSubgroup']))
             if subject['employee'] and subject['numSubgroup'] == 0:
                 schedule += ' {}'.format(subject['employee'][0]['lastName'])
 
@@ -87,7 +71,7 @@ def get_films(delta):
 
     for i, film in enumerate(films):
         film_title = film.select('.movie > .info > header > h1')[0]
-        premieres += '{}. {}\n'.format(str(i + 1), film_title.string)
+        premieres += '{}. {}\n'.format(i + 1, film_title.string)
 
     return premieres
 

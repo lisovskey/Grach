@@ -433,4 +433,6 @@ paket-files/
 # Cake - Uncomment if you are using it
 # tools/
 
-### VisualStudio Patch ###
+# Pipenv
+Pipfile
+Pipfile.lock

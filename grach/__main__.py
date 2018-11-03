@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 '''
 the bot and his handlers
 '''
@@ -89,7 +87,7 @@ def handle_cinema(message, text_message=None,
 def handle_crypto(message, text_message=None,
                   failure_answer=choice(DICTBASE['negation'])):
     '''
-    send cryptocurrency exchange retes in usd
+    send cryptocurrency exchange rates in usd
     '''
     currency_name = 'error'
     if text_message is not None:
@@ -132,76 +130,76 @@ def handle_sticker(message):
     grach.reply(message, grach.send_sticker, choice(DICTBASE['overload']))
 
 
-def check_reaction(message, text_message):
-    '''
-    return True if reaction is necessary
-    '''
-    if (message.chat.type == 'private' or
-        any(name in text_message for name in DICTBASE['names'])):
-        return True
-    elif message.from_user.id == grach.interlocutor_id:
-        grach.interlocutor_id = 0
-        return True
-    return False
-
-
-def useful_text_len(text_message):
-    '''
-    return len of message without bot name
-    '''
-    call = ''
-    for name in DICTBASE['names']:
-        if name in text_message:
-            call = name
-            break
-    return len(text_message.replace(call, '').strip())
-
-
-def check_recognition(message, text_message):
-    '''
-    return True if database check is necessary
-    '''
-    text_len = useful_text_len(text_message)
-    if message.chat.type == 'private':
-        if text_len < CONFIGBASE['min_len']:
-            return False
-    elif (any(name in text_message for name in DICTBASE['names']) and
-          text_len < CONFIGBASE['min_len']):
-        grach.interlocutor_id = message.from_user.id
-        return False
-    return True
-
-
-def process_text_message(text_message):
-    '''
-    lower, unstripe, cut rows of identical chars
-    '''
-    text_message = ' ' + text_message.lower().replace('ё', 'е') + ' '
-    return ''.join(ch for ch, _ in itertools.groupby(text_message))
-
-
-def find_command(text_message):
-    '''
-    execute command if found in commandbase
-    '''
-    for command in COMMANDBASE:
-        parts = 0
-        for text in command['text']:
-            for word in text:
-                if word in text_message:
-                    if not any(exc in text_message for exc in command['exceptions']):
-                        parts += 1
-                        break
-        if parts == len(command['text']):
-            return command['method'], choice(command['answers'])
-    return None, None
-
-
 @grach.message_handler(content_types=['text'])
 def handle_text(message):
     '''
     send message if message recieved depends on who, what and where sent it
     '''
+    def check_reaction(message, text_message):
+        '''
+        return True if reaction is necessary
+        '''
+        if (message.chat.type == 'private' or
+            any(name in text_message for name in DICTBASE['names'])):
+            return True
+        elif message.from_user.id == grach.interlocutor_id:
+            grach.interlocutor_id = 0
+            return True
+        return False
+
+
+    def useful_text_len(text_message):
+        '''
+        return len of message without bot name
+        '''
+        call = ''
+        for name in DICTBASE['names']:
+            if name in text_message:
+                call = name
+                break
+        return len(text_message.replace(call, '').strip())
+
+
+    def check_recognition(message, text_message):
+        '''
+        return True if database check is necessary
+        '''
+        text_len = useful_text_len(text_message)
+        if message.chat.type == 'private':
+            if text_len < CONFIGBASE['min_len']:
+                return False
+        elif (any(name in text_message for name in DICTBASE['names']) and
+            text_len < CONFIGBASE['min_len']):
+            grach.interlocutor_id = message.from_user.id
+            return False
+        return True
+
+
+    def process_text_message(text_message):
+        '''
+        lower, unstripe, cut rows of identical chars
+        '''
+        text_message = ' ' + text_message.lower().replace('ё', 'е') + ' '
+        return ''.join(ch for ch, _ in itertools.groupby(text_message))
+
+
+    def find_command(text_message):
+        '''
+        execute command if found in commandbase
+        '''
+        for command in COMMANDBASE:
+            parts = 0
+            for text in command['text']:
+                for word in text:
+                    if word in text_message:
+                        if not any(exc in text_message for exc in command['exceptions']):
+                            parts += 1
+                            break
+            if parts == len(command['text']):
+                return command['method'], choice(command['answers'])
+        return None, None
+
+
     text_message = process_text_message(message.text)
     if check_reaction(message, text_message):
         if check_recognition(message, text_message):
@@ -222,6 +220,7 @@ def handle_text(message):
         else:
             grach.reply(message, grach.send_message,
                         choice(DICTBASE['call_answers']))
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
