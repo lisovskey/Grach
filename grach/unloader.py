@@ -82,6 +82,6 @@ def get_cryptorate(currency_name):
     '''
     try:
         currency = get(CRYPTORATE_URL + currency_name).json()[0]
-        return round(currency['price_usd'], 2)
+        return str(round(float(currency['price_usd']), 2))
     except KeyError:
         return None
