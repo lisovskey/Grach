@@ -46,8 +46,24 @@ def check_reaction(message, text_message):
     return False
 
 
+def reply_text(message, text_message, answer):
+    '''
+    send answer
+    '''
+    grach.reply(message, grach.send_message, answer)
+
+
+def handle_percentage(message, text_message, answer_addition):
+    '''
+    send random percentage
+    '''
+    grach.reply(message, grach.send_message,
+                str(randint(0, 100)) + answer_addition)
+
+
 @grach.message_handler(commands=['help', 'start'])
-def handle_help(message):
+def handle_help(message, text_message=None,
+                failure_answer=choice(DICTBASE['negation'])):
     '''
     send help text
     '''
@@ -131,7 +147,8 @@ def handle_weather(message, text_message=None,
 
 
 @grach.message_handler(commands=['leave'])
-def handle_leave(message, failure_answer=choice(DICTBASE['negation'])):
+def handle_leave(message, text_message=None,
+                 failure_answer=choice(DICTBASE['negation'])):
     '''
     leave chat if user in userbase and if possible
     '''
@@ -148,7 +165,8 @@ def handle_leave(message, failure_answer=choice(DICTBASE['negation'])):
 
 
 @grach.message_handler(content_types=['sticker'])
-def handle_sticker(message):
+def handle_sticker(message, text_message=None,
+                   failure_answer=choice(DICTBASE['negation'])):
     '''
     send sticker if sticker recieved
     '''
@@ -223,10 +241,10 @@ def handle_text(message):
                 grach.reply(message, grach.send_sticker,
                             choice(DICTBASE['overload']))
             else:
-                command, answer = find_command(text_message)
-                if command:
-                    # omg facepalm
-                    exec(command)
+                command_name, answer = find_command(text_message)
+                if command_name:
+                    command = eval(command_name)
+                    command(message, text_message, answer)
                 else:
                     grach.reply(message, grach.send_message,
                                 choice(DICTBASE['incomprehension']))
