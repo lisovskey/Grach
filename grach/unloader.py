@@ -1,12 +1,8 @@
-'''
-parsers
-'''
-
 from datetime import datetime, timedelta
-import json
 from urllib.request import urlopen
 from requests import get
 from requests.exceptions import ConnectionError
+import json
 import bs4
 
 
@@ -17,9 +13,9 @@ WEATHER_URL = 'http://api.openweathermap.org/data/2.5/weather?id=625144&units=me
 
 
 def get_schedule(group, delta):
-    '''
+    """
     return schedule from bsuir.by with delta days
-    '''
+    """
     week_days = ['в понедельник', 'во вторник', 'в среду', 'в четверг',
                  'в пятницу', 'в субботу', 'в воскресенье']
 
@@ -54,9 +50,9 @@ def get_schedule(group, delta):
 
 
 def get_films(delta):
-    '''
+    """
     return list of films from 360.by
-    '''
+    """
     premieres = ''
 
     date = datetime.now() + timedelta(days=delta, hours=3)
@@ -78,9 +74,9 @@ def get_films(delta):
 
 
 def get_cryptorate(currency_name):
-    '''
+    """
     return exchange rate if exists
-    '''
+    """
     try:
         currency = get(CRYPTORATE_URL + currency_name).json()[0]
         return str(round(float(currency['price_usd']), 2))
@@ -89,6 +85,9 @@ def get_cryptorate(currency_name):
 
 
 def get_weather():
+    """
+    return current weather in minsk
+    """
     data = get(WEATHER_URL).json()
     try:
         weather = ''

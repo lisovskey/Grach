@@ -1,13 +1,9 @@
-'''
-the bot and his handlers
-'''
-
 from os import path, getcwd, environ
 from random import choice, randint
+from . import bot, unloader
 import json
 import logging
 import itertools
-from . import bot, unloader
 
 
 __location__ = path.join(getcwd(), path.dirname(__file__), 'content')
@@ -32,9 +28,9 @@ except bot.telebot.apihelper.ApiException:
 
 
 def check_reaction(message, text_message):
-    '''
+    """
     return True if reaction is necessary
-    '''
+    """
     if message.chat.type == 'private':
         return True
     elif (text_message and
@@ -47,16 +43,16 @@ def check_reaction(message, text_message):
 
 
 def reply_text(message, text_message, answer):
-    '''
+    """
     send answer
-    '''
+    """
     grach.reply(message, grach.send_message, answer)
 
 
 def handle_percentage(message, text_message, answer_addition):
-    '''
+    """
     send random percentage
-    '''
+    """
     grach.reply(message, grach.send_message,
                 str(randint(0, 100)) + answer_addition)
 
@@ -64,9 +60,9 @@ def handle_percentage(message, text_message, answer_addition):
 @grach.message_handler(commands=['help', 'start'])
 def handle_help(message, text_message=None,
                 failure_answer=choice(DICTBASE['negation'])):
-    '''
+    """
     send help text
-    '''
+    """
     answer = choice(DICTBASE['help'])
     grach.reply(message, grach.send_message, answer)
 
@@ -74,9 +70,9 @@ def handle_help(message, text_message=None,
 @grach.message_handler(commands=['schedule'])
 def handle_schedule(message, text_message=None,
                     failure_answer=choice(DICTBASE['negation'])):
-    '''
+    """
     send bsuir schedule if user in userbase
-    '''
+    """
     delta = 1
     if text_message is not None:
         if any(word in text_message for word in DICTBASE['today']):
@@ -97,9 +93,9 @@ def handle_schedule(message, text_message=None,
 @grach.message_handler(commands=['cinema'])
 def handle_cinema(message, text_message=None,
                   failure_answer=choice(DICTBASE['negation'])):
-    '''
+    """
     send list of films at the minsk box office
-    '''
+    """
     answer = choice(DICTBASE['solving'])
     grach.reply(message, grach.send_message, answer)
     delta = 0
@@ -117,9 +113,9 @@ def handle_cinema(message, text_message=None,
 @grach.message_handler(commands=['crypto'])
 def handle_crypto(message, text_message=None,
                   failure_answer=choice(DICTBASE['negation'])):
-    '''
+    """
     send cryptocurrency exchange rates in usd
-    '''
+    """
     currency_name = 'error'
     if text_message is not None:
         for currency in CRYPTOBASE:
@@ -139,9 +135,9 @@ def handle_crypto(message, text_message=None,
 @grach.message_handler(commands=['weather'])
 def handle_weather(message, text_message=None,
                    failure_answer=choice(DICTBASE['negation'])):
-    '''
+    """
     send current weather information
-    '''
+    """
     answer = unloader.get_weather()
     grach.reply(message, grach.send_message, answer or failure_answer)
 
@@ -149,9 +145,9 @@ def handle_weather(message, text_message=None,
 @grach.message_handler(commands=['leave'])
 def handle_leave(message, text_message=None,
                  failure_answer=choice(DICTBASE['negation'])):
-    '''
+    """
     leave chat if user in userbase and if possible
-    '''
+    """
     admin = False
     if (message.chat.type != 'private' and
         any(user['name'] == message.from_user.username for user in USERBASE)):
@@ -167,22 +163,22 @@ def handle_leave(message, text_message=None,
 @grach.message_handler(content_types=['sticker'])
 def handle_sticker(message, text_message=None,
                    failure_answer=choice(DICTBASE['negation'])):
-    '''
+    """
     send sticker if sticker recieved
-    '''
+    """
     if check_reaction(message, message.text):
         grach.reply(message, grach.send_sticker, choice(DICTBASE['overload']))
 
 
 @grach.message_handler(content_types=['text'])
 def handle_text(message):
-    '''
+    """
     send message if message recieved depends on who, what and where sent it
-    '''
+    """
     def useful_text_len(text_message):
-        '''
+        """
         return len of message without bot name
-        '''
+        """
         call = ''
         for name in DICTBASE['names']:
             if name in text_message:
@@ -192,9 +188,9 @@ def handle_text(message):
 
 
     def check_recognition(message, text_message):
-        '''
+        """
         return True if database check is necessary
-        '''
+        """
         text_len = useful_text_len(text_message)
         if message.chat.type == 'private':
             if text_len < CONFIGBASE['min_len']:
@@ -207,17 +203,17 @@ def handle_text(message):
 
 
     def process_text_message(text_message):
-        '''
+        """
         lower, unstripe, cut rows of identical chars
-        '''
+        """
         text_message = ' ' + text_message.lower().replace('ё', 'е') + ' '
         return ''.join(ch for ch, _ in itertools.groupby(text_message))
 
 
     def find_command(text_message):
-        '''
+        """
         execute command if found in commandbase
-        '''
+        """
         for command in COMMANDBASE:
             parts = 0
             for text in command['text']:

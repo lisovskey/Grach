@@ -6,7 +6,7 @@
 
     {
         "name": "bitcoin",
-        "verbose_names": ["биткоин", "биткоен", "биткоэн", "биток", "битки", " btc ", " бтк "]
+        "verbose_names": ["биткоин", "биткоен", "биткоэн", "биток", "битки", " бетхов", " btc ", " бтк "]
     },
 
     {
@@ -26,12 +26,27 @@
 
     {
         "name": "ripple",
-        "verbose_names": ["рипл", "риппл", " xrp ", " хрп "]
+        "verbose_names": [" рипл", " xrp ", " хрп "]
     },
 
     {
         "name": "dash",
         "verbose_names": [" дэш", " даш", " деш", " dash "]
+    },
+
+    {
+        "name": "stellar",
+        "verbose_names": [" стелар", " стэлар", " хлм ", " xlm "]
+    },
+
+    {
+        "name": "monero",
+        "verbose_names": [" монеро", " монера", " монэро", " хмр ", " xmr "]
+    },
+
+    {
+        "name": "tron",
+        "verbose_names": [" трон", " trx ", " трх "]
     },
 
     {
